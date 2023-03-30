@@ -3,27 +3,29 @@ package dev.adss_inventory.src.BuisnessLayer;
 import java.util.Date;
 
 public class Item {
-    String producer;
-    String name;
+    private String producerID;
+    private String name;
     enum location {STORE, INVENTORY};
-    location currentLocation;
-    boolean isExpired=false;
-    Date expirationDate;
-    float costPrice;
-    float sellingPrice;
-    boolean isDefective =false;
+    private location currentLocation;
+    private boolean isExpired = false;
+    private Date expirationDate;
+    private float costPrice;
+    private float sellingPrice;
+    private boolean isDefective = false;
+    private int productID;
 
 
-    public Item(String producer, String name, location currentLocation, Date expirationDate, float costPrice, float sellingPrice) {
-        this.producer = producer;
+    public Item(String producer, String name, location currentLocation, Date expirationDate, float costPrice, float sellingPrice, int productID) {
+        this.producerID = producer;
         this.name = name;
         this.currentLocation = currentLocation;
         this.expirationDate = expirationDate;
         this.costPrice = costPrice;
+        this.productID = productID;
     }
 
     public String getProducer() {
-        return producer;
+        return producerID;
     }
 
     public String getName() {
@@ -55,7 +57,7 @@ public class Item {
     }
 
     public void setProducer(String producer) {
-        this.producer = producer;
+        this.producerID = producer;
     }
 
     public void setName(String name) {
@@ -97,4 +99,7 @@ public class Item {
         return isExpired;
     }
 
+    public int getProductID(){
+        return this.productID;
+    }
 }
