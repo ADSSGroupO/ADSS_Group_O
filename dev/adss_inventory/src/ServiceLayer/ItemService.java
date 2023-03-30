@@ -14,8 +14,8 @@ public class ItemService {
         this.itemController = itemController;
     }
     // AddItem(Place:string,Manufacturer:string ,Integer c )
-    public void addItem(String place, String manufacturer , Integer barcode, String name, Date expirationDate, Integer costPrice , int category) {
-        itemController.addItem(place, manufacturer, barcode, name, expirationDate, costPrice, category);
+    public void addItem( String manufacturer , Integer barcode, String name, Date expirationDate, Integer costPrice ,Integer sellingPrice,int category,int productID) {
+        itemController.addItem( manufacturer, barcode, name, expirationDate, costPrice, category ,sellingPrice,productID);
     }
     // SetMinimum-product- check where urs better to put it
     public void setMinimum(int itemID, String deliveryTime, String demand) {
@@ -24,6 +24,11 @@ public class ItemService {
     // getItem(ID: int ,barcode: int)
     public void getItem(int CategoryID,int ItemID) {
         itemController.getItem(CategoryID,ItemID);
+    }
+
+    //move item to store
+    public void moveItemToStore(int CategoryID,int ItemID){
+        itemController.moveItemToStore(CategoryID,ItemID);
     }
 
     //update Item has been sold
