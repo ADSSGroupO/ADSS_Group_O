@@ -7,6 +7,8 @@ public class ProductController {
     private Dictionary<Integer, List<Product>> productByCategory;
     private Dictionary<Integer,List<Category>> categoryByProduct;
     private Dictionary<Integer, Product> ProductById;
+  //  private Dictionary<Integer, List<Item>> itemByProduct;
+
 
     public ProductController() {
     }

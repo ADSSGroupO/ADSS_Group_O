@@ -8,52 +8,42 @@ public class ItemController {
     private Dictionary<Integer, List<Item>> inStoreItems; //in store items by category ID
     private Dictionary<Integer, List<Item>> defectiveItems; //defective items by category ID
     private ProductController productController;
+    private Dictionary<Integer, Item> itemById;
 
 
     public ItemController() {
     }
-    //what do we get as location? string or enum?
-     public void addItem(String place, String manufacturer , Integer barcode, String name, Date expirationDate, Integer costPrice ,int category) {
-        Item.location locate= null;
-        if(place.equals("store")) {
-             locate = Item.location.STORE;
-         } else if (place.equals("storage")) {
-            locate = Item.location.INVENTORY;
-        }
-         Item item = new Item(manufacturer, name, locate, expirationDate, costPrice, -1);
+
+     public void addItem( String manufacturer , Integer barcode, String name, Date expirationDate, Integer costPrice,Integer sellingPrice ,int category,int productID) {
+        Item.location locate= Item.location.INVENTORY;
+         Item item = new Item(manufacturer, name, locate, expirationDate, costPrice, sellingPrice,productID);
          List<Item> items = new LinkedList<Item>();
          items.add(item);
-         if (locate == Item.location.STORE) {
-             //check if the item is already in the dictionary
-             if (inStoreItems.get(category) == null) {
-                 inStoreItems.put(category,items);
-             } else {
-                 inStoreItems.get(category).add(item);
-             }
-         } else if (locate == Item.location.INVENTORY) {
-             if (storageItems.get(category) == null) {
-                 storageItems.put(category,items);
-             } else {
-                 storageItems.get(category).add(item);
-             }
-         }
+         //add to item by id dictionary
+         itemById.put(barcode,item);
+         //every new item added goes straight to storage
+         storageItems.put(category,items);
      }
      //sold item
         public void itemSold(int CategoryID, int ItemID) {
             //get item from storage
             //add to sold items
             //remove from storage
-            if (inStoreItems.get(CategoryID).contains(ItemID)){
-                soldItems.get(CategoryID).add(inStoreItems.get(CategoryID).get(ItemID));
-                inStoreItems.get(CategoryID).remove(ItemID);
+            Item item = itemById.get(ItemID);
+            if (inStoreItems.get(CategoryID).contains(item)){
+                //add the item to sold items
+                soldItems.get(CategoryID).add(item);
+                //remove from in store items
+                inStoreItems.get(CategoryID).remove(item);
                 //remove from product amount
-                productController.setProductAmountById(ItemID,1);
+                productController.setProductAmountById(item.getProductID(),1);
             }
         }
         //get item
         public Item getItem(int CategoryID, int ItemID) {
+            Item item = itemById.get(ItemID);
             //get item from storage
-            if (inStoreItems.get(CategoryID).contains(ItemID)){
+            if (inStoreItems.get(CategoryID).contains(item)){
                 return inStoreItems.get(CategoryID).get(ItemID);
             }
             return null;
@@ -68,8 +58,13 @@ public class ItemController {
         }
 
 
-
-
-
-
+    public void moveItemToStore(int categoryID, int itemID) {
+        Item item = itemById.get(itemID);
+        if (storageItems.get(categoryID).contains(item)){
+            //add the item to in store items
+            inStoreItems.get(categoryID).add(item);
+            //remove from storage items
+            storageItems.get(categoryID).remove(item);
+        }
+    }
 }
