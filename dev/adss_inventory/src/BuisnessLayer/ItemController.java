@@ -67,4 +67,14 @@ public class ItemController {
             storageItems.get(categoryID).remove(item);
         }
     }
+
+    //getDiscount
+    public float getDiscount(int ItemID) {
+        Item item = itemById.get(ItemID);
+        double discountProduct = productController.getProductDiscount(item.getProductID());
+        double pricePerDiscountProduct = item.getSellingPrice()*(1-discountProduct)*(0.01);
+       // double discountCategory = productController.getProductById(itemById.get(ItemID).getProductID()).getCategoryID();;
+
+        return (float) pricePerDiscountProduct;
+    }
 }
