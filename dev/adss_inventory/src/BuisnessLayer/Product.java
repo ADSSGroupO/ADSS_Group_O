@@ -1,30 +1,54 @@
 package dev.adss_inventory.src.BuisnessLayer;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Objects;
+
 public class Product {
     private String name;
-    private String producer;
     private int minAmount;
     private int currentAmount;
     private int amountInStore;
     private int amountInInventory;
-    private Category category;
-    private int ID;
-    static int productID = 0;
-   // float discount= 0;
+    private int categoryID;
+    private int makat;
+    static int supplierID = 0;
 
 
-    public Product(String name, String producer, int minAmount, int currentAmount, int amountInStore, int amountInInventory, Category category) {
-        this.name = name;
-        this.producer = producer;
-        this.minAmount = minAmount;
-        this.currentAmount = currentAmount;
-        this.amountInStore = amountInStore;
-        this.amountInInventory = amountInInventory;
-        this.category = category;
-        this.ID = productID;
-        productID++;
+    float discount;
+    LocalDate startDiscount;
+    LocalDate endDiscount;
+
+
+
+
+    public int getCategoryID() {
+        return categoryID;
     }
 
+    public void setCategoryID(int categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public Product(String name, int minAmount, int categoryID, int makat , int supplierID) {
+        this.name = name;
+        this.minAmount = minAmount;
+        this.currentAmount = 0;
+        this.amountInStore = 0;
+        this.amountInInventory = 0;
+        this.categoryID = categoryID;
+        this.makat = makat;
+        this.supplierID = supplierID;
+
+    }
+
+    public int getMakat() {
+        return makat;
+    }
+
+    public void setMakat(int makat) {
+        this.makat = makat;
+    }
     public String getName() {
         return name;
     }
@@ -33,20 +57,14 @@ public class Product {
         this.name = name;
     }
 
-    public String getProducer() {
-        return producer;
-    }
-
-    public void setProducer(String producer) {
-        this.producer = producer;
-    }
-
     public int getMinAmount() {
         return minAmount;
     }
 
-    public void setMinAmount(int minAmount) {
-        this.minAmount = minAmount;
+    public void setMinAmount(int deliveryTime, int demand ) {
+        int storeState=demand*deliveryTime;
+        if(minAmount>=storeState)
+            this.minAmount = storeState;
     }
 
     public int getCurrentAmount() {
@@ -73,12 +91,12 @@ public class Product {
         this.amountInInventory = amountInInventory;
     }
 
-    public Category getCategory() {
-        return category;
+    public int getCategory() {
+        return categoryID;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(int category) {
+        this.categoryID = category;
     }
 
     //this method is used to reduce items from inventory and
@@ -89,5 +107,44 @@ public class Product {
         if(minAmount >= currentAmount)
             System.out.println("Warning: The amount of " + name + " is below the minimum amount");
     }
+    public void addItems(int amount){
+        this.currentAmount += amount;
+    }
+    public void addItemsToStore(int amount){
+        this.amountInStore += amount;
+    }
+    public void addItemsToInventory(int amount){
+        this.amountInInventory += amount;
+    }
+    public void reduceItemsFromStore(int amount){
+        if(amount <= this.amountInStore)
+            this.amountInStore -= amount;
+    }
+    public void reduceItemsFromInventory(int amount){
+        if(amount <= this.amountInInventory)
+            this.amountInInventory -= amount;
+    }
+    public void setSupplierID(int supplierID) {
+        this.supplierID = supplierID;
+    }
+    public int getSupplierID() {
+        return supplierID;
+    }
 
+
+    public void setDiscount(LocalDate start, LocalDate end, float discount) {
+        this.discount = discount;
+        this.startDiscount = start;
+        this.endDiscount = end;
+    }
+
+
+    public float getDiscount() {
+        LocalDate now = LocalDate.now();
+        if(now.isBefore(startDiscount) && now.isAfter(endDiscount))
+            return discount;
+        else
+            return 0;
+
+    }
 }

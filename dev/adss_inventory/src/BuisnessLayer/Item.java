@@ -9,7 +9,9 @@ public class Item {
     private location currentLocation;
     private boolean isExpired = false;
     private Date expirationDate;
+    //המחיר ששילמנו על המוצר מהספק
     private float costPrice;
+    //המחיר שניתן למכור את המוצר בו
     private float sellingPrice;
     private boolean isDefective = false;
     private int productID;
@@ -102,4 +104,6 @@ public class Item {
     public int getProductID(){
         return this.productID;
     }
+
+
 }
