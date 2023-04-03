@@ -1,18 +1,17 @@
 package dev.adss_inventory.src.BuisnessLayer;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Dictionary;
 import java.util.LinkedList;
 import java.util.List;
 //product controller as a singleton
 public class ProductController {
-    private Dictionary<Integer, List<Product>> productByCategory;//dictionary contains the product by category
-    // Itay: we need to consider moiving this to the category controller^^^
+
+    CategoryController categoryController;
     private Dictionary<Integer,List<Category>> categoryByProduct;//dictionary contains the category by product
 
-    public Dictionary<Integer, Product> getProductById() {
-        return ProductById;
+    public Product getProductById(Integer productId) {
+        return ProductById.get(productId);
     }
 
     private Dictionary<Integer, Product> ProductById;
@@ -43,7 +42,7 @@ public class ProductController {
         //add to product by id dictionary
         ProductById.put(makat,product);
         //add to product by category dictionary
-        productByCategory.put(categoryID,products);
+        categoryController.addProductByCategory(products,categoryID);
         //add to category by product dictionary
         categoryByProduct.put(makat,categories);
     }
@@ -53,7 +52,7 @@ public class ProductController {
     }
     //get product by category
     public List<Product> getProductsByCategory(int categoryID){
-        return productByCategory.get(categoryID);
+        return categoryController.getProductsByCategory(categoryID);
     }
 
     //set minimum amount

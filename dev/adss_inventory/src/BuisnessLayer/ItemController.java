@@ -9,6 +9,7 @@ public class ItemController {
     private Dictionary<Integer, List<Item>> inStoreItems; //in store items by category ID
     private Dictionary<Integer, List<Item>> defectiveItems; //defective items by category ID
     private ProductController productController;
+    private CategoryController categoryController;
     private Dictionary<Integer, Item> itemById;
     private static ItemController instance = null;
 
@@ -77,12 +78,19 @@ public class ItemController {
     }
 
     //getDiscount
-    public float getDiscount(int ItemID) {
+    public double getDiscount(int ItemID) {
         Item item = itemById.get(ItemID);
         double discountProduct = productController.getProductDiscount(item.getProductID());
         double pricePerDiscountProduct = item.getSellingPrice()*(1-discountProduct)*(0.01);
-       // double discountCategory = productController.getProductById(itemById.get(ItemID).getProductID()).getCategoryID();;
-
-        return (float) pricePerDiscountProduct;
+        int productID = itemById.get(ItemID).getProductID();
+        int categoryID= productController.getProductById(productID).getCategoryID();
+        float categoryDiscount = categoryController.getCategoryDiscount(categoryID);
+        double pricePerDiscountCategory = item.getSellingPrice()*(1-categoryDiscount)*(0.01);
+        if(pricePerDiscountCategory>=pricePerDiscountProduct){
+            return pricePerDiscountProduct;
+        }
+        else {
+            return pricePerDiscountCategory;
+        }
     }
 }
