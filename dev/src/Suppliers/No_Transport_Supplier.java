@@ -5,7 +5,7 @@ public class No_Transport_Supplier extends Supplier {
     // it inherits the class supplier. in addition to parent class attributes, it has an address, which is the address that the orders will be picked up from.
     String address; // pick up address
 
-    public No_Transport_Supplier(String name, int id, int bank, String pay, String shipaddress) { // constructor
+    public No_Transport_Supplier(String name, int id, int bank, Payment pay, String shipaddress) { // constructor
         super(name, id, bank, pay);
         address = shipaddress;
     }
