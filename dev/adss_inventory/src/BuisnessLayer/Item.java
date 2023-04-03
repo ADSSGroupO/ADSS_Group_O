@@ -1,5 +1,6 @@
 package dev.adss_inventory.src.BuisnessLayer;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Item {
@@ -8,7 +9,7 @@ public class Item {
     enum location {STORE, INVENTORY};
     private location currentLocation;
     private boolean isExpired = false;
-    private Date expirationDate;
+    private LocalDate expirationDate;
     //המחיר ששילמנו על המוצר מהספק
     private float costPrice;
     //המחיר שניתן למכור את המוצר בו
@@ -17,7 +18,7 @@ public class Item {
     private int productID;
 
 
-    public Item(String producer, String name, location currentLocation, Date expirationDate, float costPrice, float sellingPrice, int productID) {
+    public Item(String producer, String name, location currentLocation, LocalDate expirationDate, float costPrice, float sellingPrice, int productID) {
         this.producerID = producer;
         this.name = name;
         this.currentLocation = currentLocation;
@@ -42,7 +43,7 @@ public class Item {
         return isExpired;
     }
 
-    public Date getExpirationDate() {
+    public LocalDate getExpirationDate() {
         return expirationDate;
     }
 
@@ -74,7 +75,7 @@ public class Item {
         isExpired = expired;
     }
 
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
     }
 
@@ -94,8 +95,8 @@ public class Item {
      * @return true if the item is expired
      */
     public boolean checkDate(){
-        Date today = new Date();
-        if (today.after(expirationDate)){
+        LocalDate today = LocalDate.now();
+        if (today.isAfter(expirationDate)){
             isExpired = true;
         }
         return isExpired;

@@ -3,6 +3,7 @@ package dev.adss_inventory.src.ServiceLayer;
 import dev.adss_inventory.src.BuisnessLayer.Item;
 import dev.adss_inventory.src.BuisnessLayer.ItemController;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -10,12 +11,12 @@ public class ItemService {
     //connect to item controller
     ItemController itemController;
 
-    public ItemService(ItemController itemController) {
-        this.itemController = itemController;
+    public ItemService() {
+        this.itemController = ItemController.getInstance();
     }
     // AddItem(Place:string,Manufacturer:string ,Integer c )
-    public void addItem( String manufacturer , Integer barcode, String name, Date expirationDate, Integer costPrice ,Integer sellingPrice,int category,int productID) {
-        itemController.addItem( manufacturer, barcode, name, expirationDate, costPrice, category ,sellingPrice,productID);
+    public void addItem(String manufacturer , Integer barcode, String name, LocalDate expirationDate, float costPrice , float sellingPrice, int category, int productID) {
+        itemController.addItem( manufacturer, barcode, name, expirationDate, costPrice, sellingPrice ,category,productID);
     }
 
     // getItem(ID: int ,barcode: int)
