@@ -22,6 +22,7 @@ public class Order_Details_By_Product {
 
     // getters for the details
     public int getProductCode() {return product_code;}
+    public String getProductName() {return product_name;}
     public int getAmount() {return amount;}
     public double getListPrice() {return list_price;}
     public double getDiscountGiven() {return discount;}

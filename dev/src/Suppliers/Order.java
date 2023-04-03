@@ -22,7 +22,7 @@ public class Order {
         date = new java.util.Date(); // current date
         contact = supcontact;
         order_status = Status.InProcess;
-        ordered_products = new ArrayList<>(); // setting empty list
+        ordered_products = new ArrayList<Order_Details_By_Product>(); // setting empty list
     }
 
     // function that takes in the details of new ordered product, creates listing and adds it to list of ordered products.
