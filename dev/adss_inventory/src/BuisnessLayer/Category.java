@@ -24,5 +24,13 @@ public class Category {
         startDiscount=start;
         endDiscount=end;
     }
+    public float getDiscount() {
+        LocalDate now = LocalDate.now();
+        if(now.isBefore(startDiscount) && now.isAfter(endDiscount))
+            return discount;
+        else
+            return 0;
+
+    }
 
 }
