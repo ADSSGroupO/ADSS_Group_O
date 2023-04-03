@@ -8,7 +8,7 @@ public class Fixed_Days_Supplier extends Supplier {
     // in addition to parent class, it has a list of days. these days are the delivery days of the supplier.
     private ArrayList<Shipment_Days> days; // shipping days
 
-    public Fixed_Days_Supplier(String name, int id, int bank, String pay, ArrayList<Shipment_Days> ship_days) { // constructor
+    public Fixed_Days_Supplier(String name, int id, int bank, Payment pay, ArrayList<Shipment_Days> ship_days) { // constructor
         super(name, id, bank, pay);
         days = ship_days;
     }
