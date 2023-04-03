@@ -5,9 +5,10 @@ import java.util.Date;
 import java.util.Dictionary;
 import java.util.LinkedList;
 import java.util.List;
-
+//product controller as a singleton
 public class ProductController {
     private Dictionary<Integer, List<Product>> productByCategory;//dictionary contains the product by category
+    // Itay: we need to consider moiving this to the category controller^^^
     private Dictionary<Integer,List<Category>> categoryByProduct;//dictionary contains the category by product
 
     public Dictionary<Integer, Product> getProductById() {
@@ -16,11 +17,18 @@ public class ProductController {
 
     private Dictionary<Integer, Product> ProductById;
   //  private Dictionary<Integer, List<Item>> itemByProduct;
+    private static ProductController instance = null;
 
 
     public ProductController() {
     }
 
+    public static ProductController getInstance() {
+        if (instance == null) {
+            instance = new ProductController();
+        }
+        return instance;
+    }
 
     public void setProductAmountById(int productID, int amount) {
         ProductById.get(productID).setCurrentAmount( ProductById.get(productID).getCurrentAmount()-amount);
@@ -39,6 +47,15 @@ public class ProductController {
         //add to category by product dictionary
         categoryByProduct.put(makat,categories);
     }
+    //get product
+    public Product getProduct(int productID){
+        return ProductById.get(productID);
+    }
+    //get product by category
+    public List<Product> getProductsByCategory(int categoryID){
+        return productByCategory.get(categoryID);
+    }
+
     //set minimum amount
     public void setMinimum(int deliveryTime, int demand ,int productID){
         //set minimum amount

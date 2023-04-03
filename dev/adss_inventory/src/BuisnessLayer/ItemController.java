@@ -1,7 +1,8 @@
 package dev.adss_inventory.src.BuisnessLayer;
 
+import java.time.LocalDate;
 import java.util.*;
-
+//controller for items as singleton
 public class ItemController {
     private Dictionary<Integer, List<Item>> soldItems; //sold items by category ID
     private Dictionary<Integer, List<Item>> storageItems; //storage items by category ID
@@ -9,12 +10,19 @@ public class ItemController {
     private Dictionary<Integer, List<Item>> defectiveItems; //defective items by category ID
     private ProductController productController;
     private Dictionary<Integer, Item> itemById;
+    private static ItemController instance = null;
 
 
     public ItemController() {
     }
 
-     public void addItem( String manufacturer , Integer barcode, String name, Date expirationDate, Integer costPrice,Integer sellingPrice ,int category,int productID) {
+    public static ItemController getInstance() {
+        if (instance == null) {
+            instance = new ItemController();
+        }
+        return instance;
+    }
+     public void addItem(String manufacturer , Integer barcode, String name, LocalDate expirationDate, float costPrice, float sellingPrice , int category, int productID) {
         Item.location locate= Item.location.INVENTORY;
          Item item = new Item(manufacturer, name, locate, expirationDate, costPrice, sellingPrice,productID);
          List<Item> items = new LinkedList<Item>();
