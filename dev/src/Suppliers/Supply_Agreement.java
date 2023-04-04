@@ -40,4 +40,25 @@ public class Supply_Agreement {
     public int getMaxAmount() {return max_amount;}
     public ArrayList<DiscountByProduct> getDiscounts() {return discounts;}
 
+    // function takes in the requested amount of units, and returns the minimal price available based on list of discounts in agreement
+    public double getMinimalPrice(int units) {
+        // calculate price before discounts
+        double price_before_discount = units * list_price;
+        double current_minimal_price = price_before_discount;
+        for (int i = 0; i < discounts.size(); i++) {
+            if (discounts.get(i).isEligibleForDiscount(units, price_before_discount)) {
+                double newPrice = discounts.get(i).applyDiscount(price_before_discount);
+                if (newPrice < current_minimal_price) {
+                    current_minimal_price = newPrice;
+                }
+            }
+        }
+        return current_minimal_price;
+    }
+
+    // function that takes in the number of units, and returns the price list based on the agreement
+    public double getListPriceBeforeDiscounts(int units) {
+        return (list_price * units);
+    }
+
 }

@@ -36,9 +36,11 @@ public abstract class Supplier {
 
     public ArrayList<DiscountByOrder> getOrderDiscounts() {return this.discountsByOrder;}
 
-    // add new agreement to list of agreements
-    public void addAgreement (Supply_Agreement agreement) {
-        agreements.add(agreement);
+    // function takes in information of new agreement, initializes it and adds the new agreement to list of agreements, and returns the agreement created
+    public Supply_Agreement addAgreement (int code, double price, int catalog, int amount) {
+        Supply_Agreement newAgreement = new Supply_Agreement(code, price, catalog, amount);
+        agreements.add(newAgreement);
+        return newAgreement;
     }
 
     // remove agreement from list of agreements. if finds and deletes, return true. else, return false
@@ -57,13 +59,69 @@ public abstract class Supplier {
         discountsByOrder.add(discount);
     }
 
-    // add new order to history of orders
-
-    public void addNewOrder(Order order) {
+    // function takes in information of new order, initializes it, adds the new order to history of orders, and returns the order created
+    public Order addNewOrder(int destination, Supplier_Contact supcontact) {
+        Order order = new Order(destination, supcontact);
         ordersHistory.add(order);
+        return order;
     }
 
-    public void addContact(Supplier_Contact contact) {
+    // function takes in information of new contact, initializes it, adds the new contact to list of contacts, and returns the contact created
+    public Supplier_Contact addContact(String name, int phone) {
+        Supplier_Contact contact = new Supplier_Contact(name, phone);
         contacts.add(contact);
+        return contact;
+    }
+
+    // function that takes in the product code and number of units, and returns the list price the supplier offers. if supplier doesn't
+    // sell product, return -1
+    public double getListPriceOfProducts(int product_code, int units) {
+        for (int i = 0; i < agreements.size(); i++) {
+            if (product_code == agreements.get(i).getProductCode())
+                return agreements.get(i).getListPriceBeforeDiscounts(units);
+        }
+        return -1;
+    }
+
+    // function that takes in the product code, and returns the catalog number of the product in the supplier's systems. if supplier doesn't
+    // sell product, return -1
+    public int getCatalogNumber(int product_code) {
+        for (int i = 0; i < agreements.size(); i++) {
+            if (product_code == agreements.get(i).getProductCode())
+                return agreements.get(i).getCatalogCode();
+        }
+        return -1;
+    }
+
+    // function that takes in the product code, and returns the max amount of units the supplier can deliver. if supplier doesn't
+    // sell product, return -1
+    public int getMaxAmountOfUnits(int product_code) {
+        for (int i = 0; i < agreements.size(); i++) {
+            if (product_code == agreements.get(i).getProductCode())
+                return agreements.get(i).getMaxAmount();
+        }
+        return -1;
+    }
+
+    // function that takes in the product code and number of units, and returns the minimal price the supplier offers after discount. if supplier doesn't
+    // sell product, return -1
+    public double getBestPossiblePrice(int product_code, int units) {
+        for (int i = 0; i < agreements.size(); i++) {
+            if (product_code == agreements.get(i).getProductCode()) {
+               double minimal_price = agreements.get(i).getMinimalPrice(units);
+               return minimal_price;
+            }
+        }
+        return -1;
+    }
+
+    // function takes in name of contact of supplier, and returns it. if can't find, returns null
+    public Supplier_Contact getContact(String name) {
+        for (int i = 0; i < contacts.size(); i++) {
+            if (name == contacts.get(i).getContactName()) {
+                return contacts.get(i);
+            }
+        }
+        return null;
     }
 }
