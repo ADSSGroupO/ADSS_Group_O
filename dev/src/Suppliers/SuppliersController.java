@@ -85,17 +85,10 @@ public class SuppliersController {
     public void addSupplyAgreement() {
         // printing menu for user, asking for input
         Scanner agreement_input = new Scanner(System.in);
-        System.out.println("Enter private company number: ");
-        int supplier_id = agreement_input.nextInt();
         // find supplier in suppliers list
-        Supplier current_supplier = null;
-        for (int i = 0; i < suppliers.size(); i++) {
-            if (suppliers.get(i).getPrivateCompanyNumber() == supplier_id)
-                current_supplier = suppliers.get(i);
-        }
+        Supplier current_supplier = findSupplier();
         // if supplier doesn't exist, print error message and return
         if (current_supplier == null) {
-            System.out.println("Invalid ID");
             return;
         }
         // if supplier exists, continue with input taking
@@ -141,6 +134,54 @@ public class SuppliersController {
         }
         // add supplier to map of products and suppliers
         suppliersByProduct.get(product_code).add(current_supplier);
+    }
+
+    // function for adding contact of supplier
+    public void addContact() {
+        // taking input of contact info
+        Scanner contact_input = new Scanner(System.in);
+        // find supplier in suppliers list
+        Supplier supplier = findSupplier();
+        // if supplier doesn't exist, print error message and return
+        if (supplier == null) {
+            return;
+        }
+        System.out.println("Enter contact's name: ");
+        String name = contact_input.nextLine();
+        System.out.println("Enter phone number: ");
+        int phone = contact_input.nextInt();
+        supplier.addContact(name, phone);
+    }
+
+    public void addOrderDiscountForSupplier() {
+        // find supplier in suppliers list
+        Supplier supplier = findSupplier();
+        // if supplier doesn't exist, print error message and return
+        if (supplier == null) {
+            return;
+        }
+        // taking input
+        Scanner order_discount = new Scanner(System.in);
+        System.out.println("Is the discount of percentage or of fixed price?\n1. By Percentage\n 2. By Fixed Price\n");
+        int discountOption = order_discount.nextInt();
+        DiscountByOrder newDiscount;
+        System.out.println("Please enter discount value: ");
+        double discountValue = order_discount.nextInt();
+        System.out.println("Please enter minimal price: ");
+        double minPrice = order_discount.nextInt();
+        // if discount by percentage, meaning the percentage of the total price
+        if (discountOption == 1) {
+            newDiscount = new DiscountOfPercentageByOrder(discountValue, minPrice);
+            supplier.addOrderDiscount(newDiscount);
+        }
+        // if discount by fixed price, meaning that a fixed amount of money will be reduced
+        else if (discountOption == 2) {
+            newDiscount = new DiscountOfPriceByOrder(discountValue, minPrice);
+            supplier.addOrderDiscount(newDiscount);
+        } else {
+            // if invalid option,print error message and break to menu
+            System.out.println("Invalid option");
+        }
     }
 
     // function for creating a new order
@@ -282,4 +323,21 @@ public class SuppliersController {
         // make order from chosen supplier
         return makeOrderFromSupplier(branch, minSupplier, productsToOrder, productsAndAmounts);
     }
+    // function that takes id of supplier, search for it in suppliers list, and returns reference to it
+    public Supplier findSupplier() {
+        // take input of supplier
+        Scanner supplier_input = new Scanner(System.in);
+        System.out.println("Enter supplier's id: ");
+        int id = supplier_input.nextInt();
+        // search supplier
+        Supplier supplier;
+        for (int i = 0; i < suppliers.size(); i++) {
+            if (suppliers.get(i).getPrivateCompanyNumber() == id) {
+                supplier = suppliers.get(i);
+                return supplier;
+            }
+        }
+        return null;
+    }
 }
+
