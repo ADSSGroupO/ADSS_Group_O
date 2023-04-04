@@ -17,4 +17,10 @@ public class On_Order_Supplier extends Supplier {
         current_order = newOrder;
     }
 
+
+    // function that returns the next shipping date saved in supplier's card
+    @Override
+    public Date getNextShippingDate() {
+        return current_order;
+    }
 }

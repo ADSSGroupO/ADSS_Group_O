@@ -1,6 +1,11 @@
 package Suppliers;
 
+import java.lang.reflect.Array;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Fixed_Days_Supplier extends Supplier {
 
@@ -27,4 +32,27 @@ public class Fixed_Days_Supplier extends Supplier {
         }
     }
 
+
+    // function that returns the closest date of the days in the list of days
+    @Override
+    public Date getNextShippingDate() {
+        Date closest_date = null;
+        // today's date
+        LocalDate today = LocalDate.now();
+        Date date = new java.util.Date();
+        // get dates of all closest shipment days
+        for (Shipment_Days day : days) {
+            // find closest date of the day on the list
+            LocalDate current_day = today.with(TemporalAdjusters.next(DayOfWeek.valueOf(day.toString())));
+            // convert to Date object
+            Date date_of_current_day = java.sql.Date.valueOf(current_day);
+            // get the distance between today and the date
+            long distance = Math.abs(date_of_current_day.getTime() - date.getTime());
+            // if closest day is null or closest day is further than current day checked
+            if (closest_date == null || Math.abs(closest_date.getTime() - date.getTime()) > distance) {
+                closest_date = date_of_current_day;
+            }
+        }
+        return closest_date;
+    }
 }
