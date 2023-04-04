@@ -4,13 +4,13 @@ import java.time.LocalDate;
 import java.util.*;
 //controller for items as singleton
 public class ItemController {
-    private Dictionary<Integer, List<Item>> soldItems; //sold items by category ID
-    private Dictionary<Integer, List<Item>> storageItems; //storage items by category ID
-    private Dictionary<Integer, List<Item>> inStoreItems; //in store items by category ID
-    private Dictionary<Integer, List<Item>> defectiveItems; //defective items by category ID
-    private ProductController productController;
-    private CategoryController categoryController;
-    private Dictionary<Integer, Item> itemById;
+    private static HashMap<Integer, List<Item>> soldItems = new HashMap<Integer, List<Item>>(); //sold items by category ID
+    private static HashMap<Integer, List<Item>> storageItems = new HashMap<Integer,List<Item>>(); //storage items by category ID
+    private static HashMap<Integer, List<Item>> inStoreItems = new HashMap<Integer,List<Item>>(); //in store items by category ID
+    private static HashMap<Integer, List<Item>> defectiveItems = new HashMap<Integer, List<Item>>(); //defective items by category ID
+    private static ProductController productController = ProductController.getInstance();
+    private CategoryController categoryController = CategoryController.getInstance();
+    private static HashMap<Integer, Item> itemById = new HashMap<Integer, Item>();
     private static ItemController instance = null;
 
 

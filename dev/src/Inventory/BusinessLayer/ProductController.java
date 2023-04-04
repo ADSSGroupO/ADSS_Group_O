@@ -1,20 +1,19 @@
 package dev.src.Inventory.BusinessLayer;
 
 import java.time.LocalDate;
-import java.util.Dictionary;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+
 //product controller as a singleton
 public class ProductController {
 
-    CategoryController categoryController;
-    private Dictionary<Integer,List<Category>> categoryByProduct;//dictionary contains the category by product
+    CategoryController categoryController = CategoryController.getInstance();
+    private static HashMap<Integer,List<Category>> categoryByProduct = new HashMap<Integer,List<Category>>();//dictionary contains the category by product
 
     public Product getProductById(Integer productId) {
         return ProductById.get(productId);
     }
 
-    private Dictionary<Integer, Product> ProductById;
+    private static HashMap<Integer, Product> ProductById = new HashMap<Integer, Product>();
   //  private Dictionary<Integer, List<Item>> itemByProduct;
     private static ProductController instance = null;
 
@@ -40,6 +39,7 @@ public class ProductController {
         Category category = new Category(name,categoryID);
         List<Category> categories = new LinkedList<Category>();
         //add to product by id dictionary
+
         ProductById.put(makat,product);
         //add to product by category dictionary
         categoryController.addProductByCategory(products,categoryID);

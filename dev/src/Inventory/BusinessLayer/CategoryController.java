@@ -1,15 +1,16 @@
 package dev.src.Inventory.BusinessLayer;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Dictionary;
 //Controller for category as singleton
 public class CategoryController {
-    private Dictionary<Integer, List<Product>> productByCategory;//dictionary contains the product by category
+    private static HashMap<Integer, List<Product>> productByCategory = new HashMap<Integer,List<Product>>();//dictionary contains the product by category
     // Itay: we need to consider moiving this to the category controller^^^
     //tamar : been moved -  what do you say?
     //dictionary contains the category by Id
-    private Dictionary<Integer, Category> categoryById;
+    private static HashMap<Integer, Category> categoryById = new HashMap<Integer,Category>();
     private static CategoryController instance = null;
 
     public CategoryController() {
