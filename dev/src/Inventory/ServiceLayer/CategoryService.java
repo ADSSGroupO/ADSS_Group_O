@@ -1,6 +1,6 @@
 package dev.src.Inventory.ServiceLayer;
 
-import dev.src.Inventory.BuisnessLayer.CategoryController;
+import dev.src.Inventory.BusinessLayer.CategoryController;
 
 public class CategoryService {
     //connect to CategoryController controller
