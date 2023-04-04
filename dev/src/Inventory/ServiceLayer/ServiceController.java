@@ -6,12 +6,21 @@ public class ServiceController {
     CategoryService categoryService;
     ProductService productService;
     ItemService itemService;
+    static ServiceController serviceController = null;
 
-    public ServiceController() {
+    private ServiceController() {
         categoryService = new CategoryService();
         productService = new ProductService();
         itemService = new ItemService();
     }
+
+    public static ServiceController getInstance() {
+        if(serviceController == null) {
+            serviceController = new ServiceController();
+        }
+        return serviceController;
+    }
+
     ///////////////////////////ItemService/////////////////////////////
     public void addItem(String manufacturer, Integer barcode, String name, LocalDate expirationDate, float costPrice, float sellingPrice,int category, int productID) {
         itemService.addItem(manufacturer, barcode, name, expirationDate, costPrice, sellingPrice, category, productID);
