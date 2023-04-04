@@ -1,6 +1,7 @@
 package Suppliers;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public abstract class Supplier {
 
@@ -26,6 +27,9 @@ public abstract class Supplier {
         ordersHistory = new ArrayList<Order>();
         contacts = new ArrayList<Supplier_Contact>();
     }
+
+    // abstract method that returns the closest possible shipping date from supplier
+    public abstract Date getNextShippingDate();
 
     // getters for the attributes of the class
     public int getPrivateCompanyNumber() {return this.supplier_id;}
@@ -61,9 +65,14 @@ public abstract class Supplier {
 
     // function takes in information of new order, initializes it, adds the new order to history of orders, and returns the order created
     public Order addNewOrder(int destination, Supplier_Contact supcontact) {
-        Order order = new Order(destination, supcontact);
+        Order order = new Order(this, destination, supcontact);
         ordersHistory.add(order);
         return order;
+    }
+
+    // function that applies order discount on the order by using a function from order class
+    public void applyOrderDiscountsOnOrder(Order order) {
+        order.applyOrderDiscount(discountsByOrder);
     }
 
     // function takes in information of new contact, initializes it, adds the new contact to list of contacts, and returns the contact created

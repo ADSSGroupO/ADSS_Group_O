@@ -8,11 +8,6 @@ public class DiscountOfPriceByProduct extends DiscountByProduct {
         super(val, products);
     }
 
-    // function that checks if an order is eligible for discount
-    public boolean isEligibleForDiscount(int products, double totalPrice) {
-        return (products >= numOfProducts);
-    }
-
     // function that calculates the amount of money reduced in discount
     public double calculateDiscount(double price) {return value;}
 }

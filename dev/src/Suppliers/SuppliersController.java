@@ -193,7 +193,37 @@ public class SuppliersController {
         }
         // if list is empty, we need to divide the order and therefore to find cheapest supplier per product
         else {
-
+            // map of suppliers and the products they deliver
+            HashMap<Supplier, ArrayList<Integer>> suppliersAndProducts = new HashMap<>(); // <supplier, list<product_code>>
+            // iterate all products to order
+            for (int i = 0; i < productsToOrder.size(); i++) {
+                // min price for current product
+                double minPrice = -1;
+                Supplier minSupplier = null;
+                // get list of suppliers who ship products
+                ArrayList<Supplier> supplierForProduct = suppliersByProduct.get(productsToOrder.get(i));
+                for (int j = 0; j < supplierForProduct.size(); j++) {
+                    // finding best price for product for current supplier
+                     double currentPrice = supplierForProduct.get(j).getBestPossiblePrice(productsToOrder.get(i), productsAndAmounts.get(productsToOrder.get(i)));
+                     if (currentPrice < minPrice || minSupplier == null) {
+                         minSupplier = supplierForProduct.get(j);
+                         minPrice = currentPrice;
+                     }
+                }
+                // getting current list of products to order from supplier
+                ArrayList<Integer> minSupplierCurrentProducts = suppliersAndProducts.get(minSupplier);
+                if (minSupplierCurrentProducts == null) {
+                    minSupplierCurrentProducts = new ArrayList<>();
+                }
+                // add product to list
+                minSupplierCurrentProducts.add(productsToOrder.get(i));
+                // add to map
+                suppliersAndProducts.put(minSupplier, minSupplierCurrentProducts);
+            }
+            // iterate the disctionary and make orders for matching suppliers
+            for (Supplier currentSup : suppliersAndProducts.keySet()) {
+                makeOrderFromSupplier(branch, currentSup, suppliersAndProducts.get(currentSup), productsAndAmounts);
+            }
         }
     }
 
@@ -208,7 +238,7 @@ public class SuppliersController {
         String contact_name = order_input.nextLine();
         Supplier_Contact contact = supplier.getContact(contact_name);
         // starting the order
-        Order newOrder = new Order(branch, contact);
+        Order newOrder = supplier.addNewOrder(branch, contact);
         System.out.println("---INITIALIZING ORDER---");
         // iterating all products and adding to order
         for (int i = 0; i < productsToOrder.size(); i++) {
@@ -222,6 +252,8 @@ public class SuppliersController {
         }
         // when finished, print and return order
         System.out.println("---ORDER WAS PLACED!---");
+        // apply order discounts on order made
+        supplier.applyOrderDiscountsOnOrder(newOrder);
         return newOrder;
     }
 
