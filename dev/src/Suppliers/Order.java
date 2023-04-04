@@ -15,13 +15,15 @@ public class Order {
     private Supplier_Contact contact; // contact of the supplier
     private Status order_status; // the status of the order
     private double total_price; // the total cost of the order
+    private double orderDiscount; // discount given on total order
 
-    public Order(int destination, Supplier_Contact supcontact) { // constructor
+    public Order(Supplier supplier, int destination, Supplier_Contact supcontact) { // constructor
         branch_code = destination;
-        date = new java.util.Date(); // current date
+        date = supplier.getNextShippingDate(); // activating supplier's next shipping date method
         contact = supcontact;
         order_status = Status.InProcess;
         ordered_products = new ArrayList<Order_Details_By_Product>(); // setting empty list
+        orderDiscount = 0; // discount 0 until finishing order and calculating final price
     }
 
     // function that takes in the details of new ordered product, creates listing and adds it to list of ordered products.
@@ -59,4 +61,16 @@ public class Order {
     public Date getDateOfOrder() {return date;}
     public Supplier_Contact getContact() {return contact;}
     public Status getOrderStatus() {return order_status;}
+
+    // function that takes in the order discounts of supplier's and applies best discount to order
+    public void applyOrderDiscount(ArrayList<DiscountByOrder> discountsByOrder) {
+        double price_before_discount = total_price;
+        for (int i = 0; i < discountsByOrder.size(); i++) {
+            double newPrice = discountsByOrder.get(i).applyDiscount(total_price);
+            if (total_price < newPrice) {
+                total_price = newPrice;
+                orderDiscount = price_before_discount - newPrice;
+            }
+        }
+    }
 }
