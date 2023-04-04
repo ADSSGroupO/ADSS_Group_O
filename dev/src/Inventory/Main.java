@@ -1,4 +1,6 @@
-package dev.adss_inventory.src.BuisnessLayer;
+package dev.src.Inventory;
+
+import dev.src.Inventory.PresentationLayer.CLI;
 
 public class Main {
     public static void main(String[] args) {

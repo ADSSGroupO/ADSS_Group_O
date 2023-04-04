@@ -1,7 +1,7 @@
-package dev.adss_inventory.src.ServiceLayer;
+package dev.src.Inventory.ServiceLayer;
 
-import dev.adss_inventory.src.BuisnessLayer.Item;
-import dev.adss_inventory.src.BuisnessLayer.ItemController;
+import dev.src.Inventory.BuisnessLayer.Item;
+import dev.src.Inventory.BuisnessLayer.ItemController;
 
 import java.time.LocalDate;
 import java.util.Date;

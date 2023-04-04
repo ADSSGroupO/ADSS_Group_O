@@ -1,10 +1,6 @@
-package dev.adss_inventory.src.ServiceLayer;
+package dev.src.Inventory.ServiceLayer;
 
-import dev.adss_inventory.src.BuisnessLayer.Category;
-import dev.adss_inventory.src.BuisnessLayer.CategoryController;
-
-import java.util.Date;
-import java.util.List;
+import dev.src.Inventory.BuisnessLayer.CategoryController;
 
 public class CategoryService {
     //connect to CategoryController controller

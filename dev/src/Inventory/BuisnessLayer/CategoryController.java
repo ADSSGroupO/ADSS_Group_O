@@ -1,8 +1,6 @@
-package dev.adss_inventory.src.BuisnessLayer;
+package dev.src.Inventory.BuisnessLayer;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Dictionary;
 //Controller for category as singleton
