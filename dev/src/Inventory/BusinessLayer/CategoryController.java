@@ -1,4 +1,4 @@
-package dev.src.Inventory.BuisnessLayer;
+package dev.src.Inventory.BusinessLayer;
 
 import java.time.LocalDate;
 import java.util.List;

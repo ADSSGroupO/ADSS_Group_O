@@ -1,9 +1,6 @@
-package dev.src.Inventory.BuisnessLayer;
+package dev.src.Inventory.BusinessLayer;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Category {
     //dictionary contains the product by category

@@ -1,8 +1,4 @@
 package dev.src.Inventory.ServiceLayer;
-
-import dev.adss_inventory.src.BuisnessLayer.Category;
-import dev.adss_inventory.src.BuisnessLayer.Product;
-
 import java.time.LocalDate;
 import java.util.List;
 

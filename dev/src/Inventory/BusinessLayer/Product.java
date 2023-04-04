@@ -1,8 +1,6 @@
-package dev.src.Inventory.BuisnessLayer;
+package dev.src.Inventory.BusinessLayer;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Objects;
 
 public class Product {
     private String name;

@@ -1,6 +1,5 @@
 package dev.src.Inventory.ServiceLayer;
-import java.util.Date;
-import dev.src.Inventory.BuisnessLayer.ProductController;
+import dev.src.Inventory.BusinessLayer.ProductController;
 
 public class ProductService {
     //connect to ProductController controller
