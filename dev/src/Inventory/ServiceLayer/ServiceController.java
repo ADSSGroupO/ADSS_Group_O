@@ -1,4 +1,4 @@
-package dev.adss_inventory.src.ServiceLayer;
+package dev.src.Inventory.ServiceLayer;
 
 import dev.adss_inventory.src.BuisnessLayer.Category;
 import dev.adss_inventory.src.BuisnessLayer.Product;

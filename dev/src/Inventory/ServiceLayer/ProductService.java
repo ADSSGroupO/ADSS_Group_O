@@ -1,7 +1,6 @@
-package dev.adss_inventory.src.ServiceLayer;
-import dev.adss_inventory.src.BuisnessLayer.ProductController;
-
+package dev.src.Inventory.ServiceLayer;
 import java.util.Date;
+import dev.src.Inventory.BuisnessLayer.ProductController;
 
 public class ProductService {
     //connect to ProductController controller

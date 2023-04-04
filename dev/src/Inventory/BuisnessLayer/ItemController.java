@@ -1,4 +1,4 @@
-package dev.adss_inventory.src.BuisnessLayer;
+package dev.src.Inventory.BuisnessLayer;
 
 import java.time.LocalDate;
 import java.util.*;
