@@ -34,9 +34,12 @@ public class ItemService {
         //need to update product amount
     }
     //return a list of items in stock (both at store and storage)
+    /*I think that this function not needed any more. what do you say?*/
      public List<Item> getItemsInStock(int categoryID) {
          return itemController.itemsInStock(categoryID);
      }
+    /*Make item a Defective */
+    public void setDefectiveItems(List<Integer> items) {}
 
 
 }
