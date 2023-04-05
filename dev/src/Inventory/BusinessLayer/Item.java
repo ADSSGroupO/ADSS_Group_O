@@ -13,6 +13,8 @@ public class Item {
     private float costPrice;
     //המחיר שניתן למכור את המוצר בו
     private float sellingPrice;
+    //המכיר שהמוצר נמכר בו!
+    private float thePriceBeenSoldAt=-1 ;
     private boolean isDefective = false;
     private int productID;
 
@@ -103,6 +105,13 @@ public class Item {
 
     public int getProductID(){
         return this.productID;
+    }
+    public float getThePriceBeenSoldAt() {
+        return thePriceBeenSoldAt;
+    }
+
+    public void setThePriceBeenSoldAt(float thePriceBeenSoldAt) {
+        this.thePriceBeenSoldAt = thePriceBeenSoldAt;
     }
 
 

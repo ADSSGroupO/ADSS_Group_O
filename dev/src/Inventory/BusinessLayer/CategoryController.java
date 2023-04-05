@@ -2,6 +2,7 @@ package dev.src.Inventory.BusinessLayer;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Dictionary;
 //Controller for category as singleton
@@ -47,6 +48,23 @@ public class CategoryController {
     }
     public float getCategoryDiscount(int categoryID){
         return categoryById.get(categoryID).getDiscount();
+    }
+
+    //get report about items in stock by category
+    public List<StringBuilder> getItemsInStockByCategory(List<Integer> categoryID){
+        StringBuilder item= new StringBuilder("Category Id :");
+        List<StringBuilder> report=new LinkedList<StringBuilder>();
+     for (int i=0; i<categoryID.size(); i++){
+         item.append(" ").append(i).append(" : ");
+         List<Product> products = productByCategory.get(i);
+         for (Product product : products) {
+             //Do we need to check the repeatability of a product?
+             item.append(product.getName()).append(" product makat - ").append(product.getMakat()).append(" : current amount : ").append(product.getCurrentAmount());
+         }
+         report.add(item);
+         item = new StringBuilder("Category Id :");
+     }
+        return report;
     }
 
 
