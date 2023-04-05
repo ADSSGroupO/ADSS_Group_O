@@ -47,6 +47,8 @@ public class ItemController {
                 //remove from product amount
                 productController.setProductAmountById(item.getProductID(),1);
             }
+            //update the price been sold
+            item.setThePriceBeenSoldAt((float) getDiscount(ItemID));
         }
         //get item
         public Item getItem(int CategoryID, int ItemID) {
