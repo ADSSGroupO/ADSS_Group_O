@@ -70,7 +70,7 @@ public class Product {
     }
 
     public void setCurrentAmount(int currentAmount) {
-        this.currentAmount = currentAmount;
+        this.currentAmount =- currentAmount;
     }
 
     public int getAmountInStore() {
@@ -78,7 +78,7 @@ public class Product {
     }
 
     public void setAmountInStore(int amountInStore) {
-        this.amountInStore = amountInStore;
+        this.amountInStore =- amountInStore;
     }
 
     public int getAmountInInventory() {
@@ -86,7 +86,7 @@ public class Product {
     }
 
     public void setAmountInInventory(int amountInInventory) {
-        this.amountInInventory = amountInInventory;
+        this.amountInInventory =- amountInInventory;
     }
 
     public int getCategory() {

@@ -28,8 +28,20 @@ public class ProductController {
         return instance;
     }
 
-    public void setProductAmountById(int productID, int amount) {
-        ProductById.get(productID).setCurrentAmount( ProductById.get(productID).getCurrentAmount()-amount);
+    public void setProductAmountById(int productID, int amount , Item.location locale) {
+        //ProductById.get(productID).setCurrentAmount( ProductById.get(productID).getCurrentAmount()-amount);
+        Product product =ProductById.get(productID);
+        product.reduceItems(amount);
+        switch (locale){
+            case STORE -> {
+                product.reduceItemsFromStore(1);
+                break;
+            }
+            case INVENTORY -> {
+                product.reduceItemsFromInventory(1);
+                break;
+            }
+        }
     }
     //add product with category
     public void addProduct(String name, int minAmount, int categoryID, int makat , int supplierID) {

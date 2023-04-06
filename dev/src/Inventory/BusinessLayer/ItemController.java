@@ -45,9 +45,10 @@ public class ItemController {
                 //remove from in store items
                 inStoreItems.get(CategoryID).remove(item);
                 //remove from product amount
-                productController.setProductAmountById(item.getProductID(),1);
+                productController.setProductAmountById(item.getProductID(),1 , Item.location.STORE);
             }
             //update the price been sold
+
             item.setThePriceBeenSoldAt((float) getDiscount(ItemID));
         }
         //get item
@@ -94,5 +95,32 @@ public class ItemController {
         else {
             return pricePerDiscountCategory;
         }
+    }
+
+    public void defective(List<Integer> items,List<Integer> CategoryIds){
+        for (Integer integer : items) {
+            Item item = itemById.get(integer);
+            item.setDefective(true);
+            for (int j = 0; j < CategoryIds.size(); j++) {
+                if (inStoreItems.get(j).contains(item)) {
+                    //add the item to sold items
+                    defectiveItems.get(j).add(item);
+                    //remove from in store items
+                    inStoreItems.get(j).remove(item);
+                    //remove from product amount
+                    productController.setProductAmountById(item.getProductID(), 1 , Item.location.STORE);
+                }
+                if (storageItems.get(j).contains(item)) {
+                    //add the item to sold items
+                    defectiveItems.get(j).add(item);
+                    //remove from in store items
+                    storageItems.get(j).remove(item);
+                    //remove from product amount
+                    productController.setProductAmountById(item.getProductID(), 1 , Item.location.INVENTORY);
+                }
+            }
+        }
+
+
     }
 }
