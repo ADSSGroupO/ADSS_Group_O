@@ -39,7 +39,7 @@ public class ItemService {
          return itemController.itemsInStock(categoryID);
      }
     /*Make item a Defective */
-    public void setDefectiveItems(List<Integer> items,List<Integer> CategoryIds) {
+    public void setDefectiveItems(Integer items,List<Integer> CategoryIds) {
         itemController.defective(items,CategoryIds);
 
     }
