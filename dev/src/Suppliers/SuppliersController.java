@@ -149,7 +149,7 @@ public class SuppliersController {
         System.out.println("Enter contact's name: ");
         String name = contact_input.nextLine();
         System.out.println("Enter phone number: ");
-        int phone = contact_input.nextInt();
+        String phone = contact_input.nextLine();
         supplier.addContact(name, phone);
     }
 
