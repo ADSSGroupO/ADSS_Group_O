@@ -8,6 +8,7 @@ public class ItemController {
     private static HashMap<Integer, List<Item>> storageItems = new HashMap<Integer,List<Item>>(); //storage items by category ID
     private static HashMap<Integer, List<Item>> inStoreItems = new HashMap<Integer,List<Item>>(); //in store items by category ID
     private static HashMap<Integer, List<Item>> defectiveItems = new HashMap<Integer, List<Item>>(); //defective items by category ID
+    private static HashMap<Integer, Item> expiredItems = new HashMap<Integer, Item>();
     private static ProductController productController = ProductController.getInstance();
     private CategoryController categoryController = CategoryController.getInstance();
     private static HashMap<Integer, Item> itemById = new HashMap<Integer, Item>();
@@ -97,9 +98,10 @@ public class ItemController {
         }
     }
 
-    public void defective(List<Integer> items,List<Integer> CategoryIds){
-        for (Integer integer : items) {
-            Item item = itemById.get(integer);
+    //change to one item at a time
+    public void defective(Integer DefItem,List<Integer> CategoryIds){
+
+            Item item = itemById.get(DefItem);
             item.setDefective(true);
             for (int j = 0; j < CategoryIds.size(); j++) {
                 if (inStoreItems.get(j).contains(item)) {
@@ -117,7 +119,7 @@ public class ItemController {
                     storageItems.get(j).remove(item);
                     //remove from product amount
                     productController.setProductAmountById(item.getProductID(), 1 , Item.location.INVENTORY);
-                }
+
             }
         }
 
