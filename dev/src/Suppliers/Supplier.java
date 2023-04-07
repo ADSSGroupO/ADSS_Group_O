@@ -1,7 +1,7 @@
 package Suppliers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public abstract class Supplier {
 
@@ -29,22 +29,30 @@ public abstract class Supplier {
     }
 
     // abstract method that returns the closest possible shipping date from supplier
-    public abstract Date getNextShippingDate();
+    public abstract LocalDate getNextShippingDate();
 
     // getters for the attributes of the class
     public int getPrivateCompanyNumber() {return this.supplier_id;}
     public String getName() {return this.supplier_name;}
     public int getBankAccount() {return this.bank_account;}
-
-    public ArrayList<Supply_Agreement> getAgreements() {return this.agreements;}
-
-    public ArrayList<DiscountByOrder> getOrderDiscounts() {return this.discountsByOrder;}
+    public ArrayList<Order> getOrdersHistory() {return ordersHistory;}
+    public ArrayList<DiscountByOrder> getDiscounts() {return discountsByOrder;}
 
     // function takes in information of new agreement, initializes it and adds the new agreement to list of agreements, and returns the agreement created
     public Supply_Agreement addAgreement (int code, double price, int catalog, int amount) {
         Supply_Agreement newAgreement = new Supply_Agreement(code, price, catalog, amount);
         agreements.add(newAgreement);
         return newAgreement;
+    }
+
+    // return specific agreement from list of agreements based on product code. if cant find, return null
+    public Supply_Agreement getAgreement (int product_code) {
+        for (int i = 0; i < agreements.size(); i++) {
+            if (agreements.get(i).getProductCode() == product_code) {
+                return agreements.get(i);
+            }
+        }
+        return null;
     }
 
     // remove agreement from list of agreements. if finds and deletes, return true. else, return false
@@ -58,9 +66,13 @@ public abstract class Supplier {
         return false;
     }
 
-    // add new order discount to list of discounts
-    public void addOrderDiscount(DiscountByOrder discount) {
+    // add new order discount to list of discounts. if argument is null, returns false. else, returns true
+    public boolean addOrderDiscount(DiscountByOrder discount) {
+        if (discount == null)
+            return false;
         discountsByOrder.add(discount);
+        return true;
+
     }
 
     // function takes in information of new order, initializes it, adds the new order to history of orders, and returns the order created
@@ -76,7 +88,7 @@ public abstract class Supplier {
     }
 
     // function takes in information of new contact, initializes it, adds the new contact to list of contacts, and returns the contact created
-    public Supplier_Contact addContact(String name, int phone) {
+    public Supplier_Contact addContact(String name, String phone) {
         Supplier_Contact contact = new Supplier_Contact(name, phone);
         contacts.add(contact);
         return contact;

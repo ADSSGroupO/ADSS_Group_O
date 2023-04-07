@@ -1,8 +1,7 @@
 package Suppliers;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Order {
@@ -11,7 +10,7 @@ public class Order {
     // was made, the supplier contact and the status of the order.
     private List<Order_Details_By_Product> ordered_products; // list of all the information of ordered products
     private int branch_code; // the destination branch of the order
-    private Date date; // the estimated date of delivery
+    private LocalDate date; // the estimated date of delivery
     private Supplier_Contact contact; // contact of the supplier
     private Status order_status; // the status of the order
     private double total_price; // the total cost of the order
@@ -58,16 +57,18 @@ public class Order {
 
     // getters for attributes
     public int getBranch() {return branch_code;}
-    public Date getDateOfOrder() {return date;}
+    public LocalDate getDateOfOrder() {return date;}
     public Supplier_Contact getContact() {return contact;}
     public Status getOrderStatus() {return order_status;}
+
+    public double getTotalPrice() {return total_price;}
 
     // function that takes in the order discounts of supplier's and applies best discount to order
     public void applyOrderDiscount(ArrayList<DiscountByOrder> discountsByOrder) {
         double price_before_discount = total_price;
         for (int i = 0; i < discountsByOrder.size(); i++) {
-            double newPrice = discountsByOrder.get(i).applyDiscount(total_price);
-            if (total_price < newPrice) {
+            double newPrice = discountsByOrder.get(i).applyDiscount(price_before_discount);
+            if (total_price > newPrice) {
                 total_price = newPrice;
                 orderDiscount = price_before_discount - newPrice;
             }
