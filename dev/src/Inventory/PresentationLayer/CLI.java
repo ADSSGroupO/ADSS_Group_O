@@ -39,7 +39,7 @@ public class CLI {
                 case 3 -> {
                     System.out.println("How many items do you want to add?");
                     int numOfItems = scanner.nextInt();
-                    if(numOfItems>1){
+                    if(numOfItems==1){
                         System.out.println("Enter item manufacturer");
                         String manufacturer = scanner.next();
                         System.out.println("Enter first item barcode");
@@ -48,16 +48,21 @@ public class CLI {
                         String name1 = scanner.next();
                         System.out.println("Enter item expiration date in the form of yyyy-mm-dd");
                         String expirationDate = scanner.next();
+                        LocalDate expiration = null;
+                        try {
+                            expiration = LocalDate.parse(expirationDate);
+                        } catch (Exception e) {
+                            System.out.println("Invalid date format try again from the beginning");
+                            start();
+                        }
                         System.out.println("Enter item cost price");
                         float costPrice = scanner.nextFloat();
-                        System.out.println("Enter item selling price");
-                        float sellingPrice = scanner.nextFloat();
                         System.out.println("Enter item category id");
                         int categoryID2 = scanner.nextInt();
                         System.out.println("Enter item product id");
                         int productID = scanner.nextInt();
                         for (int i = 0; i < numOfItems; i++) {
-                            serviceController.addItem(manufacturer, barcode, name1, LocalDate.parse(expirationDate), costPrice, sellingPrice, categoryID2, productID);
+                            serviceController.addItem(manufacturer, barcode, name1, expiration, costPrice, categoryID2, productID);
                             barcode++;
                             }
                     }
@@ -68,7 +73,7 @@ public class CLI {
                 case 4 -> {
                     System.out.println("Enter product id");
                     int productID1 = scanner.nextInt();
-                    System.out.println("Enter product demand");
+                    System.out.println("Enter product demand by how many items per day");
                     int demand = scanner.nextInt();
                     System.out.println("Enter how many days till supplier arrives");
                     int days = scanner.nextInt();
@@ -80,9 +85,9 @@ public class CLI {
                     int productID2 = scanner.nextInt();
                     System.out.println("Enter product discount");
                     float discount = scanner.nextFloat();
-                    System.out.println("Enter product start date");
+                    System.out.println("Enter product start date in the form of yyyy-mm-dd");
                     String start = scanner.next();
-                    System.out.println("Enter product end date");
+                    System.out.println("Enter product end date in the form of yyyy-mm-dd");
                     String end = scanner.next();
                     serviceController.setDiscountByProduct(productID2, discount, start, end);
                     System.out.println("Discount set successfully");
@@ -93,10 +98,10 @@ public class CLI {
                     System.out.println("Enter category discount");
                     float discount1 = scanner.nextFloat();
                     System.out.println("Enter category start date");
-                    String start1 = scanner.next();
+                    String start = scanner.next();
                     System.out.println("Enter category end date");
-                    String end1 = scanner.next();
-                    serviceController.setDiscountByCategory(categoryID2, discount1, start1, end1);
+                    String end = scanner.next();
+                    serviceController.setDiscountByCategory(categoryID2, discount1, start, end);
                     System.out.println("Discount set successfully");
                 }
                 case 7 -> {
@@ -104,7 +109,26 @@ public class CLI {
                     int categoryID3 = scanner.nextInt();
                     serviceController.getProductsByCategory(categoryID3);
                 }
-                case 8 -> System.exit(0);
+                case 8 -> {
+                    serviceController.getExpiredReport();
+                }
+                case 9 -> {
+                    System.out.println("Enter how many days till expiration");
+                    int days = scanner.nextInt();
+                    serviceController.getToBeExpiredReport(days);
+                }
+                case 10 -> {
+                    serviceController.getDefectiveReport();
+                }
+                case 11 -> {
+                    System.out.println("Enter how often to get defective report");
+                    int days = scanner.nextInt();
+                    serviceController.setDefectiveReport(days);
+                }
+                case 12 -> {
+                    serviceController.getInventoryReport();
+                }
+                case 13 -> System.exit(0);
             }
 }
         while (choice != 8);
@@ -118,7 +142,12 @@ public class CLI {
         System.out.println("5. Set discount by product");
         System.out.println("6. Set discount by category");
         System.out.println("7. Get products by category");
-        System.out.println("8. Exit");
+        System.out.println("8. Get expired report");
+        System.out.println("9. Get to be expired report");
+        System.out.println("10. Get defective report");
+        System.out.println("11. Set how often to get defective report");
+        System.out.println("12. Get inventory report");
+        System.out.println("13. Exit");
     }
     public void addItem(){
         System.out.println("Enter item manufacturer");
@@ -129,15 +158,20 @@ public class CLI {
         String name1 = scanner.next();
         System.out.println("Enter item expiration date in the form of yyyy-mm-dd");
         String expirationDate = scanner.next();
+        LocalDate expiration = null;
+        try {
+            expiration = LocalDate.parse(expirationDate);
+        } catch (Exception e) {
+            System.out.println("Invalid date format try again from the beginning");
+            start();
+        }
         System.out.println("Enter item cost price");
         float costPrice = scanner.nextFloat();
-        System.out.println("Enter item selling price");
-        float sellingPrice = scanner.nextFloat();
         System.out.println("Enter item category id");
         int categoryID2 = scanner.nextInt();
         System.out.println("Enter item product id");
         int productID = scanner.nextInt();
-        serviceController.addItem(manufacturer, barcode, name1, LocalDate.parse(expirationDate), costPrice, sellingPrice, categoryID2, productID);
+        serviceController.addItem(manufacturer, barcode, name1, expiration, costPrice, categoryID2, productID);
         System.out.println("Item added successfully");
     }
 }

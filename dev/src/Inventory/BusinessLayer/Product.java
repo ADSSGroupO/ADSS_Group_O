@@ -138,11 +138,18 @@ public class Product {
 
 
     public float getDiscount() {
+        if(startDiscount == null || endDiscount == null)
+            return 0;
         LocalDate now = LocalDate.now();
-        if(now.isBefore(startDiscount) && now.isAfter(endDiscount))
+        if(now.isBefore(endDiscount) && now.isAfter(startDiscount))
             return discount;
         else
             return 0;
 
     }
+
+    public String toString(){
+        return "Product name: "+name+" Product id: "+makat;
+    }
+
 }

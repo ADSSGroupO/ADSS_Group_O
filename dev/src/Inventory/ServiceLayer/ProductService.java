@@ -1,5 +1,8 @@
 package dev.src.Inventory.ServiceLayer;
+import dev.src.Inventory.BusinessLayer.Product;
 import dev.src.Inventory.BusinessLayer.ProductController;
+
+import java.util.ArrayList;
 
 public class ProductService {
     //connect to ProductController controller
@@ -27,8 +30,9 @@ public class ProductService {
     }
 
     //getProductsByCategory
-    public void getProductsByCategory(int categoryID){
-        productController.getProductsByCategory(categoryID);
+    public ArrayList<Product> getProductsByCategory(int categoryID){
+        ArrayList<Product> products = (ArrayList<Product>) productController.getProductsByCategory(categoryID);
+        return products;
     }
 
 
