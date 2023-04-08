@@ -112,7 +112,6 @@ public class Item {
     public void setDefective(String defDescription) {
         this.defDescription = defDescription;
         isDefective = true;
-
     }
     /**
      * check if the item is expired
