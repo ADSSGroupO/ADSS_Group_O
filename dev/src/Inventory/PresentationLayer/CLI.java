@@ -142,7 +142,7 @@ public class CLI {
         System.out.println("6. Set discount by category");
         System.out.println("7. Get products by category");
         System.out.println("8. Get expired report");
-        System.out.println("9. Get to be expired report");
+        System.out.println("9. Get set to be expired report");
         System.out.println("10. Get defective report");
         System.out.println("11. Set how often to get defective report");
         System.out.println("12. Get inventory report");
