@@ -4,6 +4,7 @@ import dev.src.Inventory.BusinessLayer.Item;
 import dev.src.Inventory.BusinessLayer.ItemController;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemService {
@@ -14,8 +15,8 @@ public class ItemService {
         this.itemController = ItemController.getInstance();
     }
     // AddItem(Place:string,Manufacturer:string ,Integer c )
-    public void addItem(String manufacturer , Integer barcode, String name, LocalDate expirationDate, float costPrice , float sellingPrice, int category, int productID) {
-        itemController.addItem( manufacturer, barcode, name, expirationDate, costPrice, sellingPrice ,category,productID);
+    public void addItem(String manufacturer , Integer barcode, String name, LocalDate expirationDate, double costPrice , int category, int productID) {
+        itemController.addItem( manufacturer, barcode, name, expirationDate, costPrice ,category,productID);
     }
 
     // getItem(ID: int ,barcode: int)
@@ -35,7 +36,7 @@ public class ItemService {
     }
     //return a list of items in stock (both at store and storage)
     /*I think that this function not needed any more. what do you say?*/
-     public List<Item> getItemsInStock(int categoryID) {
+     public ArrayList<Item> getItemsInStock(int categoryID) {
          return itemController.itemsInStock(categoryID);
      }
     /*Make item a Defective */
@@ -44,5 +45,32 @@ public class ItemService {
 
     }
 
+    public void setDaysToReport(int days){
+        itemController.setDaysToReport(days);
+    }
 
+
+    public void getExpiredReport() {
+        itemController.getExpiredReport();
+    }
+
+    public void getToBeExpiredReport(int days) {
+        itemController.getToBeExpiredReport(days);
+    }
+
+    public void getDefectiveReport() {
+        itemController.getDefectiveReport();
+    }
+
+    public void getInventoryReport() {
+        itemController.getInventoryReport();
+    }
+
+    public ArrayList<Item> getItemsInStore() {
+        return itemController.getItemsInStore();
+    }
+
+    public double getPrice(int barcode) {
+        return itemController.getPrice(barcode);
+    }
 }

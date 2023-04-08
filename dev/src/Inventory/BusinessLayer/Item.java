@@ -10,23 +10,40 @@ public class Item {
     private boolean isExpired = false;
     private LocalDate expirationDate;
     //המחיר ששילמנו על המוצר מהספק
-    private float costPrice;
-    //המחיר שניתן למכור את המוצר בו
-    private float sellingPrice;
-    //המכיר שהמוצר נמכר בו!
-    private float thePriceBeenSoldAt=-1 ;
+    private double costPrice;
+    //המחיר שעלה המוצר
+    private double sellingPrice;
+    //המחיר שהמוצר נמכר בו!
+    private double thePriceBeenSoldAt=-1 ;
     private boolean isDefective = false;
-    private int productID;
+    private final int productID;
+    private final int barcode;
 
 
-    public Item(String producer, String name, location currentLocation, LocalDate expirationDate, float costPrice, float sellingPrice, int productID) {
+    public Item(String producer,int barcode, String name, location currentLocation, LocalDate expirationDate, double costPrice, int productID) {
         this.producerID = producer;
         this.name = name;
         this.currentLocation = currentLocation;
         this.expirationDate = expirationDate;
         this.costPrice = costPrice;
         this.productID = productID;
+        this.barcode = barcode;
+        this.sellingPrice = costPrice*(1.17+0.2);
     }
+@Override
+    public String toString(){
+        String categoryString = "";
+        String productString = "";
+        try {
+            Category category = CategoryController.getInstance().getCategoryByProductID(productID);
+            categoryString = category.toString();
+            Product product = ProductController.getInstance().getProductById(productID);
+            productString = product.toString();
+        } catch (IllegalArgumentException e) {
+            // handle the exception or log an error message
+        }
+        return "producer: " + producerID + " name: " + name + " currentLocation: " + currentLocation + " isExpired: " + isExpired + " expirationDate: " + expirationDate + " costPrice: " + costPrice + " sellingPrice: " + sellingPrice + " isDefective: " + isDefective + " productID: " + productID + " category: " + categoryString + " product: " + productString;
+}
 
     public String getProducer() {
         return producerID;
@@ -48,11 +65,11 @@ public class Item {
         return expirationDate;
     }
 
-    public float getCostPrice() {
+    public double getCostPrice() {
         return costPrice;
     }
 
-    public float getSellingPrice() {
+    public double getSellingPrice() {
         return sellingPrice;
     }
 
@@ -106,13 +123,23 @@ public class Item {
     public int getProductID(){
         return this.productID;
     }
-    public float getThePriceBeenSoldAt() {
+    public double getThePriceBeenSoldAt() {
         return thePriceBeenSoldAt;
     }
 
-    public void setThePriceBeenSoldAt(float thePriceBeenSoldAt) {
+    public void setThePriceBeenSoldAt(double thePriceBeenSoldAt) {
         this.thePriceBeenSoldAt = thePriceBeenSoldAt;
     }
 
+    public int getBarcode(){
+        return this.barcode;
+    }
 
+    public void setSellingPrice(double sellingPrice) {
+        this.sellingPrice = sellingPrice;
+    }
+
+    public double getPrice(){
+        return this.sellingPrice;
+    }
 }

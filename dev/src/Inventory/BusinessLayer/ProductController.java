@@ -6,19 +6,16 @@ import java.util.*;
 //product controller as a singleton
 public class ProductController {
 
-    CategoryController categoryController = CategoryController.getInstance();
-    private static HashMap<Integer,List<Category>> categoryByProduct = new HashMap<Integer,List<Category>>();//dictionary contains the category by product
-
-    public Product getProductById(Integer productId) {
-        return ProductById.get(productId);
-    }
-
+    private final CategoryController categoryController;
+    private static HashMap<Integer,List<Category>> categoryByProduct = new HashMap<Integer,List<Category>>();//ToDo: are we sure that product has more than one category?
     private static HashMap<Integer, Product> ProductById = new HashMap<Integer, Product>();
   //  private Dictionary<Integer, List<Item>> itemByProduct;
     private static ProductController instance = null;
+    private static ArrayList<Product> products = new ArrayList<Product>();
+    private static ArrayList<Category> categories = new ArrayList<Category>();
 
-
-    public ProductController() {
+    private ProductController() {
+        categoryController = CategoryController.getInstance();
     }
 
     public static ProductController getInstance() {
@@ -26,6 +23,9 @@ public class ProductController {
             instance = new ProductController();
         }
         return instance;
+    }
+    public Product getProductById(Integer productId) {
+        return ProductById.get(productId);
     }
 
     public void setProductAmountById(int productID, int amount , Item.location locale) {
@@ -45,13 +45,14 @@ public class ProductController {
     }
     //add product with category
     public void addProduct(String name, int minAmount, int categoryID, int makat , int supplierID) {
+        if(ProductById.containsKey(makat)){
+            System.out.println("product ID already exist");
+            throw new IllegalArgumentException("product ID already exist");
+        }
         Product product = new Product(name, minAmount, categoryID, makat , supplierID);
-        List<Product> products = new LinkedList<Product>();
         products.add(product);
         Category category = new Category(name,categoryID);
-        List<Category> categories = new LinkedList<Category>();
         //add to product by id dictionary
-
         ProductById.put(makat,product);
         //add to product by category dictionary
         categoryController.addProductByCategory(products,categoryID);
@@ -63,7 +64,7 @@ public class ProductController {
         return ProductById.get(productID);
     }
     //get product by category
-    public List<Product> getProductsByCategory(int categoryID){
+    public ArrayList<Product> getProductsByCategory(int categoryID){
         return categoryController.getProductsByCategory(categoryID);
     }
 
@@ -83,5 +84,9 @@ public class ProductController {
     //get product discount
     public float getProductDiscount(int productID){
         return ProductById.get(productID).getDiscount();
+    }
+    //get the hash map of product by ID
+    public HashMap<Integer, Product> getProductById() {
+        return ProductById;
     }
 }
