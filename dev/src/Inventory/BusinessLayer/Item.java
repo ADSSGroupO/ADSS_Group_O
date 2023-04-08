@@ -18,6 +18,8 @@ public class Item {
     private boolean isDefective = false;
     private final int productID;
     private final int barcode;
+    private String defDescription;
+
 
 
     public Item(String producer,int barcode, String name, location currentLocation, LocalDate expirationDate, double costPrice, int productID) {
@@ -42,6 +44,8 @@ public class Item {
         } catch (IllegalArgumentException e) {
             // handle the exception or log an error message
         }
+        if(isDefective)
+            return "producer: " + producerID + " name: " + name + " currentLocation: " + currentLocation + " isExpired: " + isExpired + " expirationDate: " + expirationDate + " costPrice: " + costPrice + " sellingPrice: " + sellingPrice + " isDefective: " + isDefective + " defDescription: " + defDescription + " productID: " + productID + " category: " + categoryString + " product: " + productString;
         return "producer: " + producerID + " name: " + name + " currentLocation: " + currentLocation + " isExpired: " + isExpired + " expirationDate: " + expirationDate + " costPrice: " + costPrice + " sellingPrice: " + sellingPrice + " isDefective: " + isDefective + " productID: " + productID + " category: " + categoryString + " product: " + productString;
 }
 
@@ -105,8 +109,10 @@ public class Item {
         this.sellingPrice = sellingPrice;
     }
 
-    public void setDefective(boolean defective) {
-        isDefective = defective;
+    public void setDefective(String defDescription) {
+        this.defDescription = defDescription;
+        isDefective = true;
+
     }
     /**
      * check if the item is expired

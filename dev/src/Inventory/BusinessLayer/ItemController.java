@@ -173,33 +173,28 @@ public class ItemController {
     }
 
     //change to one item at a time
-    public void defective(Integer DefItem, List<Integer> CategoryIds) {
-
+    public void defective(Integer DefItem, int CategoryId, String reason) {
         Item item = itemById.get(DefItem);
-        item.setDefective(true);
-        for (int j = 0; j < CategoryIds.size(); j++) {
-            if (inStoreItems.get(j).contains(item)) {
+            if (inStoreItems.get(CategoryId).contains(item)) {
                 //add the item to sold items
-                defectiveItems.get(j).add(item);
+                defectiveItems.get(CategoryId).add(item);
                 //remove from in store items
-                inStoreItems.get(j).remove(item);
+                inStoreItems.get(CategoryId).remove(item);
                 //remove from product amount
                 productController.setProductAmountById(item.getProductID(), 1, Item.location.STORE);
             }
-            if (storageItems.get(j).contains(item)) {
+            if (storageItems.get(CategoryId).contains(item)) {
                 //add the item to sold items
-                defectiveItems.get(j).add(item);
+                defectiveItems.get(CategoryId).add(item);
                 //remove from in store items
-                storageItems.get(j).remove(item);
+                storageItems.get(CategoryId).remove(item);
                 //remove from product amount
                 productController.setProductAmountById(item.getProductID(), 1, Item.location.INVENTORY);
-
-            }
         }
     }
 
     //get all defective items
-    public List<Item> getDefectiveItems(int CategoryID) {
+    public ArrayList<Item> getDefectiveItems(int CategoryID) {
         return defectiveItems.get(CategoryID);
     }
 
