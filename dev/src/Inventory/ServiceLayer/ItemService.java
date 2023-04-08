@@ -40,9 +40,8 @@ public class ItemService {
          return itemController.itemsInStock(categoryID);
      }
     /*Make item a Defective */
-    public void setDefectiveItems(Integer items,List<Integer> CategoryIds) {
-        itemController.defective(items,CategoryIds);
-
+    public void setDefectiveItems(Integer items,int categoryId, String reason){
+        itemController.defective(items,categoryId, reason);
     }
 
     public void setDaysToReport(int days){
