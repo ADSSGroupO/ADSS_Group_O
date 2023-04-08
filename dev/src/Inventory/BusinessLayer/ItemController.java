@@ -4,22 +4,21 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 //controller for items as singleton
 public class ItemController {
-    private static HashMap<Integer, ArrayList<Item>> soldItems = new HashMap<Integer, ArrayList<Item>>(); //sold items by category ID
-    private static HashMap<Integer, ArrayList<Item>> storageItems = new HashMap<Integer, ArrayList<Item>>(); //storage items by category ID
-    private static HashMap<Integer, ArrayList<Item>> inStoreItems = new HashMap<Integer, ArrayList<Item>>(); //in store items by category ID
-    private static HashMap<Integer, ArrayList<Item>> defectiveItems = new HashMap<Integer, ArrayList<Item>>(); //defective items by category ID
-    private static ArrayList<Item> items = new ArrayList<Item>(); //all items
-    private static HashMap<Integer, Item> expiredItems = new HashMap<Integer, Item>();
+    private static HashMap<Integer, ArrayList<Item>> soldItems = new HashMap<>(); //sold items by category ID
+    private static HashMap<Integer, ArrayList<Item>> storageItems = new HashMap<>(); //storage items by category ID
+    private static HashMap<Integer, ArrayList<Item>> inStoreItems = new HashMap<>(); //in store items by category ID
+    private static HashMap<Integer, ArrayList<Item>> defectiveItems = new HashMap<>(); //defective items by category ID
+    private static ArrayList<Item> items = new ArrayList<>(); //all items
+    private static HashMap<Integer, Item> expiredItems = new HashMap<>();
     private final ProductController productController;
     private final CategoryController categoryController;
-    private static HashMap<Integer, Item> itemById = new HashMap<Integer, Item>();
+    private static HashMap<Integer, Item> itemById = new HashMap<>();
     private static ItemController instance = null;
     private LocalDate lastReportDate;
     private static int DAYS_TO_Report = 7;
@@ -30,13 +29,8 @@ public class ItemController {
         categoryController = CategoryController.getInstance();
         this.lastReportDate = LocalDate.now();
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                //check for expired items
-                checkForExpiredItems();
-            }
-        }, 0, 1, TimeUnit.DAYS);
+        //check for expired items
+        scheduler.scheduleAtFixedRate(this::checkForExpiredItems, 0, 1, TimeUnit.DAYS);
     }
 
     private void checkForExpiredItems() {
@@ -59,7 +53,7 @@ public class ItemController {
             System.out.println("No expired items");
             return;
         }
-        ArrayList<Item> expiredItemsList = new ArrayList<Item>(expiredItems.values());
+        ArrayList<Item> expiredItemsList = new ArrayList<>(expiredItems.values());
         for (Item item : expiredItemsList) {
             System.out.println(item.toString());
         }
@@ -92,7 +86,7 @@ public class ItemController {
             storageItems.get(category).add(item);
         }
         else{
-            ArrayList<Item> items = new ArrayList<Item>();
+            ArrayList<Item> items = new ArrayList<>();
             items.add(item);
             storageItems.put(category, items);
         }
@@ -104,7 +98,7 @@ public class ItemController {
     //sold item
     public void itemSold(int CategoryID, int ItemID) {
         //check if there are sold item from the same category
-        soldItems.computeIfAbsent(CategoryID, k -> new ArrayList<Item>());
+        soldItems.computeIfAbsent(CategoryID, k -> new ArrayList<>());
         //get item from storage
         //add to sold items
         //remove from storage
@@ -143,7 +137,7 @@ public class ItemController {
     //+ItemsInStock()
     public ArrayList<Item> itemsInStock(int CategoryID) {
         //get all items from storage
-        ArrayList<Item> items = new ArrayList<Item>();
+        ArrayList<Item> items = new ArrayList<>();
         if(storageItems.get(CategoryID)!=null){
             items.addAll(storageItems.get(CategoryID));
         }
@@ -156,7 +150,7 @@ public class ItemController {
 
     public void moveItemToStore(int categoryID, int itemID) {
         //check if there are items in this category in store
-        inStoreItems.computeIfAbsent(categoryID, k -> new ArrayList<Item>());
+        inStoreItems.computeIfAbsent(categoryID, k -> new ArrayList<>());
         Item item = itemById.get(itemID);
         if (storageItems.get(categoryID).contains(item)) {
             //add the item to in store items
@@ -210,7 +204,7 @@ public class ItemController {
     }
 
     public void getToBeExpiredReport(int days) {
-        ArrayList<Item> allItems = new ArrayList<Item>();
+        ArrayList<Item> allItems = new ArrayList<>();
         if(inStoreItems.isEmpty() && storageItems.isEmpty()){
             System.out.println("No items in Inventory");
             return;
@@ -279,7 +273,7 @@ public class ItemController {
     }
 
     public ArrayList<Item> getItemsInStore() {
-        ArrayList<Item> items = new ArrayList<Item>();
+        ArrayList<Item> items = new ArrayList<>();
         for (int i = 0; i < inStoreItems.size(); i++) {
             items.addAll(inStoreItems.get(i));
         }
@@ -310,12 +304,12 @@ public class ItemController {
             return item.getSellingPrice();
         }
         else{
-            if(pricePerDiscountCategory == 0 && pricePerDiscountProduct != 0){
+            if(pricePerDiscountCategory == 0){
                 if(item.isDefective())
                     return Math.min(pricePerDiscountProduct, item.getSellingPrice() * 0.5);
                 return pricePerDiscountProduct;
             }
-            else if(pricePerDiscountCategory != 0 && pricePerDiscountProduct == 0){
+            else if(pricePerDiscountProduct == 0){
                 if(item.isDefective())
                     return Math.min(pricePerDiscountCategory, item.getSellingPrice() * 0.5);
                 return pricePerDiscountCategory;
