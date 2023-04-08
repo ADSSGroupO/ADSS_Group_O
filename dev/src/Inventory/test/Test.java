@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -161,4 +160,16 @@ class Test {
         assertEquals(0.85*(i.getPrice()), service.getPrice(i.getBarcode()));
     }
 
+//    @org.junit.jupiter.api.Test
+//    void getInventoryReport() {
+//        ServiceController service = ServiceController.getInstance();
+////        StringBuilder sb = new StringBuilder();
+////        ArrayList<Item> items = service.getItemsInStock(0);
+////        for (Item i : items) {
+////            sb.append(i.toString());
+////    }
+////        assertEquals(sb.toString(), service.getInventoryReport());
+////    }
+//        service.getInventoryReport();
+//    }
 }

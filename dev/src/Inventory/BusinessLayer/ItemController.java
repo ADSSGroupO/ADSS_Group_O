@@ -55,6 +55,10 @@ public class ItemController {
     }
 
     private void publishExpiredReport() {
+        if(expiredItems.isEmpty()){
+            System.out.println("No expired items");
+            return;
+        }
         ArrayList<Item> expiredItemsList = new ArrayList<Item>(expiredItems.values());
         for (Item item : expiredItemsList) {
             System.out.println(item.toString());
@@ -207,15 +211,21 @@ public class ItemController {
 
     public void getToBeExpiredReport(int days) {
         ArrayList<Item> allItems = new ArrayList<Item>();
-        for (int i = 0; i < inStoreItems.size(); i++) {
-            allItems.addAll(inStoreItems.get(i));
-        }
-        for (int i = 0; i < storageItems.size(); i++) {
-            allItems.addAll(storageItems.get(i));
+        if(inStoreItems.isEmpty() && storageItems.isEmpty()){
+            System.out.println("No items in Inventory");
+            return;
+        } else if (inStoreItems.isEmpty()) {
+            for (int i = 0; i < storageItems.size(); i++) {
+                allItems.addAll(storageItems.get(i));
+            }
+        } else if (storageItems.isEmpty()) {
+            for (int i = 0; i < inStoreItems.size(); i++) {
+                allItems.addAll(inStoreItems.get(i));
+            }
         }
         for (Item allItem : allItems) {
             if (allItem.getExpirationDate().isBefore(LocalDate.now().plusDays(days))) {
-                System.out.println(allItem.toString());
+                System.out.println(allItem);
             }
         }
 
@@ -234,10 +244,15 @@ public class ItemController {
     }
 
     private void publishDefectiveReport() {
-        Collection<ArrayList<Item>> defectiveItemsList = defectiveItems.values();
-        for (ArrayList<Item> item : defectiveItemsList) {
-            for (Item value : item) {
-                System.out.println(value.toString());
+        if(defectiveItems.isEmpty()){
+            System.out.println("No defective items");
+        }
+        else{
+            Collection<ArrayList<Item>> defectiveItemsList = defectiveItems.values();
+            for (ArrayList<Item> item : defectiveItemsList) {
+                for (Item value : item) {
+                    System.out.println(value.toString());
+                }
             }
         }
     }
