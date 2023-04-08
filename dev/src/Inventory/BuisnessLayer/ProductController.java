@@ -7,7 +7,7 @@ import java.util.List;
 //product controller as a singleton
 public class ProductController {
 
-    CategoryController categoryController;
+    private CategoryController categoryController;
     private Dictionary<Integer,List<Category>> categoryByProduct;//dictionary contains the category by product
 
     public Product getProductById(Integer productId) {
