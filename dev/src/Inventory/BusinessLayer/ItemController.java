@@ -10,15 +10,15 @@ import java.util.concurrent.TimeUnit;
 
 //controller for items as singleton
 public class ItemController {
-    private static HashMap<Integer, ArrayList<Item>> soldItems = new HashMap<>(); //sold items by category ID
-    private static HashMap<Integer, ArrayList<Item>> storageItems = new HashMap<>(); //storage items by category ID
-    private static HashMap<Integer, ArrayList<Item>> inStoreItems = new HashMap<>(); //in store items by category ID
-    private static HashMap<Integer, ArrayList<Item>> defectiveItems = new HashMap<>(); //defective items by category ID
-    private static ArrayList<Item> items = new ArrayList<>(); //all items
-    private static HashMap<Integer, Item> expiredItems = new HashMap<>();
+    private static final HashMap<Integer, ArrayList<Item>> soldItems = new HashMap<>(); //sold items by category ID
+    private static final HashMap<Integer, ArrayList<Item>> storageItems = new HashMap<>(); //storage items by category ID
+    private static final HashMap<Integer, ArrayList<Item>> inStoreItems = new HashMap<>(); //in store items by category ID
+    private static final HashMap<Integer, ArrayList<Item>> defectiveItems = new HashMap<>(); //defective items by category ID
+    private static final ArrayList<Item> items = new ArrayList<>(); //all items
+    private static final HashMap<Integer, Item> expiredItems = new HashMap<>();
     private final ProductController productController;
     private final CategoryController categoryController;
-    private static HashMap<Integer, Item> itemById = new HashMap<>();
+    private static final HashMap<Integer, Item> itemById = new HashMap<>();
     private static ItemController instance = null;
     private LocalDate lastReportDate;
     private static int DAYS_TO_Report = 7;
