@@ -109,26 +109,25 @@ public class CLI {
                     int categoryID3 = scanner.nextInt();
                     serviceController.getProductsByCategory(categoryID3);
                 }
-                case 8 -> {
-                    serviceController.getExpiredReport();
-                }
+                case 8 -> serviceController.getExpiredReport();
                 case 9 -> {
                     System.out.println("Enter how many days till expiration");
                     int days = scanner.nextInt();
                     serviceController.getToBeExpiredReport(days);
                 }
-                case 10 -> {
-                    serviceController.getDefectiveReport();
-                }
+                case 10 -> serviceController.getDefectiveReport();
                 case 11 -> {
                     System.out.println("Enter how often to get defective report");
                     int days = scanner.nextInt();
                     serviceController.setDefectiveReport(days);
                 }
-                case 12 -> {
-                    serviceController.getInventoryReport();
-                }
+                case 12 -> serviceController.getInventoryReport();
                 case 13 -> System.exit(0);
+                default -> {
+                    System.out.println("Unexpected value: " + choice);
+                    System.out.println("Please try again");
+                    start();
+                }
             }
 }
         while (choice != 8);
