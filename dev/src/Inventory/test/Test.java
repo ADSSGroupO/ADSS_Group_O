@@ -140,4 +140,6 @@ class TestServiceController {
         assertEquals(5, service.getAmountOfProduct(4));
         assertEquals(8, service.getAmountOfProduct(5));
     }
+
+
 }
