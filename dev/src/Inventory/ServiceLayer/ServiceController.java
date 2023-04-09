@@ -27,7 +27,7 @@ public class ServiceController {
     }
 
     ///////////////////////////ItemService/////////////////////////////
-    public Boolean addItem(String manufacturer, Integer barcode, String name, LocalDate expirationDate, double costPrice,int category, int productID) {
+    public Boolean addItem(String manufacturer, Integer barcode, String name, String expirationDate, double costPrice,int category, int productID) {
         try{
             itemService.addItem(manufacturer, barcode, name, expirationDate, costPrice, category, productID);
         } catch (Exception e) {
@@ -118,5 +118,70 @@ public class ServiceController {
 
     public ArrayList<Item> getItemsInStore() {
         return itemService.getItemsInStore();
+    }
+
+    public int getAmountOfProduct(int productID) {
+        return productService.getAmountOfProduct(productID);
+    }
+
+    public void setDiscountBySupplier(int supplierID, int productID, Double discount) {
+        productService.setDiscountBySupplier(supplierID, productID, discount);
+    }
+
+    public ArrayList<Double> getDiscountsByProductId(int productID) {
+        return productService.getDiscountsByProductId(productID);
+    }
+
+    public void addData() {
+        String expirationDateStr = "2023-12-31";
+        this.addCategory("Dairy products", 0);
+        this.addCategory("Meat products", 1);
+        this.addCategory("Housewares", 2);
+        this.addProduct("Milk", 5, 0, 0, 0);
+        this.addProduct("Cheese", 2, 0, 1, 0);
+        this.addProduct("Salami", 2, 1, 2, 0);
+        this.addProduct("Beef Fillet ", 2, 1, 3, 0);
+        this.addProduct("Broom", 2, 2, 4, 0);
+        this.addProduct("Pot", 2, 2, 5, 0);
+        this.addItem("Tnuva", 0, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        this.addItem("Tnuva", 1, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        this.addItem("Tnuva", 2, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        this.addItem("Tnuva", 3, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        this.addItem("Tnuva", 4, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        this.addItem("Tnuva", 5, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        this.addItem("Tnuva", 6, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        this.addItem("Tnuva", 7, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        this.addItem("Tnuva", 8, "Cheese 3%", expirationDateStr, 10, 0, 1);
+        this.addItem("Tnuva", 9, "Cheese 3%", expirationDateStr, 10, 0, 1);
+        this.addItem("Tnuva", 10, "Cheese 3%", expirationDateStr, 10, 0, 1);
+        this.addItem("Tnuva", 11, "Cheese 3%", expirationDateStr, 10, 0, 1);
+        this.addItem("Tnuva", 12, "Cheese 3%", expirationDateStr, 10, 0, 1);
+        this.addItem("Tnuva", 13, "Cheese 3%", expirationDateStr, 10, 0, 1);
+        this.addItem("Zoglobek", 14, "Salami 5%", expirationDateStr, 15, 1, 2);
+        this.addItem("Zoglobek", 15, "Salami 5%", expirationDateStr, 15, 1, 2);
+        this.addItem("Zoglobek", 16, "Salami 5%", expirationDateStr, 15, 1, 2);
+        this.addItem("Zoglobek", 17, "Salami 5%", expirationDateStr, 15, 1, 2);
+        this.addItem("Zoglobek", 18, "Salami 5%", expirationDateStr, 15, 1, 2);
+        this.addItem("Zoglobek", 19, "Salami 5%", expirationDateStr, 15, 1, 2);
+        this.addItem("Havat HaBokrim", 20, "Beef Fillet", expirationDateStr, 100, 1, 3);
+        this.addItem("Havat HaBokrim", 21, "Beef Fillet", expirationDateStr, 100, 1, 3);
+        this.addItem("Havat HaBokrim", 22, "Beef Fillet", expirationDateStr, 100, 1, 3);
+        this.addItem("Havat HaBokrim", 23, "Beef Fillet", expirationDateStr, 100, 1, 3);
+        this.addItem("Havat HaBokrim", 24, "Beef Fillet", expirationDateStr, 100, 1, 3);
+        this.addItem("Havat HaBokrim", 25, "Beef Fillet", expirationDateStr, 100, 1, 3);
+        this.addItem("Havat HaBokrim", 26, "Beef Fillet", expirationDateStr, 100, 1, 3);
+        this.addItem("Soltam", 27, "Pot 1L", null, 55, 2, 4);
+        this.addItem("Soltam", 28, "Pot 1L", null, 55, 2, 4);
+        this.addItem("Soltam", 29, "Pot 0.5L", null, 55, 2, 4);
+        this.addItem("Soltam", 30, "Pot 0.5L", null, 55, 2, 4);
+        this.addItem("Soltam", 31, "Pot 0.5L", null, 55, 2, 4);
+        this.addItem("Ruhama", 32, "Broom", null, 15, 2, 5);
+        this.addItem("Ruhama", 33, "Broom", null, 15, 2, 5);
+        this.addItem("Ruhama", 34, "Broom", null, 15, 2, 5);
+        this.addItem("Ruhama", 35, "Broom", null, 15, 2, 5);
+        this.addItem("Ruhama", 36, "Broom", null, 15, 2, 5);
+        this.addItem("Ruhama", 37, "Broom", null, 15, 2, 5);
+        this.addItem("Ruhama", 38, "Broom", null, 15, 2, 5);
+        this.addItem("Ruhama", 39, "Broom", null, 15, 2, 5);
     }
 }

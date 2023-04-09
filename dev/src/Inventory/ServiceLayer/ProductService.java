@@ -36,4 +36,15 @@ public class ProductService {
     }
 
 
+    public int getAmountOfProduct(int productID) {
+        return productController.getAmountOfProduct(productID);
+    }
+
+    public void setDiscountBySupplier(int supplierID, int productID, Double discount) {
+        productController.setDiscountBySupplier(supplierID, productID, discount);
+    }
+
+    public ArrayList<Double> getDiscountsByProductId(int productID) {
+        return productController.getDiscountsByProductId(productID);
+    }
 }

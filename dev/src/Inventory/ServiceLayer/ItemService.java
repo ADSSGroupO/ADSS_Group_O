@@ -15,7 +15,7 @@ public class ItemService {
         this.itemController = ItemController.getInstance();
     }
     // AddItem(Place:string,Manufacturer:string ,Integer c )
-    public void addItem(String manufacturer , Integer barcode, String name, LocalDate expirationDate, double costPrice , int category, int productID) {
+    public void addItem(String manufacturer , Integer barcode, String name, String expirationDate, double costPrice , int category, int productID) {
         itemController.addItem( manufacturer, barcode, name, expirationDate, costPrice ,category,productID);
     }
 

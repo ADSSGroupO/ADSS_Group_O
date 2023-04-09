@@ -28,7 +28,7 @@ public class ProductController {
         return ProductById.get(productId);
     }
 
-    public void setProductAmountById(int productID, int amount , Item.location locale) {
+    public void reduceAmountOfProductByID(int productID, int amount , Item.location locale) {
         //ProductById.get(productID).setCurrentAmount( ProductById.get(productID).getCurrentAmount()-amount);
         Product product =ProductById.get(productID);
         product.reduceItems(amount);
@@ -48,6 +48,10 @@ public class ProductController {
         if(ProductById.containsKey(makat)){
             System.out.println("product ID already exist");
             throw new IllegalArgumentException("product ID already exist");
+        }
+        if(categoryController.getCategoryById(categoryID)==null){
+            System.out.println("category ID not exist");
+            throw new IllegalArgumentException("category ID not exist");
         }
         Product product = new Product(name, minAmount, categoryID, makat , supplierID);
         products.add(product);
@@ -88,5 +92,21 @@ public class ProductController {
     //get the hash map of product by ID
     public HashMap<Integer, Product> getProductById() {
         return ProductById;
+    }
+
+    public void addItem(int productID){
+        ProductById.get(productID).addItems(1);
+    }
+
+    public int getAmountOfProduct(int productID) {
+        return getProduct(productID).getCurrentAmount();
+    }
+
+    public void setDiscountBySupplier(int supplierID, int productID, Double discount) {
+        ProductById.get(productID).setDiscountBySupplier(supplierID, discount);
+    }
+
+    public ArrayList<Double> getDiscountsByProductId(int productID) {
+        return ProductById.get(productID).getDiscountsBySupplier();
     }
 }

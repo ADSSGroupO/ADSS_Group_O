@@ -22,6 +22,9 @@ public class ItemController {
     private static ItemController instance = null;
     private LocalDate lastReportDate;
     private static int DAYS_TO_Report = 7;
+    private static final HashMap<Integer, ArrayList<Item>> storageItemsByProductID = new HashMap<>(); //storage items by Product ID
+    private static final HashMap<Integer, ArrayList<Item>> inStoreItemsByProductId = new HashMap<>(); //in store items by Product ID
+
 
 
     private ItemController() {
@@ -70,7 +73,7 @@ public class ItemController {
         return instance;
     }
 
-    public void addItem(String manufacturer, Integer barcode, String name, LocalDate expirationDate, double costPrice, int category, int productID) {
+    public void addItem(String manufacturer, Integer barcode, String name, String expirationDate, double costPrice, int category, int productID) {
         if(itemById.containsKey(barcode)){
             throw new IllegalArgumentException("Item already exists");
         }
@@ -90,9 +93,20 @@ public class ItemController {
             items.add(item);
             storageItems.put(category, items);
         }
+//        //add to storage items by product id
+//        if(storageItemsByProductID.containsKey(productID)){
+//            storageItemsByProductID.get(productID).add(item);
+//        }
+//        else{
+//            ArrayList<Item> items = new ArrayList<>();
+//            items.add(item);
+//            storageItemsByProductID.put(productID, items);
+//        }
         items.add(item);
         //add to item by id dictionary
         itemById.put(barcode, item);
+        //add the amout of the product
+        productController.addItem(productID);
     }
 
     //sold item
@@ -103,6 +117,7 @@ public class ItemController {
         //add to sold items
         //remove from storage
         Item item = itemById.get(ItemID);
+
         if(inStoreItems.get(CategoryID)!=null){
             if (inStoreItems.get(CategoryID).contains(item)) {
                 //add the item to sold items
@@ -110,7 +125,8 @@ public class ItemController {
                 //remove from in store items
                 inStoreItems.get(CategoryID).remove(item);
                 //remove from product amount
-                productController.setProductAmountById(item.getProductID(), 1, Item.location.STORE);
+                productController.reduceAmountOfProductByID(item.getProductID(), 1, Item.location.STORE);
+
             }
         }
         else{
@@ -118,7 +134,7 @@ public class ItemController {
             //remove from storage items
             storageItems.get(CategoryID).remove(item);
             //remove from product amount
-            productController.setProductAmountById(item.getProductID(), 1, Item.location.INVENTORY);
+            productController.reduceAmountOfProductByID(item.getProductID(), 1, Item.location.INVENTORY);
         }
         //update the price been sold
         item.setThePriceBeenSoldAt(getDiscount(ItemID)); //todo: check if this is the right way to do it
@@ -181,7 +197,7 @@ public class ItemController {
                 //remove from in store items
                 inStoreItems.get(CategoryId).remove(item);
                 //remove from product amount
-                productController.setProductAmountById(item.getProductID(), 1, Item.location.STORE);
+                productController.reduceAmountOfProductByID(item.getProductID(), 1, Item.location.STORE);
             }
             if (storageItems.get(CategoryId).contains(item)) {
                 //add the item to sold items
@@ -189,7 +205,7 @@ public class ItemController {
                 //remove from in store items
                 storageItems.get(CategoryId).remove(item);
                 //remove from product amount
-                productController.setProductAmountById(item.getProductID(), 1, Item.location.INVENTORY);
+                productController.reduceAmountOfProductByID(item.getProductID(), 1, Item.location.INVENTORY);
         }
     }
 
