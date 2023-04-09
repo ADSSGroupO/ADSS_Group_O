@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ItemService {
     //connect to item controller
-    ItemController itemController;
+    private final ItemController itemController;
 
     public ItemService() {
         this.itemController = ItemController.getInstance();
