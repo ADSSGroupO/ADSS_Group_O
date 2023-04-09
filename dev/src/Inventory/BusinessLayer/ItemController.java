@@ -73,7 +73,7 @@ public class ItemController {
         return instance;
     }
 
-    public void addItem(String manufacturer, Integer barcode, String name, String expirationDate, double costPrice, int category, int productID) {
+    public void addItem(String manufacturer, Integer barcode, String name, String expirationDate, double costPrice, int category, int productID,String size) {
         if(itemById.containsKey(barcode)){
             throw new IllegalArgumentException("Item already exists");
         }
@@ -84,7 +84,13 @@ public class ItemController {
             throw new IllegalArgumentException("Category does not exist");
         }
         Item.location locate = Item.location.INVENTORY;
-        Item item = new Item(manufacturer,barcode, name, locate, expirationDate, costPrice, productID);
+        Item item = null;
+        if(size==null || size.equals("") || size.equals("null")){
+            item = new Item(manufacturer,barcode, name, locate, expirationDate, costPrice, productID);
+        }
+        else {
+            item = new Item(manufacturer,barcode, name, locate, expirationDate, costPrice, productID,size);
+        }
         if(storageItems.containsKey(category)){//every new item added goes straight to storage
             storageItems.get(category).add(item);
         }
