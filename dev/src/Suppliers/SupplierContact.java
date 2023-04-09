@@ -1,11 +1,11 @@
 package Suppliers;
 
-public class Supplier_Contact {
+public class SupplierContact {
     // description of class: this class represents a contact of a supplier. it has name of contact, and its phone number.
     private String contact_name; // contact name
     private String cellphone; // phone number
 
-    public Supplier_Contact(String name, String phone) { // constructor
+    public SupplierContact(String name, String phone) { // constructor
         contact_name = name;
         cellphone = phone;
     }
@@ -13,4 +13,5 @@ public class Supplier_Contact {
     // getters of attributes
     public String getContactName() {return this.contact_name;}
     public String getPhone() {return this.cellphone;}
+
 }

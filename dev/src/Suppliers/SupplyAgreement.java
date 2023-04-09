@@ -2,7 +2,7 @@ package Suppliers;
 
 import java.util.ArrayList;
 
-public class Supply_Agreement {
+public class SupplyAgreement {
     // description of class: this class represents a supply agreement with specified supplier. it has the base price of the product, its number in
     // the supplier's catalog, and a discounts list that includes all the bills of quantities made with the supplier regarding this product.
     private int product_code; // product serial number
@@ -11,7 +11,7 @@ public class Supply_Agreement {
     private int catalog_code; // code in the supplier's catalog
     private ArrayList<DiscountByProduct> discounts; // list of possible discount
 
-    public Supply_Agreement(int code, double price, int catalog, int amount) { // constructor
+    public SupplyAgreement(int code, double price, int catalog, int amount) { // constructor
         product_code = code;
         list_price = price;
         catalog_code = catalog;

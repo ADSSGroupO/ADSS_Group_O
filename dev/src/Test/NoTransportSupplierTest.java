@@ -1,6 +1,6 @@
 package Test;
 
-import Suppliers.No_Transport_Supplier;
+import Suppliers.NoTransportSupplier;
 import Suppliers.Payment;
 import org.junit.jupiter.api.Test;
 
@@ -8,10 +8,10 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class No_Transport_SupplierTest {
+class NoTransportSupplierTest {
 
     // instance of no transport supplier for test
-    No_Transport_Supplier nt_supplier = new No_Transport_Supplier("ido", 1234, 707111, Payment.TransferToAccount, "gaon hayarden 38");
+    NoTransportSupplier nt_supplier = new NoTransportSupplier("ido", 1234, 707111, Payment.TransferToAccount, "gaon hayarden 38");
 
     @Test
     void getAddress() {
