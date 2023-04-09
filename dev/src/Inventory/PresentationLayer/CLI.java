@@ -59,9 +59,11 @@ public class CLI {
                         int categoryID2 = scanner.nextInt();
                         System.out.println("Enter item product id");
                         int productID = scanner.nextInt();
+                        System.out.println("Enter item size if exist otherwise press enter or write null");
+                        String size = scanner.next();
                         try{
                             for (int i = 0; i < numOfItems; i++) {
-                                serviceController.addItem(manufacturer, barcode, name1, expirationDate, costPrice, categoryID2, productID);
+                                serviceController.addItem(manufacturer, barcode, name1, expirationDate, costPrice, categoryID2, productID,size);
                                 barcode++;
                             }
                             System.out.println("Items added successfully");
@@ -191,8 +193,10 @@ public class CLI {
         int categoryID2 = scanner.nextInt();
         System.out.println("Enter item product id");
         int productID = scanner.nextInt();
+        System.out.println("Enter item size if exist otherwise press enter or write null");
+        String size = scanner.next();
         try{
-            serviceController.addItem(manufacturer, barcode, name, expirationDate, costPrice, categoryID2, productID);
+            serviceController.addItem(manufacturer, barcode, name, expirationDate, costPrice, categoryID2, productID,size);
         }
         catch (Exception e){
             System.out.println("Invalid input try again from the beginning");

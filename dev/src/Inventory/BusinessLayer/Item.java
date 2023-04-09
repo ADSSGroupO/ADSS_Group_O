@@ -3,6 +3,7 @@ package dev.src.Inventory.BusinessLayer;
 import java.time.LocalDate;
 
 public class Item {
+    String size=null;
     private String producerID;
     private String name;
     enum location {STORE, INVENTORY};
@@ -25,6 +26,25 @@ public class Item {
     public Item(String producer,int barcode, String name, location currentLocation, String expirationDate, double costPrice, int productID) {
         this.producerID = producer;
         this.name = name;
+        this.currentLocation = currentLocation;
+        try {
+            if(expirationDate == null || expirationDate.equals("null"))
+                this.expirationDate = null;
+            else
+                this.expirationDate = LocalDate.parse(expirationDate);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid date format");
+        }
+        this.costPrice = costPrice;
+        this.productID = productID;
+        this.barcode = barcode;
+        this.sellingPrice = costPrice*(1.17+0.2);
+    }
+
+    public Item(String producer,int barcode, String name, location currentLocation, String expirationDate, double costPrice, int productID , String size) {
+        this.producerID = producer;
+        this.name = name;
+        this.size=size;
         this.currentLocation = currentLocation;
         try {
             if(expirationDate == null || expirationDate.equals("null"))
