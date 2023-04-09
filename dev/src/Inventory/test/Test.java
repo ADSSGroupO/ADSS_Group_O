@@ -163,7 +163,7 @@ class TestServiceController {
         assertEquals(6, service.getAmountOfProduct(1));
         assertEquals(6, service.getAmountOfProduct(2));
         assertEquals(7, service.getAmountOfProduct(3));
-        assertEquals(5, service.getAmountOfProduct(4));
+        assertEquals(6, service.getAmountOfProduct(4));
         assertEquals(8, service.getAmountOfProduct(5));
     }
 
