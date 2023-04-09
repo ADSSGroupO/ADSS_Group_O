@@ -1,6 +1,6 @@
 package Suppliers;
 
-public class Order_Details_By_Product {
+public class OrderDetailsByProduct {
 
     // description of class: this class includes detailed information of a single product/multiple products of same type.
     // it has the product code & name, the amount ordered, the list price (before discounts), the discount given, and the final price.
@@ -11,11 +11,11 @@ public class Order_Details_By_Product {
     private double discount; // discount given
     private double final_price; // the final price of the unit(s) of this product
 
-    public Order_Details_By_Product(int code, String name, int amountofitems, double price, double discountgiven, double totalprice) { // constructor
+    public OrderDetailsByProduct(int code, String name, int amountofitems, double listpriceofunit, double discountgiven, double totalprice) { // constructor
         product_code = code;
         product_name = name;
         amount = amountofitems;
-        list_price = price;
+        list_price = listpriceofunit;
         discount = discountgiven;
         final_price = totalprice;
     }
@@ -27,5 +27,11 @@ public class Order_Details_By_Product {
     public double getListPrice() {return list_price;}
     public double getDiscountGiven() {return discount;}
     public double getFinalPrice() {return final_price;}
+
+
+    // toString method
+    public String toString() {
+        return "Product node: " + product_code + " Product name: " + product_name + " Units: " + amount + " Price: " + final_price;
+    }
 
 }

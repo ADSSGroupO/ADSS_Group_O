@@ -6,19 +6,19 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Fixed_Days_Supplier extends Supplier {
+public class FixedDaysSupplier extends Supplier {
 
     // description of class: this is a class that represents the suppliers of superli, who delivers orders on fixed days. it inherits the class supplier.
     // in addition to parent class, it has a list of days. these days are the delivery days of the supplier.
-    private ArrayList<Shipment_Days> days; // shipping days
+    private ArrayList<ShipmentDays> days; // shipping days
 
-    public Fixed_Days_Supplier(String name, int id, int bank, Payment pay) { // constructor
+    public FixedDaysSupplier(String name, int id, int bank, Payment pay) { // constructor
         super(name, id, bank, pay);
-        days = new ArrayList<Shipment_Days>();
+        days = new ArrayList<ShipmentDays>();
     }
 
     // function that takes in the string of the new day, and adds it to the list of days
-    public void addShipDay(Shipment_Days day) {
+    public void addShipDay(ShipmentDays day) {
         days.add(day);
     }
 
@@ -32,8 +32,8 @@ public class Fixed_Days_Supplier extends Supplier {
     }
 
     // function that takes in a day and returns true if supplier ships on that day
-    public boolean canShipOnDay(Shipment_Days day) {
-        for (Shipment_Days shipday : days) {
+    public boolean canShipOnDay(ShipmentDays day) {
+        for (ShipmentDays shipday : days) {
             if (shipday == day)
                 return true;
         }

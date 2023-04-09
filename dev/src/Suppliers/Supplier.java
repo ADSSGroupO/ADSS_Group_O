@@ -11,10 +11,10 @@ public abstract class Supplier {
     protected int supplier_id; // supplier's id
     protected int bank_account; // number of bank accounts
     protected Payment pay_system; // preferred method of payment
-    protected ArrayList<Supply_Agreement> agreements; // list of supply agreements made with the supplier
+    protected ArrayList<SupplyAgreement> agreements; // list of supply agreements made with the supplier
     protected ArrayList<DiscountByOrder> discountsByOrder; // list of discounts relevant to entire order from supplier
     protected ArrayList<Order> ordersHistory; // list of orders made from supplier
-    protected ArrayList<Supplier_Contact> contacts; // list of supplier's contacts
+    protected ArrayList<SupplierContact> contacts; // list of supplier's contacts
 
 
     public Supplier(String name, int id, int bank, Payment pay) { // constructor
@@ -22,10 +22,10 @@ public abstract class Supplier {
         supplier_id = id;
         bank_account = bank;
         pay_system = pay;
-        agreements = new ArrayList<Supply_Agreement>();
+        agreements = new ArrayList<SupplyAgreement>();
         discountsByOrder = new ArrayList<DiscountByOrder>();
         ordersHistory = new ArrayList<Order>();
-        contacts = new ArrayList<Supplier_Contact>();
+        contacts = new ArrayList<SupplierContact>();
     }
 
     // abstract method that returns the closest possible shipping date from supplier
@@ -38,15 +38,25 @@ public abstract class Supplier {
     public ArrayList<Order> getOrdersHistory() {return ordersHistory;}
     public ArrayList<DiscountByOrder> getDiscounts() {return discountsByOrder;}
 
+    // function that takes in number of order and returns it. if cant find, returns null
+    public Order getOrder(int order_number) {
+        for (int i = 0; i < ordersHistory.size(); i++) {
+            if (ordersHistory.get(i).getOrderNumber() == order_number) {
+                return ordersHistory.get(i);
+            }
+        }
+        return null;
+    }
+
     // function takes in information of new agreement, initializes it and adds the new agreement to list of agreements, and returns the agreement created
-    public Supply_Agreement addAgreement (int code, double price, int catalog, int amount) {
-        Supply_Agreement newAgreement = new Supply_Agreement(code, price, catalog, amount);
+    public SupplyAgreement addAgreement (int code, double price, int catalog, int amount) {
+        SupplyAgreement newAgreement = new SupplyAgreement(code, price, catalog, amount);
         agreements.add(newAgreement);
         return newAgreement;
     }
 
     // return specific agreement from list of agreements based on product code. if cant find, return null
-    public Supply_Agreement getAgreement (int product_code) {
+    public SupplyAgreement getAgreement (int product_code) {
         for (int i = 0; i < agreements.size(); i++) {
             if (agreements.get(i).getProductCode() == product_code) {
                 return agreements.get(i);
@@ -66,6 +76,11 @@ public abstract class Supplier {
         return false;
     }
 
+    // function that returns the list of agreements
+    public ArrayList<SupplyAgreement> getAllAgreements() {
+        return agreements;
+    }
+
     // add new order discount to list of discounts. if argument is null, returns false. else, returns true
     public boolean addOrderDiscount(DiscountByOrder discount) {
         if (discount == null)
@@ -76,7 +91,7 @@ public abstract class Supplier {
     }
 
     // function takes in information of new order, initializes it, adds the new order to history of orders, and returns the order created
-    public Order addNewOrder(int destination, Supplier_Contact supcontact) {
+    public Order addNewOrder(int destination, SupplierContact supcontact) {
         Order order = new Order(this, destination, supcontact);
         ordersHistory.add(order);
         return order;
@@ -88,10 +103,21 @@ public abstract class Supplier {
     }
 
     // function takes in information of new contact, initializes it, adds the new contact to list of contacts, and returns the contact created
-    public Supplier_Contact addContact(String name, String phone) {
-        Supplier_Contact contact = new Supplier_Contact(name, phone);
+    public SupplierContact addContact(String name, String phone) {
+        SupplierContact contact = new SupplierContact(name, phone);
         contacts.add(contact);
         return contact;
+    }
+
+    // function takes in information of contact and removes it. if deletes, returns true. if can't find contact in list, returns false;
+    public boolean removeContact(String name) {
+        for (int i = 0; i < contacts.size(); i++) {
+            if (contacts.get(i).getContactName().equals(name)) {
+                contacts.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 
     // function that takes in the product code and number of units, and returns the list price the supplier offers. if supplier doesn't
@@ -137,12 +163,24 @@ public abstract class Supplier {
     }
 
     // function takes in name of contact of supplier, and returns it. if can't find, returns null
-    public Supplier_Contact getContact(String name) {
+    public SupplierContact getContact(String name) {
         for (int i = 0; i < contacts.size(); i++) {
-            if (name == contacts.get(i).getContactName()) {
+            if (name.equals(contacts.get(i).getContactName())) {
                 return contacts.get(i);
             }
         }
         return null;
+    }
+
+    // setters for attributes
+    public void setName(String name) {supplier_name = name;} // set name
+    public void setBankAccount(int bank) {bank_account = bank;} // set bank account
+    public void setPaymentMethod(Payment pay) {pay_system = pay;} // set payment method
+
+    // print supplier's order history
+    public void printOrderHistory() {
+        for (int i = 0; i < ordersHistory.size(); i++) {
+            System.out.println(ordersHistory.get(i).toString());
+        }
     }
 }

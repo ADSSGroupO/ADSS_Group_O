@@ -6,30 +6,54 @@ import java.util.List;
 
 public class Order {
 
+    // static variable that counts number of orders and assign serial number
+    static int numberOfOrders = 0;
+
     // description of class: this class represents an order made. it includes the id of the supplier, the branch the order needs to be sent to, the date in which the order
     // was made, the supplier contact and the status of the order.
-    private List<Order_Details_By_Product> ordered_products; // list of all the information of ordered products
+
+    private int order_number;
+    private List<OrderDetailsByProduct> ordered_products; // list of all the information of ordered products
     private int branch_code; // the destination branch of the order
     private LocalDate date; // the estimated date of delivery
-    private Supplier_Contact contact; // contact of the supplier
+    private SupplierContact contact; // contact of the supplier
     private Status order_status; // the status of the order
     private double total_price; // the total cost of the order
     private double orderDiscount; // discount given on total order
 
-    public Order(Supplier supplier, int destination, Supplier_Contact supcontact) { // constructor
+    public Order(Supplier supplier, int destination, SupplierContact supcontact) { // constructor
+        numberOfOrders++;
+        order_number = numberOfOrders; // assign order number
         branch_code = destination;
         date = supplier.getNextShippingDate(); // activating supplier's next shipping date method
         contact = supcontact;
         order_status = Status.InProcess;
-        ordered_products = new ArrayList<Order_Details_By_Product>(); // setting empty list
+        ordered_products = new ArrayList<OrderDetailsByProduct>(); // setting empty list
         orderDiscount = 0; // discount 0 until finishing order and calculating final price
     }
 
-    // function that takes in the details of new ordered product, creates listing and adds it to list of ordered products.
-    public void addProducts(int code, String name, int amount, double price, double discount, double finalprice) {
-        Order_Details_By_Product new_product = new Order_Details_By_Product(code, name, amount, price, discount, finalprice);
+    // function that returns the number of the order
+    public int getOrderNumber() {return order_number;}
+
+
+    // function that takes in product code, and returns the details of that product in the order
+    public OrderDetailsByProduct getOrderDetailsOfProduct(int product_code) {
+        for (int i = 0; i < ordered_products.size(); i++) {
+            // if finds product, return details
+            if (ordered_products.get(i).getProductCode() == product_code) {
+                return ordered_products.get(i);
+            }
+        }
+        // if cant find, return null
+        return null;
+    }
+
+    // function that takes in the details of new ordered product, creates listing, adds it to list of ordered products and returns the details
+    public OrderDetailsByProduct addProducts(int code, String name, int amount, double price, double discount, double finalprice) {
+        OrderDetailsByProduct new_product = new OrderDetailsByProduct(code, name, amount, price, discount, finalprice);
         ordered_products.add(new_product);
         total_price = total_price + finalprice;
+        return new_product;
     }
 
     // a function that takes in the code of product and the amount to cancel, and cancels it. if can cancel returns true. else,
@@ -58,7 +82,7 @@ public class Order {
     // getters for attributes
     public int getBranch() {return branch_code;}
     public LocalDate getDateOfOrder() {return date;}
-    public Supplier_Contact getContact() {return contact;}
+    public SupplierContact getContact() {return contact;}
     public Status getOrderStatus() {return order_status;}
 
     public double getTotalPrice() {return total_price;}
@@ -73,5 +97,16 @@ public class Order {
                 orderDiscount = price_before_discount - newPrice;
             }
         }
+    }
+
+    // toString method
+    public String toString() {
+        String toReturn = "Order number: " + order_number + "\nDate: " + date + "\nOrder status: " + order_status + "\nTotal price: " + total_price;
+        toReturn = toReturn + "Ordered products: ";
+        for (int i = 0; i < ordered_products.size(); i++) {
+            OrderDetailsByProduct orderDetails = ordered_products.get(i);
+            toReturn = toReturn + orderDetails.toString();
+        }
+        return toReturn;
     }
 }
