@@ -69,6 +69,32 @@ class TestServiceController {
         service.addItem("Ruhama", 39, "Broom", null, 15, 2, 5,"");
     }
 
+
+    @org.junit.jupiter.api.Test
+    void addCategory() {
+        ServiceController service = ServiceController.getInstance();
+        assertFalse(service.addCategory("Dairy products", 0));
+        assertTrue(service.addCategory("Dairy products", 4));
+        assertFalse(service.addCategory("HelloWorld", 0));
+    }
+
+    @org.junit.jupiter.api.Test
+    void addProduct() {
+        //ToDo: add product that the category id doesn't exist
+        ServiceController service = ServiceController.getInstance();
+        assertFalse(service.addProduct("Milk", 5, 0, 0, 0));
+        assertTrue(service.addProduct("Milk", 5, 0, 6, 0));
+        assertFalse(service.addProduct("Milky", 5, 0, 0, 0));
+    }
+
+    @org.junit.jupiter.api.Test
+    void addItem() {
+        ServiceController service = ServiceController.getInstance();
+        assertFalse(service.addItem("Soltam", 27, "Pot 1L", null, 55, 2, 4, ""));
+        assertTrue(service.addItem("Soltam", 45, "Pot 1L", null, 55, 2, 4, ""));
+        assertFalse(service.addItem("Soltam", 44, "Pot 1L", null, 55, 5, 4, ""));
+        assertFalse(service.addItem("Soltam", 43, "Pot 1L", null, 55, 5, 8, ""));
+    }
     @org.junit.jupiter.api.Test
     void itemSold() {
         ServiceController service = ServiceController.getInstance();
