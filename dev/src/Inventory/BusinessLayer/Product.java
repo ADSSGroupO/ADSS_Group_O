@@ -1,6 +1,7 @@
 package dev.src.Inventory.BusinessLayer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Product {
     private String name;
@@ -10,12 +11,13 @@ public class Product {
     private int amountInInventory;
     private int categoryID;
     private int makat;
-    static int supplierID = 0;
+    private static int supplierID = 0;
+    private ArrayList<Double> discounts;
 
 
-    float discount;
-    LocalDate startDiscount;
-    LocalDate endDiscount;
+    private float discount;
+    private LocalDate startDiscount;
+    private LocalDate endDiscount;
 
 
 
@@ -37,6 +39,7 @@ public class Product {
         this.categoryID = categoryID;
         this.makat = makat;
         this.supplierID = supplierID;
+        this.discounts = new ArrayList<>();
 
     }
 
@@ -152,4 +155,11 @@ public class Product {
         return "Product name: "+name+" Product id: "+makat;
     }
 
+    public void setDiscountBySupplier(int supplierID, Double discount) {
+        discounts.add(discount);
+    }
+
+    public ArrayList<Double> getDiscountsBySupplier() {
+        return discounts;
+    }
 }

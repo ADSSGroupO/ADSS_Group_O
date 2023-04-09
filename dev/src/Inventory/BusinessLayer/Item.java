@@ -22,11 +22,18 @@ public class Item {
 
 
 
-    public Item(String producer,int barcode, String name, location currentLocation, LocalDate expirationDate, double costPrice, int productID) {
+    public Item(String producer,int barcode, String name, location currentLocation, String expirationDate, double costPrice, int productID) {
         this.producerID = producer;
         this.name = name;
         this.currentLocation = currentLocation;
-        this.expirationDate = expirationDate;
+        try {
+            if(expirationDate == null || expirationDate.equals("null"))
+                this.expirationDate = null;
+            else
+                this.expirationDate = LocalDate.parse(expirationDate);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid date format");
+        }
         this.costPrice = costPrice;
         this.productID = productID;
         this.barcode = barcode;

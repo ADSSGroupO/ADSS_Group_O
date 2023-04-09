@@ -20,6 +20,7 @@ class TestServiceController {
     @BeforeEach
     void setUp() {
         LocalDate expirationDate = LocalDate.of(2023, 4, 25);
+        String expirationDateStr = expirationDate.toString();
         ServiceController service = ServiceController.getInstance();
         service.addCategory("Dairy products", 0);
         service.addCategory("Meat products", 1);
@@ -30,33 +31,33 @@ class TestServiceController {
         service.addProduct("Beef Fillet ", 2, 1, 3, 0);
         service.addProduct("Broom", 2, 2, 4, 0);
         service.addProduct("Pot", 2, 2, 5, 0);
-        service.addItem("Tnuva", 0, "Milk 3%", expirationDate, 6.9, 0, 0);
-        service.addItem("Tnuva", 1, "Milk 3%", expirationDate, 6.9, 0, 0);
-        service.addItem("Tnuva", 2, "Milk 3%", expirationDate, 6.9, 0, 0);
-        service.addItem("Tnuva", 3, "Milk 3%", expirationDate, 6.9, 0, 0);
-        service.addItem("Tnuva", 4, "Milk 3%", expirationDate, 6.9, 0, 0);
-        service.addItem("Tnuva", 5, "Milk 3%", expirationDate, 6.9, 0, 0);
-        service.addItem("Tnuva", 6, "Milk 3%", expirationDate, 6.9, 0, 0);
-        service.addItem("Tnuva", 7, "Milk 3%", expirationDate, 6.9, 0, 0);
-        service.addItem("Tnuva", 8, "Cheese 3%", expirationDate, 10, 0, 1);
-        service.addItem("Tnuva", 9, "Cheese 3%", expirationDate, 10, 0, 1);
-        service.addItem("Tnuva", 10, "Cheese 3%", expirationDate, 10, 0, 1);
-        service.addItem("Tnuva", 11, "Cheese 3%", expirationDate, 10, 0, 1);
-        service.addItem("Tnuva", 12, "Cheese 3%", expirationDate, 10, 0, 1);
-        service.addItem("Tnuva", 13, "Cheese 3%", expirationDate, 10, 0, 1);
-        service.addItem("Zoglobek", 14, "Salami 5%", expirationDate, 15, 1, 2);
-        service.addItem("Zoglobek", 15, "Salami 5%", expirationDate, 15, 1, 2);
-        service.addItem("Zoglobek", 16, "Salami 5%", expirationDate, 15, 1, 2);
-        service.addItem("Zoglobek", 17, "Salami 5%", expirationDate, 15, 1, 2);
-        service.addItem("Zoglobek", 18, "Salami 5%", expirationDate, 15, 1, 2);
-        service.addItem("Zoglobek", 19, "Salami 5%", expirationDate, 15, 1, 2);
-        service.addItem("Havat HaBokrim", 20, "Beef Fillet", expirationDate, 100, 1, 3);
-        service.addItem("Havat HaBokrim", 21, "Beef Fillet", expirationDate, 100, 1, 3);
-        service.addItem("Havat HaBokrim", 22, "Beef Fillet", expirationDate, 100, 1, 3);
-        service.addItem("Havat HaBokrim", 23, "Beef Fillet", expirationDate, 100, 1, 3);
-        service.addItem("Havat HaBokrim", 24, "Beef Fillet", expirationDate, 100, 1, 3);
-        service.addItem("Havat HaBokrim", 25, "Beef Fillet", expirationDate, 100, 1, 3);
-        service.addItem("Havat HaBokrim", 26, "Beef Fillet", expirationDate, 100, 1, 3);
+        service.addItem("Tnuva", 0, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        service.addItem("Tnuva", 1, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        service.addItem("Tnuva", 2, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        service.addItem("Tnuva", 3, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        service.addItem("Tnuva", 4, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        service.addItem("Tnuva", 5, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        service.addItem("Tnuva", 6, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        service.addItem("Tnuva", 7, "Milk 3%", expirationDateStr, 6.9, 0, 0);
+        service.addItem("Tnuva", 8, "Cheese 3%", expirationDateStr, 10, 0, 1);
+        service.addItem("Tnuva", 9, "Cheese 3%", expirationDateStr, 10, 0, 1);
+        service.addItem("Tnuva", 10, "Cheese 3%", expirationDateStr, 10, 0, 1);
+        service.addItem("Tnuva", 11, "Cheese 3%", expirationDateStr, 10, 0, 1);
+        service.addItem("Tnuva", 12, "Cheese 3%", expirationDateStr, 10, 0, 1);
+        service.addItem("Tnuva", 13, "Cheese 3%", expirationDateStr, 10, 0, 1);
+        service.addItem("Zoglobek", 14, "Salami 5%", expirationDateStr, 15, 1, 2);
+        service.addItem("Zoglobek", 15, "Salami 5%", expirationDateStr, 15, 1, 2);
+        service.addItem("Zoglobek", 16, "Salami 5%", expirationDateStr, 15, 1, 2);
+        service.addItem("Zoglobek", 17, "Salami 5%", expirationDateStr, 15, 1, 2);
+        service.addItem("Zoglobek", 18, "Salami 5%", expirationDateStr, 15, 1, 2);
+        service.addItem("Zoglobek", 19, "Salami 5%", expirationDateStr, 15, 1, 2);
+        service.addItem("Havat HaBokrim", 20, "Beef Fillet", expirationDateStr, 100, 1, 3);
+        service.addItem("Havat HaBokrim", 21, "Beef Fillet", expirationDateStr, 100, 1, 3);
+        service.addItem("Havat HaBokrim", 22, "Beef Fillet", expirationDateStr, 100, 1, 3);
+        service.addItem("Havat HaBokrim", 23, "Beef Fillet", expirationDateStr, 100, 1, 3);
+        service.addItem("Havat HaBokrim", 24, "Beef Fillet", expirationDateStr, 100, 1, 3);
+        service.addItem("Havat HaBokrim", 25, "Beef Fillet", expirationDateStr, 100, 1, 3);
+        service.addItem("Havat HaBokrim", 26, "Beef Fillet", expirationDateStr, 100, 1, 3);
         service.addItem("Soltam", 27, "Pot 1L", null, 55, 2, 4);
         service.addItem("Soltam", 28, "Pot 1L", null, 55, 2, 4);
         service.addItem("Soltam", 29, "Pot 0.5L", null, 55, 2, 4);
@@ -101,7 +102,6 @@ class TestServiceController {
 
     @org.junit.jupiter.api.Test
     void itemSold() {
-        //ToDo: there are some problems here that we need to discuss about
         ServiceController service = ServiceController.getInstance();
         assertTrue(service.itemSold(0,0));
         assertFalse(service.itemSold(5,0));
@@ -161,16 +161,14 @@ class TestServiceController {
         assertEquals(0.85*(i.getPrice()), service.getPrice(i.getBarcode()));
     }
 
-//    @org.junit.jupiter.api.Test
-//    void getInventoryReport() {
-//        ServiceController service = ServiceController.getInstance();
-////        StringBuilder sb = new StringBuilder();
-////        ArrayList<Item> items = service.getItemsInStock(0);
-////        for (Item i : items) {
-////            sb.append(i.toString());
-////    }
-////        assertEquals(sb.toString(), service.getInventoryReport());
-////    }
-//        service.getInventoryReport();
-//    }
+    @org.junit.jupiter.api.Test
+    void getAmountOfProduct() {
+        ServiceController service = ServiceController.getInstance();
+        assertEquals(8, service.getAmountOfProduct(0));
+        assertEquals(6, service.getAmountOfProduct(1));
+        assertEquals(6, service.getAmountOfProduct(2));
+        assertEquals(7, service.getAmountOfProduct(3));
+        assertEquals(6, service.getAmountOfProduct(4));
+        assertEquals(8, service.getAmountOfProduct(5));
+    }
 }

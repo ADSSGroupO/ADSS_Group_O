@@ -25,8 +25,13 @@ public class CLI {
                     int makat = scanner.nextInt();
                     System.out.println("Enter product supplier id");
                     int supplierID = scanner.nextInt();
-                    serviceController.addProduct(name, minAmount, categoryID, makat, supplierID);
-                    System.out.println("Product added successfully");
+                    if(serviceController.addProduct(name, minAmount, categoryID, makat, supplierID)){
+                        System.out.println("Product added successfully");
+                    }
+                    else{
+                        System.out.println("Product couldn't be added start from the beginning");
+                        start();
+                    }
                 }
                 case 2 -> {
                     System.out.println("Enter category name");
@@ -48,23 +53,22 @@ public class CLI {
                         String name1 = scanner.next();
                         System.out.println("Enter item expiration date in the form of yyyy-mm-dd");
                         String expirationDate = scanner.next();
-                        LocalDate expiration = null;
-                        try {
-                            expiration = LocalDate.parse(expirationDate);
-                        } catch (Exception e) {
-                            System.out.println("Invalid date format try again from the beginning");
-                            start();
-                        }
                         System.out.println("Enter item cost price");
                         float costPrice = scanner.nextFloat();
                         System.out.println("Enter item category id");
                         int categoryID2 = scanner.nextInt();
                         System.out.println("Enter item product id");
                         int productID = scanner.nextInt();
-                        for (int i = 0; i < numOfItems; i++) {
-                            serviceController.addItem(manufacturer, barcode, name1, expiration, costPrice, categoryID2, productID);
-                            barcode++;
+                        try{
+                            for (int i = 0; i < numOfItems; i++) {
+                                serviceController.addItem(manufacturer, barcode, name1, expirationDate, costPrice, categoryID2, productID);
+                                barcode++;
                             }
+                            System.out.println("Items added successfully");
+                        }catch(Exception e){
+                            System.out.println("Items couldn't be added start from the beginning");
+                            start();
+                        }
                     }
                     else{
                         addItem();
@@ -122,7 +126,27 @@ public class CLI {
                     serviceController.setDefectiveReport(days);
                 }
                 case 12 -> serviceController.getInventoryReport();
-                case 13 -> System.exit(0);
+                case 13 -> {
+                    System.out.println("Enter product id");
+                    int productID = scanner.nextInt();
+                    System.out.println(serviceController.getAmountOfProduct(productID));
+                }
+                case 14 ->{
+                    System.out.println("Enter supplier id");
+                    int supplierID = scanner.nextInt();
+                    System.out.println("Enter Product id");
+                    int productID = scanner.nextInt();
+                    System.out.println("Enter the amount of discount from the supplier");
+                    Double discount = scanner.nextDouble();
+                    serviceController.setDiscountBySupplier(supplierID, productID, discount);
+                }
+                case 15 -> {
+                    System.out.println("Enter Product id");
+                    int productID = scanner.nextInt();
+                    System.out.println(serviceController.getDiscountsByProductId(productID));
+                }
+                case 16 -> serviceController.addData();
+                case 17 -> System.exit(0);
                 default -> {
                     System.out.println("Unexpected value: " + choice);
                     System.out.println("Please try again");
@@ -146,7 +170,11 @@ public class CLI {
         System.out.println("10. Get defective report");
         System.out.println("11. Set how often to get defective report");
         System.out.println("12. Get inventory report");
-        System.out.println("13. Exit");
+        System.out.println("13. Get amount of a product");
+        System.out.println("14. Set discount by supplier");
+        System.out.println("15. Get discounts by product id");
+        System.out.println("16. Add sample data");
+        System.out.println("17. Exit");
     }
     public void addItem(){
         System.out.println("Enter item manufacturer");
@@ -154,23 +182,22 @@ public class CLI {
         System.out.println("Enter item barcode");
         int barcode = scanner.nextInt();
         System.out.println("Enter item name");
-        String name1 = scanner.next();
+        String name = scanner.next();
         System.out.println("Enter item expiration date in the form of yyyy-mm-dd");
         String expirationDate = scanner.next();
-        LocalDate expiration = null;
-        try {
-            expiration = LocalDate.parse(expirationDate);
-        } catch (Exception e) {
-            System.out.println("Invalid date format try again from the beginning");
-            start();
-        }
         System.out.println("Enter item cost price");
         float costPrice = scanner.nextFloat();
         System.out.println("Enter item category id");
         int categoryID2 = scanner.nextInt();
         System.out.println("Enter item product id");
         int productID = scanner.nextInt();
-        serviceController.addItem(manufacturer, barcode, name1, expiration, costPrice, categoryID2, productID);
+        try{
+            serviceController.addItem(manufacturer, barcode, name, expirationDate, costPrice, categoryID2, productID);
+        }
+        catch (Exception e){
+            System.out.println("Invalid input try again from the beginning");
+            start();
+        }
         System.out.println("Item added successfully");
     }
 }

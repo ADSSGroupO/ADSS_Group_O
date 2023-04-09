@@ -81,4 +81,7 @@ public class CategoryController {
     public HashMap<Integer, Category> getCategoryById() {
         return categoryById;
     }
+    public Category getCategoryById(int id) {
+        return categoryById.get(id);
+    }
 }
