@@ -10,12 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class SupplierTest {
 
     // create a new fixed days supplier that will be tested on methods implemented in supplier class
-    Fixed_Days_Supplier fd_supplier = new Fixed_Days_Supplier("lior", 209259993, 1234567, Payment.Credit);
+    FixedDaysSupplier fd_supplier = new FixedDaysSupplier("lior", 209259993, 1234567, Payment.Credit);
     // new discount that will be used in tests of discount related methods
     DiscountOfPriceByOrder discount = new DiscountOfPriceByOrder(100, 100);
 
     // create new contact that will be used in functions testing
-    Supplier_Contact contact = new Supplier_Contact("ana", "0525381648");
+    SupplierContact contact = new SupplierContact("ana", "0525381648");
 
     @Test // getter of id
     void getPrivateCompanyNumber() {
@@ -34,7 +34,7 @@ class SupplierTest {
 
     @Test // adding an agreement to supplier's list of agreements, and testing it was added properly
     void addAgreement() {
-        Supply_Agreement sa = fd_supplier.addAgreement(13, 100, 43, 5); // add method
+        SupplyAgreement sa = fd_supplier.addAgreement(13, 100, 43, 5); // add method
         assertNotNull(sa);
         assertEquals(13, sa.getProductCode());
         assertEquals(100, sa.getListPrice());
@@ -44,7 +44,7 @@ class SupplierTest {
 
     @Test
     void getAgreement() {
-        Supply_Agreement sa = fd_supplier.addAgreement(13, 100, 43, 5); // add method
+        SupplyAgreement sa = fd_supplier.addAgreement(13, 100, 43, 5); // add method
         assertEquals(sa, fd_supplier.getAgreement(sa.getProductCode()));
     }
 
@@ -95,7 +95,7 @@ class SupplierTest {
     @Test
     void addContact() {
         // create new contact
-        Supplier_Contact contact2 = fd_supplier.addContact("noa", "1800400400");
+        SupplierContact contact2 = fd_supplier.addContact("noa", "1800400400");
         // test contact was added properly
         assertEquals(contact2, fd_supplier.getContact("noa"));
     }
@@ -130,7 +130,7 @@ class SupplierTest {
     @Test
     void getBestPossiblePrice() {
         // add agreement
-        Supply_Agreement sa = fd_supplier.addAgreement(4, 25, 41, 15);
+        SupplyAgreement sa = fd_supplier.addAgreement(4, 25, 41, 15);
         // add discounts for product in agreement
         DiscountOfPriceByProduct discount2 = new DiscountOfPriceByProduct(100, 10);
         sa.addDiscount(discount2);
@@ -143,7 +143,7 @@ class SupplierTest {
     @Test
     void getContact() {
         // add contact
-        Supplier_Contact contact2 = fd_supplier.addContact("shakira", "1700707060");
+        SupplierContact contact2 = fd_supplier.addContact("shakira", "1700707060");
         // should return same contact
         assertEquals(contact2, fd_supplier.getContact("shakira"));
 
@@ -165,6 +165,22 @@ class SupplierTest {
         assertEquals(orders.get(0), order);
         assertEquals(orders.get(1), order2);
         assertEquals(orders.get(2), order3);
+    }
+
+    @Test
+    void getOrder() {
+        // add orders
+        Order order = fd_supplier.addNewOrder(1, contact);
+        Order order2 = fd_supplier.addNewOrder(2, contact);
+        Order order3 = fd_supplier.addNewOrder(3, contact);
+        // test orders were created successfully
+        assertNotNull(order);
+        assertNotNull(order2);
+        assertNotNull(order3);
+        // test getter method
+        assertEquals(fd_supplier.getOrder(1), order);
+        assertEquals(fd_supplier.getOrder(2), order2);
+        assertEquals(fd_supplier.getOrder(3), order3);
     }
 
     @Test
