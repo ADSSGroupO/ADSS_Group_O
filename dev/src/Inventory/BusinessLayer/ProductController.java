@@ -75,15 +75,25 @@ public class ProductController {
     //set minimum amount
     public void setMinimum(int deliveryTime, int demand ,int productID){
         //set minimum amount
-        ProductById.get(productID).setMinAmount(deliveryTime,demand);
-    }
+        if(ProductById.containsKey(productID)){
+            ProductById.get(productID).setMinAmount(deliveryTime,demand);
+        }
+        else{
+            throw new IllegalArgumentException("product not exist");
+        }
+        }
 
 
 
     public void setDiscountByProduct(int productID, float discount , String start, String end){
         LocalDate startDate = LocalDate.parse(start);
         LocalDate endDate = LocalDate.parse(end);
+        if(products.contains(ProductById.get(productID))){
         ProductById.get(productID).setDiscount(startDate,endDate,discount);
+            }
+            else{
+        throw new IllegalArgumentException("product not exist");
+        }
     }
     //get product discount
     public float getProductDiscount(int productID){

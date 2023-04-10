@@ -39,8 +39,13 @@ public class CLI {
                     String categoryName = scanner.next();
                     System.out.println("Enter category id");
                     int categoryID1 = scanner.nextInt();
+                    try{
                     serviceController.addCategory(categoryName, categoryID1);
                     System.out.println("Category added successfully");
+                }catch(Exception e){
+                        System.out.println("Category couldn't be added start from the beginning");
+                        start();
+                    }
                 }
                 case 3 -> {
                     System.out.println("How many items do you want to add?");
@@ -84,8 +89,13 @@ public class CLI {
                     int demand = scanner.nextInt();
                     System.out.println("Enter how many days till supplier arrives");
                     int days = scanner.nextInt();
+                    try{
                     serviceController.setMinimum(days, demand, productID1);
                     System.out.println("Minimum set successfully");
+                }catch(Exception e){
+                        System.out.println("Minimum couldn't be set start from the beginning");
+                        start();
+                    }
                 }
                 case 5 -> {
                     System.out.println("Enter product id");
@@ -96,8 +106,13 @@ public class CLI {
                     String start = scanner.next();
                     System.out.println("Enter product end date in the form of yyyy-mm-dd");
                     String end = scanner.next();
-                    serviceController.setDiscountByProduct(productID2, discount, start, end);
-                    System.out.println("Discount set successfully");
+                    try{
+                        serviceController.setDiscountByProduct(productID2, discount, start, end);
+                        System.out.println("Discount set successfully");
+                    }catch(Exception e){
+                        System.out.println("Discount couldn't be set start from the beginning");
+                        start();
+                    }
                 }
                 case 6 -> {
                     System.out.println("Enter category id");
@@ -108,8 +123,13 @@ public class CLI {
                     String start = scanner.next();
                     System.out.println("Enter category end date");
                     String end = scanner.next();
-                    serviceController.setDiscountByCategory(categoryID2, discount1, start, end);
-                    System.out.println("Discount set successfully");
+                    try{
+                        serviceController.setDiscountByCategory(categoryID2, discount1, start, end);
+                        System.out.println("Discount set successfully");
+                    }catch(Exception e){
+                        System.out.println("Discount couldn't be set, start from the beginning");
+                        start();
+                    }
                 }
                 case 7 -> {
                     System.out.println("Enter category id");
@@ -146,7 +166,12 @@ public class CLI {
                 case 15 -> {
                     System.out.println("Enter Product id");
                     int productID = scanner.nextInt();
+                    try{
                     System.out.println(serviceController.getDiscountsByProductId(productID));
+                }catch(Exception e){
+                        System.out.println("Product doesn't exist");
+                        start();
+                    }
                 }
                 case 16 -> serviceController.addData();
                 case 17 -> {
@@ -179,7 +204,7 @@ public class CLI {
                 }
             }
 }
-        while (choice != 8);
+        while (choice != 19);
     }
     public void printMenu(){
         System.out.println("Hello, What would you like to do?");
