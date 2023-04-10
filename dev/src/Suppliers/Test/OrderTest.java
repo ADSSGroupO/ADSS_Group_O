@@ -1,23 +1,21 @@
-package Test;
+package Suppliers.Test;
 
 import Suppliers.*;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
+import org.threeten.bp.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderTest {
     // initialize objects for order
     FixedDaysSupplier supplier = new FixedDaysSupplier("lior", 209259993, 100100, Payment.Credit);
-    SupplierContact contact = new SupplierContact("ana", "0525381648");
-    Order order = new Order(supplier, 4, contact);
+    Order order = new Order(supplier, 4);
 
     @Test
     void getOrderNumber() {
         // because created 8 orders before, this should be the number of orders
         assertEquals(9, order.getOrderNumber());
-        Order order2 = new Order(supplier, 3, contact);
+        Order order2 = new Order(supplier, 3);
         assertEquals(10, order2.getOrderNumber());
     }
 
@@ -40,7 +38,7 @@ class OrderTest {
     @Test
     void cancelOrder() {
         // initialize new order
-        Order order2 = new Order(supplier, 3, contact);
+        Order order2 = new Order(supplier, 3);
         // cancel order
         order2.cancelOrder();
         // test the status changed to cancelled
@@ -50,7 +48,7 @@ class OrderTest {
     @Test
     void confirmDelivery() {
         // initialize new order
-        Order order2 = new Order(supplier, 3, contact);
+        Order order2 = new Order(supplier, 3);
         // confirm order
         order2.confirmDelivery();
         // test the status changed to completed
@@ -67,20 +65,15 @@ class OrderTest {
         // adds sunday as ship day
         supplier.addShipDay(ShipmentDays.Sunday);
         // initialize new order
-        Order order2 = new Order(supplier, 3, contact);
+        Order order2 = new Order(supplier, 3);
         // assuming today is saturday 8/4, delivery date should be 9/4
         assertEquals(LocalDate.of(2023, 4, 9), order2.getDateOfOrder());
     }
 
     @Test
-    void getContact() {
-        assertEquals(contact, order.getContact());
-    }
-
-    @Test
     void getOrderStatus() {
         // initialize new order
-        Order order2 = new Order(supplier, 3, contact);
+        Order order2 = new Order(supplier, 3);
         // check status is InProcess
         assertEquals(Status.InProcess, order2.getOrderStatus());
         // confirm order

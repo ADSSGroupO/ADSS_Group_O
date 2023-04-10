@@ -31,7 +31,7 @@ public class OrderDetailsByProduct {
 
     // toString method
     public String toString() {
-        return "Product node: " + product_code + " Product name: " + product_name + " Units: " + amount + " Price: " + final_price;
+        return "Product node: " + product_code + ", Product name: " + product_name + ", Units: " + amount + ", Price: " + final_price;
     }
 
 }

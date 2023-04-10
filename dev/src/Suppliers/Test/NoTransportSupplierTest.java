@@ -1,10 +1,9 @@
-package Test;
+package Suppliers.Test;
 
 import Suppliers.NoTransportSupplier;
 import Suppliers.Payment;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
+import org.threeten.bp.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
