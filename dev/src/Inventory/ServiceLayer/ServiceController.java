@@ -71,9 +71,8 @@ public class ServiceController {
         productService.setDiscountByProduct(productID, discount, start, end);
     }
     public ArrayList<Product> getProductsByCategory(int categoryID) {
-        ArrayList<Product> products = productService.getProductsByCategory(categoryID);
 
-        return products;
+        return productService.getProductsByCategory(categoryID);
     }
 
     ///////////////////////////CategoryService/////////////////////////////
@@ -128,7 +127,9 @@ public class ServiceController {
     public ArrayList<Double> getDiscountsByProductId(int productID) {
         return productService.getDiscountsByProductId(productID);
     }
-
+/*
+    this function is for testing purposes only
+ */
     public void addData() {
         String expirationDateStr = "2023-12-31";
         this.addCategory("Dairy products", 0);
