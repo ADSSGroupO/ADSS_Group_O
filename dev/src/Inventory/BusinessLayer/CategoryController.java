@@ -49,18 +49,27 @@ public class CategoryController {
     }
 
     //get report about items in stock by category
-    public List<StringBuilder> getItemsInStockByCategory(List<Integer> categoryID){
-        StringBuilder item= new StringBuilder("Category Id :");
-        List<StringBuilder> report=new LinkedList<StringBuilder>();
+    public ArrayList<StringBuilder> getItemsInStockByCategory(List<Integer> categoryID){
+        if (categoryID.size()==0){
+            throw new IllegalArgumentException("TO GENERATE A REPORT MUST HAVE AT LEAST ONE CATEGORY");
+        }
+        StringBuilder item= new StringBuilder(" Category Id :");
+        ArrayList<StringBuilder> report=new ArrayList<StringBuilder>();
      for (int i=0; i<categoryID.size(); i++){
          item.append(" ").append(i).append(" : ");
-         List<Product> products = productByCategory.get(i);
-         for (Product product : products) {
-             //Do we need to check the repeatability of a product?
-             item.append(product.getName()).append(" product makat - ").append(product.getMakat()).append(" : current amount : ").append(product.getCurrentAmount());
+         if(productByCategory.get(i)!= null){
+             ArrayList<Product> products = productByCategory.get(i);
+             for (Product product : products) {
+                 //Do we need to check the repeatability of a product?
+                 item.append(product.getName()).append(" product makat - ").append(product.getMakat()).append(" : current amount : ").append(product.getCurrentAmount()).append("\n");
+             }
+             report.add(item);
+             item = new StringBuilder(" Category Id : ");
          }
-         report.add(item);
-         item = new StringBuilder("Category Id :");
+         else {
+             throw new IllegalArgumentException("THERE IS NO SUCH CATEGORY!");
+         }
+
      }
         return report;
     }

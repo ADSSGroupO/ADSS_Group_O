@@ -3,6 +3,7 @@ package dev.src.Inventory.PresentationLayer;
 import dev.src.Inventory.ServiceLayer.ServiceController;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CLI {
@@ -148,7 +149,17 @@ public class CLI {
                     System.out.println(serviceController.getDiscountsByProductId(productID));
                 }
                 case 16 -> serviceController.addData();
-                case 17 -> System.exit(0);
+                case 17 -> {
+                    System.out.println("Enter how many categories you would like to be in the report");
+                    int amountCategory = scanner.nextInt();
+                    ArrayList<Integer> categoryList = new ArrayList<>();
+                    for(int i=0 ; i<amountCategory;i++){
+                        System.out.println("Enter the category you would like to be in the report");
+                        categoryList.add(scanner.nextInt());
+                    }
+                    System.out.println(serviceController.getInventoryReportByCategory(categoryList));
+                }
+                case 18 -> System.exit(0);
                 default -> {
                     System.out.println("Unexpected value: " + choice);
                     System.out.println("Please try again");
@@ -176,7 +187,8 @@ public class CLI {
         System.out.println("14. Set discount by supplier");
         System.out.println("15. Get discounts by product id");
         System.out.println("16. Add sample data");
-        System.out.println("17. Exit");
+        System.out.println("17. Get inventory report by category/ies");
+        System.out.println("18. Exit");
     }
     public void addItem(){
         System.out.println("Enter item manufacturer");

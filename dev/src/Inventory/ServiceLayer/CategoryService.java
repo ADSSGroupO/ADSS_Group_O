@@ -3,6 +3,7 @@ package dev.src.Inventory.ServiceLayer;
 import dev.src.Inventory.BusinessLayer.CategoryController;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryService {
@@ -23,8 +24,16 @@ public class CategoryService {
     }
     //get report about items in stock by category
     /*how would we send back items*/
-    public List<StringBuilder> getReportOfItemsInStockByCategory(List<Integer> categoryID){
-        return categoryController.getItemsInStockByCategory(categoryID);
+    public ArrayList<StringBuilder> getReportOfItemsInStockByCategory(List<Integer> categoryID){
+        try {
+            return categoryController.getItemsInStockByCategory(categoryID);
+        }
+        catch (Exception e){
+            StringBuilder warningMassage = new StringBuilder(e.getMessage());
+            ArrayList<StringBuilder> massage = new ArrayList<StringBuilder>();
+            massage.add(warningMassage);
+            return massage;
+        }
     }
 
 

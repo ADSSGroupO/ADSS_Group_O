@@ -52,6 +52,8 @@ public class ItemController {
     }
 
     private void publishExpiredReport() {
+        removeExpired(inStoreItems);
+        removeExpired(storageItems);
         if(expiredItems.isEmpty()){
             System.out.println("No expired items");
             return;
@@ -59,6 +61,17 @@ public class ItemController {
         ArrayList<Item> expiredItemsList = new ArrayList<>(expiredItems.values());
         for (Item item : expiredItemsList) {
             System.out.println(item.toString());
+        }
+    }
+
+    private void removeExpired(HashMap<Integer, ArrayList<Item>> inStoreItems) {
+        for (int i = 0; i< inStoreItems.size(); i++) {
+            for(int j = 0; j< inStoreItems.get(i).size(); j++) {
+                if(inStoreItems.get(i).get(j).checkDate()){
+                    expiredItems.put(i, inStoreItems.get(i).get(j));
+                    inStoreItems.get(i).remove(inStoreItems.get(i).get(j));
+                }
+            }
         }
     }
 
@@ -99,15 +112,7 @@ public class ItemController {
             items.add(item);
             storageItems.put(category, items);
         }
-//        //add to storage items by product id
-//        if(storageItemsByProductID.containsKey(productID)){
-//            storageItemsByProductID.get(productID).add(item);
-//        }
-//        else{
-//            ArrayList<Item> items = new ArrayList<>();
-//            items.add(item);
-//            storageItemsByProductID.put(productID, items);
-//        }
+
         items.add(item);
         //add to item by id dictionary
         itemById.put(barcode, item);
