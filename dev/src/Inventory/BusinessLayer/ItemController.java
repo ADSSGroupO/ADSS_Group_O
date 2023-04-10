@@ -65,6 +65,9 @@ public class ItemController {
     }
 
     private void removeExpired(HashMap<Integer, ArrayList<Item>> inStoreItems) {
+        if(inStoreItems.isEmpty()){
+            return;
+        }
         for (int i = 0; i< inStoreItems.size(); i++) {
             for(int j = 0; j< inStoreItems.get(i).size(); j++) {
                 if(inStoreItems.get(i).get(j).checkDate()){

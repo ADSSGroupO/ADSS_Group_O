@@ -150,6 +150,8 @@ public class Item {
      * @return true if the item is expired
      */
     public boolean checkDate(){
+        if(expirationDate == null)
+            return false;
         LocalDate today = LocalDate.now();
         if (today.isAfter(expirationDate)){
             isExpired = true;
