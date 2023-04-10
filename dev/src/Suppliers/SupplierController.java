@@ -335,7 +335,7 @@ public class SupplierController {
         while (option == 1) {
             System.out.println("Please enter required number of products: ");
             int numOfProducts = agreement_input.nextInt();
-            System.out.println("Is the discount by percentage or by price amount?\n1. By Percentage\n2.By Products Amount");
+            System.out.println("Is the discount by percentage or by price amount?\n1.By Percentage\n2.By Price");
             int discountOption = agreement_input.nextInt();
             DiscountByProduct newDiscount;
             System.out.println("Please enter discount value: ");
@@ -343,12 +343,12 @@ public class SupplierController {
             // if discount by percentage, meaning the percentage of the total price for the units of this product will be reduced
             if (discountOption == 1) {
                 newDiscount = new DiscountOfPercentageByProduct(discountValue, numOfProducts);
-                newSA.getDiscounts().add(newDiscount);
+                newSA.addDiscount(newDiscount);
             }
             // if discount by products amount, meaning that a fixed amount of money will be reduced
             else if (discountOption == 2) {
                 newDiscount = new DiscountOfPriceByProduct(discountValue, numOfProducts);
-                newSA.getDiscounts().add(newDiscount);
+                newSA.addDiscount(newDiscount);
             } else {
                 // if invalid option,print error message and break to menu
                 System.out.println("Invalid option");
