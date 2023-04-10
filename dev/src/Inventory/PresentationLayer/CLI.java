@@ -173,7 +173,7 @@ public class CLI {
         System.out.println("Hello, What would you like to do?");
         System.out.println("1. Add a product");
         System.out.println("2. Add a category");
-        System.out.println("3. Add a item to a product");
+        System.out.println("3. Add an item or items to a product");
         System.out.println("4. Set minimum amount of a product");
         System.out.println("5. Set discount by product");
         System.out.println("6. Set discount by category");
