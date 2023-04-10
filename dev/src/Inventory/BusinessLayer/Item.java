@@ -116,8 +116,13 @@ public class Item {
         this.name = name;
     }
 
-    public void setCurrentLocation(location currentLocation) {
-        this.currentLocation = currentLocation;
+    public void setCurrentLocation(String currentLocation) {
+        if(currentLocation.equals("STORE"))
+            this.currentLocation = location.STORE;
+        else if(currentLocation.equals("INVENTORY"))
+            this.currentLocation = location.INVENTORY;
+        else
+            throw new IllegalArgumentException("Invalid location");
     }
 
     public void setExpired(boolean expired) {
