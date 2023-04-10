@@ -116,7 +116,7 @@ public class ItemController {
         items.add(item);
         //add to item by id dictionary
         itemById.put(barcode, item);
-        //add the amout of the product
+        //add the amount of the product
         productController.addItem(productID);
     }
 
@@ -178,6 +178,18 @@ public class ItemController {
     public void moveItemToStore(int categoryID, int itemID) {
         //check if there are items in this category in store
         inStoreItems.computeIfAbsent(categoryID, k -> new ArrayList<>());
+        if(inStoreItems.get(categoryID).contains(itemById.get(itemID))){
+            throw new IllegalArgumentException("Item already in store");
+        }
+        else if(storageItems.get(categoryID).contains(itemById.get(itemID))){
+            //add the item to in store items
+            inStoreItems.get(categoryID).add(itemById.get(itemID));
+            //remove from storage items
+            storageItems.get(categoryID).remove(itemById.get(itemID));
+        }
+        else{
+            throw new IllegalArgumentException("Item not found");
+        }
         Item item = itemById.get(itemID);
         if (storageItems.get(categoryID).contains(item)) {
             //add the item to in store items
@@ -341,6 +353,15 @@ public class ItemController {
                     return Math.min(Math.min(pricePerDiscountCategory, pricePerDiscountProduct), item.getSellingPrice() * 0.5);
                 return Math.min(pricePerDiscountCategory, pricePerDiscountProduct);
             }
+        }
+    }
+
+    public void setLocation(int barcode, String currentLocation){
+        if(itemById.containsKey(barcode)){
+            itemById.get(barcode).setCurrentLocation(currentLocation);
+        }
+        else{
+            throw new IllegalArgumentException("Item does not exist");
         }
     }
 }

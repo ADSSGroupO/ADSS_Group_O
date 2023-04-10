@@ -159,7 +159,19 @@ public class CLI {
                     }
                     System.out.println(serviceController.getInventoryReportByCategory(categoryList));
                 }
-                case 18 -> System.exit(0);
+                case 18 -> {
+                    System.out.println("Enter the ID of the item you would like to move to the store from the storage");
+                    int itemID = scanner.nextInt();
+                    System.out.println("Enter the ID of the category of the item");
+                    int categoryID = scanner.nextInt();
+                    try{
+                        serviceController.moveItemToStore(categoryID, itemID);
+                    }catch(Exception e){
+                        System.out.println("Item couldn't be moved");
+                    }
+
+                }
+                case 19 -> System.exit(0);
                 default -> {
                     System.out.println("Unexpected value: " + choice);
                     System.out.println("Please try again");
@@ -188,7 +200,8 @@ public class CLI {
         System.out.println("15. Get discounts by product id");
         System.out.println("16. Add sample data");
         System.out.println("17. Get inventory report by category/ies");
-        System.out.println("18. Exit");
+        System.out.println("18. Move item to the store");
+        System.out.println("19. Exit");
     }
     public void addItem(){
         System.out.println("Enter item manufacturer");
