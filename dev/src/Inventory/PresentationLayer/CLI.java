@@ -141,7 +141,7 @@ public class CLI {
                 case 7 : {
                     System.out.println("Enter category id");
                     int categoryID3 = scanner.nextInt();
-                    serviceController.getProductsByCategory(categoryID3);
+                    System.out.println(serviceController.getProductsByCategory(categoryID3));
                     start();
                 }
                 case 8 : {
