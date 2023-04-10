@@ -13,6 +13,7 @@ public class Main {
         controller.products.put(7, new Product("Banana", "1234", "Fruits"));
         controller.products.put(8, new Product("Cheese", "5678", "Dairy"));
         controller.products.put(9, new Product("Baguette", "9012", "Bakery"));
+        // start menu
         controller.printMenu();
     }
 }
