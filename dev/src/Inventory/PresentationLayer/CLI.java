@@ -15,7 +15,7 @@ public class CLI {
             printMenu();
             choice = scanner.nextInt();
             switch (choice) {
-                case 1 -> {
+                case 1 : {
                     System.out.println("Enter product name");
                     String name = scanner.next();
                     System.out.println("Enter product minimum amount");
@@ -28,26 +28,28 @@ public class CLI {
                     int supplierID = scanner.nextInt();
                     if(serviceController.addProduct(name, minAmount, categoryID, makat, supplierID)){
                         System.out.println("Product added successfully");
+                        start();
                     }
                     else{
                         System.out.println("Product couldn't be added start from the beginning");
                         start();
                     }
                 }
-                case 2 -> {
+                case 2 : {
                     System.out.println("Enter category name");
                     String categoryName = scanner.next();
                     System.out.println("Enter category id");
                     int categoryID1 = scanner.nextInt();
                     try{
-                    serviceController.addCategory(categoryName, categoryID1);
-                    System.out.println("Category added successfully");
+                        serviceController.addCategory(categoryName, categoryID1);
+                        System.out.println("Category added successfully");
+                        start();
                 }catch(Exception e){
                         System.out.println("Category couldn't be added start from the beginning");
                         start();
                     }
                 }
-                case 3 -> {
+                case 3 : {
                     System.out.println("How many items do you want to add?");
                     int numOfItems = scanner.nextInt();
                     if(numOfItems==1){
@@ -73,6 +75,7 @@ public class CLI {
                                 barcode++;
                             }
                             System.out.println("Items added successfully");
+                            start();
                         }catch(Exception e){
                             System.out.println("Items couldn't be added start from the beginning");
                             start();
@@ -80,9 +83,10 @@ public class CLI {
                     }
                     else{
                         addItem();
+                        start();
                     }
                 }
-                case 4 -> {
+                case 4 : {
                     System.out.println("Enter product id");
                     int productID1 = scanner.nextInt();
                     System.out.println("Enter product demand by how many items per day");
@@ -90,14 +94,15 @@ public class CLI {
                     System.out.println("Enter how many days till supplier arrives");
                     int days = scanner.nextInt();
                     try{
-                    serviceController.setMinimum(days, demand, productID1);
-                    System.out.println("Minimum set successfully");
+                        serviceController.setMinimum(days, demand, productID1);
+                        System.out.println("Minimum set successfully");
+                        start();
                 }catch(Exception e){
                         System.out.println("Minimum couldn't be set start from the beginning");
                         start();
                     }
                 }
-                case 5 -> {
+                case 5 : {
                     System.out.println("Enter product id");
                     int productID2 = scanner.nextInt();
                     System.out.println("Enter product discount");
@@ -109,12 +114,13 @@ public class CLI {
                     try{
                         serviceController.setDiscountByProduct(productID2, discount, start, end);
                         System.out.println("Discount set successfully");
+                        start();
                     }catch(Exception e){
                         System.out.println("Discount couldn't be set start from the beginning");
                         start();
                     }
                 }
-                case 6 -> {
+                case 6 : {
                     System.out.println("Enter category id");
                     int categoryID2 = scanner.nextInt();
                     System.out.println("Enter category discount");
@@ -126,40 +132,54 @@ public class CLI {
                     try{
                         serviceController.setDiscountByCategory(categoryID2, discount1, start, end);
                         System.out.println("Discount set successfully");
+                        start();
                     }catch(Exception e){
                         System.out.println("Discount couldn't be set, start from the beginning");
                         start();
                     }
                 }
-                case 7 -> {
+                case 7 : {
                     System.out.println("Enter category id");
                     int categoryID3 = scanner.nextInt();
                     serviceController.getProductsByCategory(categoryID3);
+                    start();
                 }
-                case 8 -> serviceController.getExpiredReport();
-                case 9 -> {
+                case 8 : {
+                    serviceController.getExpiredReport();
+                    start();
+                }
+                case 9 : {
                     System.out.println("Enter how many days till expiration");
                     int days = scanner.nextInt();
                     serviceController.getToBeExpiredReport(days);
+                    start();
                 }
-                case 10 -> serviceController.getDefectiveReport();
-                case 11 -> {
+                case 10 : {
+                    serviceController.getDefectiveReport();
+                    start();
+                }
+                case 11 : {
                     System.out.println("Enter how often to get defective report");
                     int days = scanner.nextInt();
                     serviceController.setDefectiveReport(days);
+                    start();
                 }
-                case 12 -> serviceController.getInventoryReport();
-                case 13 -> {
+                case 12 : {
+                    serviceController.getInventoryReport();
+                    start();
+                }
+                case 13 : {
                     System.out.println("Enter product id");
                     int productID = scanner.nextInt();
                     try{
-                    System.out.println(serviceController.getAmountOfProduct(productID));
+                        System.out.println(serviceController.getAmountOfProduct(productID));
+                        start();
                 }catch(Exception e){
                         System.out.println("Product doesn't exist");
                         start();
                     }
                 }
-                case 14 ->{
+                case 14 :{
                     System.out.println("Enter supplier id");
                     int supplierID = scanner.nextInt();
                     System.out.println("Enter Product id");
@@ -167,24 +187,29 @@ public class CLI {
                     System.out.println("Enter the amount of discount from the supplier");
                     Double discount = scanner.nextDouble();
                     try{
-                    serviceController.setDiscountBySupplier(supplierID, productID, discount);
+                        serviceController.setDiscountBySupplier(supplierID, productID, discount);
+                        start();
                 }catch(Exception e){
                         System.out.println("Product doesn't exist");
                         start();
                     }
                 }
-                case 15 -> {
+                case 15 : {
                     System.out.println("Enter Product id");
                     int productID = scanner.nextInt();
                     try{
-                    System.out.println(serviceController.getDiscountsByProductId(productID));
+                        System.out.println(serviceController.getDiscountsByProductId(productID));
+                        start();
                 }catch(Exception e){
                         System.out.println("Product doesn't exist");
                         start();
                     }
                 }
-                case 16 -> serviceController.addData();
-                case 17 -> {
+                case 16 : {
+                    serviceController.addData();
+                    start();
+                }
+                case 17 : {
                     System.out.println("Enter how many categories you would like to be in the report");
                     int amountCategory = scanner.nextInt();
                     ArrayList<Integer> categoryList = new ArrayList<>();
@@ -193,37 +218,42 @@ public class CLI {
                         categoryList.add(scanner.nextInt());
                     }
                     try{
-                    System.out.println(serviceController.getInventoryReportByCategory(categoryList));
+                        System.out.println(serviceController.getInventoryReportByCategory(categoryList));
+                        start();
                 }catch(Exception e){
                         System.out.println("Category doesn't exist");
                         start();
                     }
                 }
-                case 18 -> {
+                case 18 : {
                     System.out.println("Enter the ID of the item you would like to move to the store from the storage");
                     int itemID = scanner.nextInt();
                     System.out.println("Enter the ID of the category of the item");
                     int categoryID = scanner.nextInt();
                     try{
                         serviceController.moveItemToStore(categoryID, itemID);
+                        start();
                     }catch(Exception e){
                         System.out.println("Item couldn't be moved");
+                        start();
                     }
 
                 }
-                case 19 -> {//option to sell item
+                case 19 : {//option to sell item
                     System.out.println("Enter the ID of the item you would like to sell");
                     int itemID = scanner.nextInt();
                     System.out.println("Enter the ID of the category of the item");
                     int categoryID = scanner.nextInt();
                     try{
                         serviceController.itemSold(categoryID, itemID);
+                        start();
                     }catch(Exception e){
                         System.out.println("Item couldn't be sold");
+                        start();
                     }
                 }
-                case 20 -> System.exit(0);
-                default -> {
+                case 20 : {System.exit(0);}
+                default : {
                     System.out.println("Unexpected value: " + choice);
                     System.out.println("Please try again");
                     start();
