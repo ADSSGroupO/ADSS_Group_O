@@ -676,7 +676,7 @@ public class SupplierController {
             return;
         }
         // get option for order update
-        System.out.println("What do you wish to do?\n1. Cancel product\n 2. Cancel order\n3. Confirm delivery");
+        System.out.println("What do you wish to do?\n1. Cancel product\n2. Cancel order\n3. Confirm delivery");
         int option = input.nextInt();
         // cancel product
         if (option == 1) {
