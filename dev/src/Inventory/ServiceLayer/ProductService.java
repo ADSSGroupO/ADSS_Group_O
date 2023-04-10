@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class ProductService {
     //connect to ProductController controller
 
-    ProductController productController;
+    private final ProductController productController;
     //constructor
     public ProductService() {
         productController = ProductController.getInstance();

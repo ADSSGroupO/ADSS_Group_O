@@ -2,10 +2,7 @@ package dev.src.Inventory.ServiceLayer;
 import dev.src.Inventory.BusinessLayer.Item;
 import dev.src.Inventory.BusinessLayer.Product;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class ServiceController {
     private final CategoryService categoryService;
@@ -183,5 +180,9 @@ public class ServiceController {
         this.addItem("Ruhama", 37, "Broom", null, 15, 2, 5,"");
         this.addItem("Ruhama", 38, "Broom", null, 15, 2, 5,"");
         this.addItem("Ruhama", 39, "Broom", null, 15, 2, 5,"");
+    }
+
+    public ArrayList<StringBuilder> getInventoryReportByCategory(ArrayList<Integer> categoryList) {
+        return categoryService.getReportOfItemsInStockByCategory(categoryList);
     }
 }
