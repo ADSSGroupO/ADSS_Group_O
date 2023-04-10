@@ -152,7 +152,12 @@ public class CLI {
                 case 13 -> {
                     System.out.println("Enter product id");
                     int productID = scanner.nextInt();
+                    try{
                     System.out.println(serviceController.getAmountOfProduct(productID));
+                }catch(Exception e){
+                        System.out.println("Product doesn't exist");
+                        start();
+                    }
                 }
                 case 14 ->{
                     System.out.println("Enter supplier id");
@@ -161,7 +166,12 @@ public class CLI {
                     int productID = scanner.nextInt();
                     System.out.println("Enter the amount of discount from the supplier");
                     Double discount = scanner.nextDouble();
+                    try{
                     serviceController.setDiscountBySupplier(supplierID, productID, discount);
+                }catch(Exception e){
+                        System.out.println("Product doesn't exist");
+                        start();
+                    }
                 }
                 case 15 -> {
                     System.out.println("Enter Product id");
@@ -182,7 +192,12 @@ public class CLI {
                         System.out.println("Enter the category you would like to be in the report");
                         categoryList.add(scanner.nextInt());
                     }
+                    try{
                     System.out.println(serviceController.getInventoryReportByCategory(categoryList));
+                }catch(Exception e){
+                        System.out.println("Category doesn't exist");
+                        start();
+                    }
                 }
                 case 18 -> {
                     System.out.println("Enter the ID of the item you would like to move to the store from the storage");
@@ -196,7 +211,18 @@ public class CLI {
                     }
 
                 }
-                case 19 -> System.exit(0);
+                case 19 -> {//option to sell item
+                    System.out.println("Enter the ID of the item you would like to sell");
+                    int itemID = scanner.nextInt();
+                    System.out.println("Enter the ID of the category of the item");
+                    int categoryID = scanner.nextInt();
+                    try{
+                        serviceController.itemSold(categoryID, itemID);
+                    }catch(Exception e){
+                        System.out.println("Item couldn't be sold");
+                    }
+                }
+                case 20 -> System.exit(0);
                 default -> {
                     System.out.println("Unexpected value: " + choice);
                     System.out.println("Please try again");
@@ -204,7 +230,7 @@ public class CLI {
                 }
             }
 }
-        while (choice != 19);
+        while (true);
     }
     public void printMenu(){
         System.out.println("Hello, What would you like to do?");
@@ -226,7 +252,8 @@ public class CLI {
         System.out.println("16. Add sample data");
         System.out.println("17. Get inventory report by category/ies");
         System.out.println("18. Move item to the store");
-        System.out.println("19. Exit");
+        System.out.println("19. Sell item");
+        System.out.println("20. Exit");
     }
     public void addItem(){
         System.out.println("Enter item manufacturer");

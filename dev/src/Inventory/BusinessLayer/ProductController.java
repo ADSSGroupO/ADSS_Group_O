@@ -109,7 +109,12 @@ public class ProductController {
     }
 
     public int getAmountOfProduct(int productID) {
-        return getProduct(productID).getCurrentAmount();
+        if(ProductById.containsKey(productID)){
+            return ProductById.get(productID).getCurrentAmount();
+        }
+        else{
+            throw new IllegalArgumentException("product not exist");
+        }
     }
 
     public void setDiscountBySupplier(int supplierID, int productID, Double discount) {
