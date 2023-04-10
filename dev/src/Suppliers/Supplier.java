@@ -1,6 +1,6 @@
 package Suppliers;
 
-import java.time.LocalDate;
+import org.threeten.bp.LocalDate;
 import java.util.ArrayList;
 
 public abstract class Supplier {
@@ -81,6 +81,13 @@ public abstract class Supplier {
         return agreements;
     }
 
+    // function that prints all the supply agreements of supplier
+    public void printSupplyAgreements() {
+        for (SupplyAgreement sa : agreements) {
+            System.out.println(sa.toString());
+        }
+    }
+
     // add new order discount to list of discounts. if argument is null, returns false. else, returns true
     public boolean addOrderDiscount(DiscountByOrder discount) {
         if (discount == null)
@@ -91,8 +98,8 @@ public abstract class Supplier {
     }
 
     // function takes in information of new order, initializes it, adds the new order to history of orders, and returns the order created
-    public Order addNewOrder(int destination, SupplierContact supcontact) {
-        Order order = new Order(this, destination, supcontact);
+    public Order addNewOrder(int destination) {
+        Order order = new Order(this, destination);
         ordersHistory.add(order);
         return order;
     }

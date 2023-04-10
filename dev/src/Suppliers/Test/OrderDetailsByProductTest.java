@@ -1,4 +1,4 @@
-package Test;
+package Suppliers.Test;
 
 import Suppliers.OrderDetailsByProduct;
 import org.junit.jupiter.api.Test;

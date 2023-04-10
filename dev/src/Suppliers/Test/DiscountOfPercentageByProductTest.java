@@ -1,4 +1,4 @@
-package Test;
+package Suppliers.Test;
 
 import Suppliers.DiscountOfPercentageByProduct;
 import org.junit.jupiter.api.Test;
@@ -13,9 +13,9 @@ class DiscountOfPercentageByProductTest { // a class that tests the discounts wh
     @Test
     void isEligibleForDiscount() {
         // discount should be eligible
-        assertTrue(discount.isEligibleForDiscount(70, 490));
+        assertEquals(true, discount.isEligibleForDiscount(70, 490));
         // discount should not be eligible
-        assertFalse(discount.isEligibleForDiscount(10, 70));
+        assertEquals(false, discount.isEligibleForDiscount(10, 70));
     }
 
     @Test

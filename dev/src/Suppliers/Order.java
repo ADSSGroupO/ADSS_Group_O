@@ -1,6 +1,7 @@
 package Suppliers;
 
-import java.time.LocalDate;
+import org.threeten.bp.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,20 +14,18 @@ public class Order {
     // was made, the supplier contact and the status of the order.
 
     private int order_number;
-    private List<OrderDetailsByProduct> ordered_products; // list of all the information of ordered products
+    private ArrayList<OrderDetailsByProduct> ordered_products; // list of all the information of ordered products
     private int branch_code; // the destination branch of the order
     private LocalDate date; // the estimated date of delivery
-    private SupplierContact contact; // contact of the supplier
     private Status order_status; // the status of the order
     private double total_price; // the total cost of the order
     private double orderDiscount; // discount given on total order
 
-    public Order(Supplier supplier, int destination, SupplierContact supcontact) { // constructor
+    public Order(Supplier supplier, int destination) { // constructor
         numberOfOrders++;
         order_number = numberOfOrders; // assign order number
         branch_code = destination;
         date = supplier.getNextShippingDate(); // activating supplier's next shipping date method
-        contact = supcontact;
         order_status = Status.InProcess;
         ordered_products = new ArrayList<OrderDetailsByProduct>(); // setting empty list
         orderDiscount = 0; // discount 0 until finishing order and calculating final price
@@ -82,7 +81,6 @@ public class Order {
     // getters for attributes
     public int getBranch() {return branch_code;}
     public LocalDate getDateOfOrder() {return date;}
-    public SupplierContact getContact() {return contact;}
     public Status getOrderStatus() {return order_status;}
 
     public double getTotalPrice() {return total_price;}
@@ -102,7 +100,7 @@ public class Order {
     // toString method
     public String toString() {
         String toReturn = "Order number: " + order_number + "\nDate: " + date + "\nOrder status: " + order_status + "\nTotal price: " + total_price;
-        toReturn = toReturn + "Ordered products: ";
+        toReturn = toReturn + "\nOrdered products: ";
         for (int i = 0; i < ordered_products.size(); i++) {
             OrderDetailsByProduct orderDetails = ordered_products.get(i);
             toReturn = toReturn + orderDetails.toString();

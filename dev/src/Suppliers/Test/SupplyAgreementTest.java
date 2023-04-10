@@ -1,4 +1,4 @@
-package Test;
+package Suppliers.Test;
 
 import Suppliers.DiscountOfPriceByProduct;
 import Suppliers.SupplyAgreement;
@@ -30,7 +30,7 @@ class SupplyAgreementTest {
         // remove discount
         sa.removeDiscount(3, 10);
         // test discount was removed
-        assertTrue(sa.getDiscounts().isEmpty());
+        assertEquals(true, sa.getDiscounts().isEmpty());
     }
 
     @Test
