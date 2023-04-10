@@ -33,11 +33,11 @@ public class ProductController {
         Product product =ProductById.get(productID);
         product.reduceItems(amount);
         switch (locale){
-            case STORE -> {
+            case STORE : {
                 product.reduceItemsFromStore(1);
                 break;
             }
-            case INVENTORY -> {
+            case INVENTORY : {
                 product.reduceItemsFromInventory(1);
                 break;
             }
