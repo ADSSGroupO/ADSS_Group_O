@@ -100,6 +100,7 @@ public class SupplierController {
         }
         // change name
         if (option == 1) {
+            info_input.nextLine();
             System.out.println("Enter new name: ");
             String name = info_input.nextLine();
             supplier.setName(name);
@@ -122,20 +123,20 @@ public class SupplierController {
         }
         // change contacts
         else {
-            contactsMenu();
+            contactsMenu(id);
         }
     }
 
     /*** contacts menu: when choosing option 4 (which is edit contacts) in edit supplier, this menu appears ***/
     // function that manages menu for contacts
-    public void contactsMenu() {
+    public void contactsMenu(int id) {
         System.out.println("What would you want to edit?\n1. Add contact\n2. Remove contact");
         Scanner contact_input = new Scanner(System.in);
         int option = contact_input.nextInt();
         if (option == 1)
-            addContact();
+            addContact(id);
         else if (option == 2)
-            removeContact();
+            removeContact(id);
         else {
             System.out.println("Invalid option!");
         }
@@ -147,6 +148,7 @@ public class SupplierController {
         System.out.println("1. Add new supply agreement");
         System.out.println("2. Remove supply agreement");
         System.out.println("3. Add discount by total price of order");
+        System.out.println("4. Print supply agreements of supplier");
         // ask for input
         Scanner input = new Scanner(System.in);
         int option = input.nextInt();
@@ -159,6 +161,9 @@ public class SupplierController {
         }
         else if (option == 3) {
             addOrderDiscountForSupplier();
+        }
+        else if (option == 4) {
+            printSupplyAgreements();
         }
         else {
             System.out.println("Invalid option");
@@ -176,6 +181,10 @@ public class SupplierController {
         System.out.println("Enter private company number: ");
         int supplier_id = supplier_input.nextInt();
         supplier_input.nextLine();
+        if (suppliers.containsKey(supplier_id)) {
+            System.out.println("Supplier already exists!");
+            return;
+        }
         System.out.println("Enter supplier's name: ");
         String supplier_name = supplier_input.nextLine();
         System.out.println("Enter supplier's bank account number: ");
@@ -212,6 +221,7 @@ public class SupplierController {
         }
         // if supplier has no transportation and needs pick up service
         else if (option == 3) {
+            supplier_input.nextLine();
             System.out.println("Enter supplier's pick up address: ");
             String address = supplier_input.nextLine();
             newSupplier = new NoTransportSupplier(supplier_name, supplier_id, bank, payment, address);
@@ -243,47 +253,49 @@ public class SupplierController {
         }
         // remove supplier from list of suppliers
         suppliers.remove(supplier.supplier_id);
+        // inform supplier was deleted
+        System.out.println("Supplier deleted successfully");
     }
 
     // function for adding contact of supplier
-    public void addContact() {
-        // taking input of contact info
-        Scanner contact_input = new Scanner(System.in);
-        System.out.println("Enter supplier's id: ");
-        int id = contact_input.nextInt();
+    public void addContact(int supplier_id) {
         // get supplier
-        Supplier supplier = suppliers.get(id);
+        Supplier supplier = suppliers.get(supplier_id);
         // if supplier doesn't exist, print error message and return
         if (supplier == null) {
             System.out.println("Invalid ID");
             return;
         }
-        contact_input.nextLine();
+        // taking input of contact info
+        Scanner contact_input = new Scanner(System.in);
         System.out.println("Enter contact's name: ");
         String name = contact_input.nextLine();
         System.out.println("Enter phone number: ");
         String phone = contact_input.nextLine();
         supplier.addContact(name, phone);
+        System.out.println("Contact added successfully");
     }
 
     // function for removing contact of supplier
-    public void removeContact() {
-        // taking input of contact info
-        Scanner contact_input = new Scanner(System.in);
-        System.out.println("Enter supplier's id: ");
-        int id = contact_input.nextInt();
+    public void removeContact(int supplier_id) {
         // get supplier
-        Supplier supplier = suppliers.get(id);
+        Supplier supplier = suppliers.get(supplier_id);
         // if supplier doesn't exist, print error message and return
         if (supplier == null) {
             System.out.println("Invalid ID");
             return;
         }
-        contact_input.nextLine();
+        // taking input of contact info
+        Scanner contact_input = new Scanner(System.in);
         // ask for contact name and remove from list of contacts
         System.out.println("Enter contact's name: ");
         String name = contact_input.nextLine();
-        supplier.removeContact(name);
+        if (supplier.removeContact(name)) {
+            System.out.println("Contact removed successfully");
+        }
+        else {
+            System.out.println("Invalid name");
+        }
     }
 
 
@@ -304,6 +316,10 @@ public class SupplierController {
         // printing menu for user, asking for input
         System.out.println("Enter product code: ");
         int product_code = agreement_input.nextInt();
+        if (!products.containsKey(product_code)) {
+            System.out.println("Invalid product code");
+            return;
+        }
         System.out.println("Enter list price per unit: ");
         double price = agreement_input.nextDouble();
         System.out.println("Enter serial number of product in supplier's catalog: ");
@@ -377,13 +393,28 @@ public class SupplierController {
         }
     }
 
+    // function that takes in the id of supplier, and prints all his supply agreements
+    public void printSupplyAgreements() {
+        // find supplier in suppliers list
+        Scanner code_input = new Scanner(System.in);
+        System.out.println("Enter supplier's id: ");
+        int id = code_input.nextInt();
+        // get supplier
+        Supplier current_supplier = suppliers.get(id);
+        if (current_supplier == null) {
+            System.out.println("Invalid ID");
+            return;
+        }
+        current_supplier.printSupplyAgreements();
+    }
+
     /*** orders ***/
     public void ordersMenu() {
         // print menu of orders methods
         System.out.println("1. Make new order");
         System.out.println("2. Update order status");
         System.out.println("3. Print all orders");
-        System.out.println("3. Print order of supplier");
+        System.out.println("4. Print order of supplier");
         // ask for input
         Scanner input = new Scanner(System.in);
         int option = input.nextInt();
@@ -397,8 +428,7 @@ public class SupplierController {
         }
         // print all orders history
         else if (option == 3) {
-            ArrayList<Supplier> suppliersList = (ArrayList<Supplier>) suppliers.values();
-            for (Supplier supplier : suppliersList) {
+            for (Supplier supplier : suppliers.values()) {
                 supplier.printOrderHistory();
             }
         }
@@ -471,6 +501,10 @@ public class SupplierController {
         // taking input of first product
         System.out.println("---CHOOSING PRODUCTS---\n Please enter product code: ");
         int product_code = order_input.nextInt();
+        if (!products.containsKey(product_code)) {
+            System.out.println("Invalid product code");
+            return;
+        }
         // adding suppliers who deliver this product to list of capable suppliers
         relevantSuppliers.addAll(suppliersByProduct.get(product_code));
         System.out.println("Enter number of units: ");
@@ -552,7 +586,7 @@ public class SupplierController {
     // adds it to list of supplier's orders
     public Order makeOrderFromSupplier(int branch, Supplier supplier, ArrayList<Integer> productsToOrder, HashMap<Integer, Integer> productsAndAmounts) {
         // informing of the chosen supplier
-        System.out.println("ID of chosen supplier: " + supplier.getPrivateCompanyNumber() + " Name: " + supplier.getName());
+        System.out.println("ID of chosen supplier: " + supplier.getPrivateCompanyNumber() + ", Name: " + supplier.getName());
         // scanner for input
         Scanner order_input = new Scanner(System.in);
         // taking input for delivery dates based on class:
@@ -560,7 +594,6 @@ public class SupplierController {
         if (supplier.getClass() == OnOrderSupplier.class) {
             System.out.println("Enter number of days to deliver: ");
             int days = order_input.nextInt();
-            order_input.nextLine();
             ((OnOrderSupplier) supplier).setNumberOfDaysToNextOrder(days);
         }
         // if supplier is no transport
@@ -572,14 +605,9 @@ public class SupplierController {
             System.out.println("Enter year of estimated delivery date: ");
             int year = order_input.nextInt();
             ((NoTransportSupplier) supplier).setNextDeliveryDate(day, month, year);
-            order_input.nextLine();
         }
-        // taking in the name of contact
-        System.out.println("Enter name of contact: ");
-        String contact_name = order_input.nextLine();
-        SupplierContact contact = supplier.getContact(contact_name);
         // starting the order
-        Order newOrder = supplier.addNewOrder(branch, contact);
+        Order newOrder = supplier.addNewOrder(branch);
         System.out.println("---INITIALIZING ORDER---");
         // iterating all products and adding to order
         for (int i = 0; i < productsToOrder.size(); i++) {
