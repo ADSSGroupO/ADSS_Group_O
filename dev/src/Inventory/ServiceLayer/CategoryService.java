@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CategoryService {
     //connect to CategoryController controller
-    CategoryController categoryController;
+    private final CategoryController categoryController;
     //constructor
     public CategoryService() {
         categoryController = CategoryController.getInstance();
