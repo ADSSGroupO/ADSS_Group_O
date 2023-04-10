@@ -1,11 +1,9 @@
-package Test;
-
+package Suppliers.Test;
 import Suppliers.FixedDaysSupplier;
 import Suppliers.Payment;
 import Suppliers.ShipmentDays;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
+import org.threeten.bp.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,9 +18,9 @@ class FixedDaysSupplierTest { // testing methods implemented in fixed days suppl
         fd_supplier.addShipDay(ShipmentDays.Friday);
         fd_supplier.addShipDay(ShipmentDays.Monday);
         // tests if method returns correct days
-        assertTrue(fd_supplier.canShipOnDay(ShipmentDays.Friday));
-        assertFalse(fd_supplier.canShipOnDay(ShipmentDays.Sunday));
-        assertTrue(fd_supplier.canShipOnDay(ShipmentDays.Monday));
+        assertEquals(true, fd_supplier.canShipOnDay(ShipmentDays.Friday));
+        assertEquals(false, fd_supplier.canShipOnDay(ShipmentDays.Sunday));
+        assertEquals(true, fd_supplier.canShipOnDay(ShipmentDays.Monday));
     }
 
     @Test
@@ -30,7 +28,7 @@ class FixedDaysSupplierTest { // testing methods implemented in fixed days suppl
         // adds shipping day
         fd_supplier.addShipDay(ShipmentDays.Sunday);
         // tests if method returns correct days
-        assertTrue(fd_supplier.canShipOnDay(ShipmentDays.Sunday));
+        assertEquals(true, fd_supplier.canShipOnDay(ShipmentDays.Sunday));
     }
 
     @Test
@@ -39,12 +37,12 @@ class FixedDaysSupplierTest { // testing methods implemented in fixed days suppl
         fd_supplier.addShipDay(ShipmentDays.Friday);
         fd_supplier.addShipDay(ShipmentDays.Monday);
         // tests if method returns correct days
-        assertTrue(fd_supplier.canShipOnDay(ShipmentDays.Friday));
-        assertTrue(fd_supplier.canShipOnDay(ShipmentDays.Monday));
+        assertEquals(true, fd_supplier.canShipOnDay(ShipmentDays.Friday));
+        assertEquals(true, fd_supplier.canShipOnDay(ShipmentDays.Monday));
         // remove friday from shipping days
         fd_supplier.removeShipDay("Friday");
         // tests if method returns false as it should
-        assertFalse(fd_supplier.canShipOnDay(ShipmentDays.Friday));
+        assertEquals(false, fd_supplier.canShipOnDay(ShipmentDays.Friday));
     }
 
     @Test

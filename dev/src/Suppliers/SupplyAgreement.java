@@ -61,4 +61,9 @@ public class SupplyAgreement {
         return (list_price * units);
     }
 
+    // toString method
+    public String toString() {
+        return "Product code: " + product_code + "\nList price: " + list_price + "\nMax amount: " + max_amount;
+    }
+
 }

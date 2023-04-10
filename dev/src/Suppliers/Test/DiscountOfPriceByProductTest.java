@@ -1,4 +1,4 @@
-package Test;
+package Suppliers.Test;
 
 import Suppliers.DiscountOfPriceByProduct;
 import org.junit.jupiter.api.Test;

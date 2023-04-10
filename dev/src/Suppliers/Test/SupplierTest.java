@@ -1,4 +1,4 @@
-package Test;
+package Suppliers.Test;
 
 import Suppliers.*;
 import org.junit.jupiter.api.Test;
@@ -51,9 +51,9 @@ class SupplierTest {
     @Test
     void removeAgreement() {
         fd_supplier.addAgreement(13, 100, 43, 5);
-        assertFalse(fd_supplier.removeAgreement(10)); // should return false because there's no such agreement
-        assertTrue(fd_supplier.removeAgreement(13)); // should return true
-        assertFalse(fd_supplier.removeAgreement(13)); // should return false because there's no such agreement anymore
+        assertEquals(false, fd_supplier.removeAgreement(10)); // should return false because there's no such agreement
+        assertEquals(true, fd_supplier.removeAgreement(13)); // should return true
+        assertEquals(false, fd_supplier.removeAgreement(13)); // should return false because there's no such agreement anymore
     }
 
     @Test
@@ -65,7 +65,7 @@ class SupplierTest {
     @Test
     void addNewOrder() {
         // add order
-        Order order = fd_supplier.addNewOrder(1, contact);
+        Order order = fd_supplier.addNewOrder(1);
         // test order was created successfully
         assertNotNull(order);
         // get list of orders
@@ -82,7 +82,7 @@ class SupplierTest {
         fd_supplier.addOrderDiscount(discount);
         fd_supplier.addOrderDiscount(discount2);
         // create new order
-        Order order = fd_supplier.addNewOrder(2, contact);
+        Order order = fd_supplier.addNewOrder(2);
         // adding product to order
         order.addProducts(1, "milk", 100, 10, 0, 1000);
         // apply order discounts
@@ -152,9 +152,9 @@ class SupplierTest {
     @Test
     void getOrdersHistory() {
         // add orders
-        Order order = fd_supplier.addNewOrder(1, contact);
-        Order order2 = fd_supplier.addNewOrder(2, contact);
-        Order order3 = fd_supplier.addNewOrder(3, contact);
+        Order order = fd_supplier.addNewOrder(1);
+        Order order2 = fd_supplier.addNewOrder(2);
+        Order order3 = fd_supplier.addNewOrder(3);
         // test orders were created successfully
         assertNotNull(order);
         assertNotNull(order2);
@@ -170,9 +170,9 @@ class SupplierTest {
     @Test
     void getOrder() {
         // add orders
-        Order order = fd_supplier.addNewOrder(1, contact);
-        Order order2 = fd_supplier.addNewOrder(2, contact);
-        Order order3 = fd_supplier.addNewOrder(3, contact);
+        Order order = fd_supplier.addNewOrder(1);
+        Order order2 = fd_supplier.addNewOrder(2);
+        Order order3 = fd_supplier.addNewOrder(3);
         // test orders were created successfully
         assertNotNull(order);
         assertNotNull(order2);
