@@ -1,4 +1,4 @@
-package dev.src.Inventory.BusinessLayer;
+package Inventory.BusinessLayer;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
