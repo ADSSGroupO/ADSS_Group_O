@@ -1,14 +1,14 @@
 package Inventory.ServiceLayer;
 
-import dev.src.Inventory.BusinessLayer.Item;
-import dev.src.Inventory.BusinessLayer.Product;
-import dev.src.Inventory.ServiceLayer.CategoryService;
-import dev.src.Inventory.ServiceLayer.ItemService;
-import dev.src.Inventory.ServiceLayer.ProductService;
+import Inventory.BusinessLayer.Item;
+import Inventory.BusinessLayer.Product;
+import Inventory.ServiceLayer.CategoryService;
+import Inventory.ServiceLayer.ItemService;
+import Inventory.ServiceLayer.ProductService;
 import java.util.ArrayList;
 
 public class ServiceController {
-    private final dev.src.Inventory.ServiceLayer.CategoryService categoryService;
+    private final CategoryService categoryService;
     private final ProductService productService;
     private final ItemService itemService;
     private static ServiceController serviceController = null;
