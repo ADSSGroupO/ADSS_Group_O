@@ -1,8 +1,8 @@
-package dev.src.Inventory.test;
+package Inventory.test;
 
+import Inventory.ServiceLayer.ServiceController;
 import dev.src.Inventory.BusinessLayer.Item;
 import dev.src.Inventory.BusinessLayer.Product;
-import dev.src.Inventory.ServiceLayer.ServiceController;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.time.LocalDate;
