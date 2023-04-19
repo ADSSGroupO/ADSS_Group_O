@@ -80,7 +80,6 @@ class TestServiceController {
 
     @org.junit.jupiter.api.Test
     void addProduct() {
-        //ToDo: add product that the category id doesn't exist
         ServiceController service = ServiceController.getInstance();
         assertFalse(service.addProduct("Milk", 5, 0, 0, 0));
         assertTrue(service.addProduct("Milk", 5, 0, 6, 0));
