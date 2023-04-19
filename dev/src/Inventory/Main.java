@@ -1,6 +1,7 @@
-package dev.src.Inventory;
+package Inventory;
 
-import dev.src.Inventory.PresentationLayer.CLI;
+
+import Inventory.PresentationLayer.CLI;
 
 public class Main {
     public static void main(String[] args) {
