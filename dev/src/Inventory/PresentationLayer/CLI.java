@@ -1,6 +1,6 @@
-package dev.src.Inventory.PresentationLayer;
+package Inventory.PresentationLayer;
 
-import dev.src.Inventory.ServiceLayer.ServiceController;
+import Inventory.ServiceLayer.ServiceController;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
