@@ -1,5 +1,6 @@
 package Suppliers;
 
+
 public class SupplierContact {
     // description of class: this class represents a contact of a supplier. it has name of contact, and its phone number.
     private String contact_name; // contact name
