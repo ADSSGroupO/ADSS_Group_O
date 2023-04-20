@@ -1,6 +1,6 @@
-package dev.src.Inventory.ServiceLayer;
-import dev.src.Inventory.BusinessLayer.Product;
-import dev.src.Inventory.BusinessLayer.ProductController;
+package Inventory.ServiceLayer;
+import Inventory.BusinessLayer.Product;
+import Inventory.BusinessLayer.ProductController;
 
 import java.util.ArrayList;
 
