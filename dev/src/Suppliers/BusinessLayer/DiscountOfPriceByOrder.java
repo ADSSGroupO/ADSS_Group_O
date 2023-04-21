@@ -1,4 +1,4 @@
-package Suppliers;
+package Suppliers.BusinessLayer;
 
 public class DiscountOfPriceByOrder extends DiscountByOrder {
     // description of class: this class represents a discount that should be applied to order by total price,

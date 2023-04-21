@@ -1,14 +1,17 @@
-package Suppliers;
+package Suppliers.PresentationLayer;
+import Suppliers.*;
+import Suppliers.BusinessLayer.*;
+
 import java.util.*;
 
-public class SupplierController {
+public class CLI {
     HashMap<Integer, Supplier> suppliers; // <id, Supplier>: map that matches id to supplier
     HashMap<Integer, Product> products; // <product_code, Product>: map that matches product code to product
     HashMap<Integer, ArrayList<Supplier>> suppliersByProduct; // <product_code, list<supplier>>: the index is product codes, and the values are list of suppliers, making
     // this map helpful when wanting to make an entire order from specific supplier and wanting to check if the supplier delivers all requested products
 
     // initialize controller
-    public SupplierController() {
+    public CLI() {
         // initialize data structures
         suppliers =  new HashMap<>();
         products = new HashMap<>();
@@ -248,7 +251,7 @@ public class SupplierController {
             suppliersByProduct.get(product).remove(supplier);
         }
         // remove supplier from list of suppliers
-        suppliers.remove(supplier.supplier_id);
+        suppliers.remove(supplier.getPrivateCompanyNumber());
         // inform supplier was deleted
         System.out.println("Supplier deleted successfully");
     }

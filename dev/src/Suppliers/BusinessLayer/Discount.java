@@ -1,4 +1,4 @@
-package Suppliers;
+package Suppliers.BusinessLayer;
 
 public abstract class Discount {
     // description of class: this class is the parent class of discount classes. it's abstract and therefore a discount's type must be

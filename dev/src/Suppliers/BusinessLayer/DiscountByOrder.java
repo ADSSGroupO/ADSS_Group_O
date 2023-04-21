@@ -1,4 +1,4 @@
-package Suppliers;
+package Suppliers.BusinessLayer;
 
 public abstract class DiscountByOrder extends Discount {
 

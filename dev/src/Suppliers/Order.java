@@ -1,5 +1,7 @@
 package Suppliers;
 
+import Suppliers.BusinessLayer.DiscountByOrder;
+import Suppliers.BusinessLayer.Supplier;
 import org.threeten.bp.LocalDate;
 
 import java.util.ArrayList;

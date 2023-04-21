@@ -1,6 +1,8 @@
 package Suppliers.Test;
 
 import Suppliers.*;
+import Suppliers.BusinessLayer.DiscountOfPriceByOrder;
+import Suppliers.BusinessLayer.FixedDaysSupplier;
 import org.junit.jupiter.api.Test;
 import org.threeten.bp.LocalDate;
 
