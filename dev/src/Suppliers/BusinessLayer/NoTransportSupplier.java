@@ -1,6 +1,5 @@
 package Suppliers.BusinessLayer;
 
-import Suppliers.Payment;
 import org.threeten.bp.LocalDate;
 
 public class NoTransportSupplier extends Supplier {

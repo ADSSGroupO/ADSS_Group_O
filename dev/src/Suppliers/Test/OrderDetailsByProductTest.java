@@ -1,6 +1,6 @@
 package Suppliers.Test;
 
-import Suppliers.OrderDetailsByProduct;
+import Suppliers.BusinessLayer.OrderDetailsByProduct;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

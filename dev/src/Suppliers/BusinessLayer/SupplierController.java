@@ -1,8 +1,5 @@
 package Suppliers.BusinessLayer;
 
-import Suppliers.Payment;
-import Suppliers.SupplyAgreement;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 

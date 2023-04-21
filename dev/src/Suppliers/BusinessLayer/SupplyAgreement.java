@@ -1,4 +1,4 @@
-package Suppliers;
+package Suppliers.BusinessLayer;
 
 import Suppliers.BusinessLayer.DiscountByProduct;
 
