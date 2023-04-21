@@ -1,6 +1,7 @@
 package Deliveries.BusinessLayer;
 
 import Deliveries.BusinessLayer.Enums_and_Interfaces.TruckType;
+import jakarta.persistence.Entity;
 
 import java.util.ArrayList;
 import java.util.HashSet;

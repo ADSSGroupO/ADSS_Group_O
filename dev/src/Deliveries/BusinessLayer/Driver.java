@@ -3,11 +3,25 @@ package Deliveries.BusinessLayer;
 
 import Deliveries.BusinessLayer.Enums_and_Interfaces.Availability;
 import Deliveries.BusinessLayer.Enums_and_Interfaces.TruckType;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "Drivers")
 public class Driver {
+
+    @Column(name = "driver_name")
     private final String name;
+    @Id
+    @Column(name = "driver_id")
     private final String id;
+    @Column(name = "phone")
     private final String phone;
+
+    public Driver() {
+        this.name = "";
+        this.id = "";
+        this.phone = "";
+    }
 
     @Override
     public String toString() {
@@ -58,4 +72,5 @@ public class Driver {
     public boolean isLicensed(Truck truck) {
         return license.isLicensed(truck);
     }
+
 }
