@@ -1,13 +1,11 @@
 package Inventory.test;
 
 import Inventory.ServiceLayer.ServiceController;
-import dev.src.Inventory.BusinessLayer.Item;
-import dev.src.Inventory.BusinessLayer.Product;
+import Inventory.BusinessLayer.Item;
+import Inventory.BusinessLayer.Product;
 import org.junit.jupiter.api.BeforeEach;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class TestServiceController {

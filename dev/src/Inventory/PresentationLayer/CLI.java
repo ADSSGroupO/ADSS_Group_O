@@ -1,7 +1,6 @@
 package Inventory.PresentationLayer;
-
 import Inventory.ServiceLayer.ServiceController;
-
+import Inventory.ServiceLayer.ProductService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
