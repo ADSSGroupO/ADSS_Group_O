@@ -1,5 +1,7 @@
 package Suppliers;
 
+import Suppliers.BusinessLayer.DiscountByProduct;
+
 import java.util.ArrayList;
 
 public class SupplyAgreement {

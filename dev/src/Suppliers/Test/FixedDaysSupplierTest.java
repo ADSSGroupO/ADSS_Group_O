@@ -1,5 +1,5 @@
 package Suppliers.Test;
-import Suppliers.FixedDaysSupplier;
+import Suppliers.BusinessLayer.FixedDaysSupplier;
 import Suppliers.Payment;
 import Suppliers.ShipmentDays;
 import org.junit.jupiter.api.Test;

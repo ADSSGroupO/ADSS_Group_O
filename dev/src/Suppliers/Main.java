@@ -1,8 +1,10 @@
 package Suppliers;
 
+import Suppliers.PresentationLayer.CLI;
+
 public class Main {
     public static void main(String[] args) {
-        SupplierController controller = new SupplierController();
+        CLI controller = new CLI();
         // Add some products to the list
         controller.products.put(1, new Product("Apple", "1234", "Fruits"));
         controller.products.put(2, new Product("Milk", "5678", "Dairy"));

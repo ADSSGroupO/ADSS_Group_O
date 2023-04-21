@@ -1,6 +1,6 @@
 package Suppliers.Test;
 
-import Suppliers.OnOrderSupplier;
+import Suppliers.BusinessLayer.OnOrderSupplier;
 import Suppliers.Payment;
 import org.junit.jupiter.api.Test;
 import org.threeten.bp.LocalDate;
