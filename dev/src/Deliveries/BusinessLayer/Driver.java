@@ -5,9 +5,12 @@ import Deliveries.BusinessLayer.Enums_and_Interfaces.Availability;
 import Deliveries.BusinessLayer.Enums_and_Interfaces.TruckType;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "Drivers")
-public class Driver {
+@SecondaryTable(name = "DriverLicenses")
+public class Driver implements Serializable {
 
     @Column(name = "driver_name")
     private final String name;
@@ -31,6 +34,7 @@ public class Driver {
                 '}';
     }
 
+    @OneToOne(targetEntity = License.class, optional = false, mappedBy = "driverId")
     private License license;
 
     private Availability availability;
