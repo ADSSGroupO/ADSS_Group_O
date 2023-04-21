@@ -1,9 +1,7 @@
 package Suppliers.BusinessLayer;
 
-import Suppliers.BusinessLayer.DiscountByOrder;
 import Suppliers.Order;
 import Suppliers.Payment;
-import Suppliers.SupplierContact;
 import Suppliers.SupplyAgreement;
 import org.threeten.bp.LocalDate;
 import java.util.ArrayList;
@@ -122,9 +120,9 @@ public abstract class Supplier {
     }
 
     // function takes in information of contact and removes it. if deletes, returns true. if can't find contact in list, returns false;
-    public boolean removeContact(String name) {
+    public boolean removeContact(String name, String phone) {
         for (int i = 0; i < contacts.size(); i++) {
-            if (contacts.get(i).getContactName().equals(name)) {
+            if (contacts.get(i).getContactName().equals(name) && contacts.get(i).getPhone().equals(phone)) {
                 contacts.remove(i);
                 return true;
             }

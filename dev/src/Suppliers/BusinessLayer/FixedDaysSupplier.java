@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.ArrayList;
 
 import Suppliers.Payment;
-import Suppliers.ShipmentDays;
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.temporal.TemporalAdjusters;
@@ -20,9 +19,10 @@ public class FixedDaysSupplier extends Supplier {
         days = new ArrayList<ShipmentDays>();
     }
 
-    // function that takes in the string of the new day, and adds it to the list of days
-    public void addShipDay(ShipmentDays day) {
-        days.add(day);
+    // function that takes in the enum of the new day, and adds it to the list of days
+    public void addShipDay(int dayNumber) {
+        ShipmentDays newDay = ShipmentDays.values()[dayNumber];
+        days.add(newDay);
     }
 
     // function that takes in the string of the new day, and removes it from the list of days

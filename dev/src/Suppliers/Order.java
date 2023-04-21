@@ -1,6 +1,7 @@
 package Suppliers;
 
 import Suppliers.BusinessLayer.DiscountByOrder;
+import Suppliers.BusinessLayer.Status;
 import Suppliers.BusinessLayer.Supplier;
 import org.threeten.bp.LocalDate;
 

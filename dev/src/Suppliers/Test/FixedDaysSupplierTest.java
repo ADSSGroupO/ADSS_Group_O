@@ -1,7 +1,7 @@
 package Suppliers.Test;
 import Suppliers.BusinessLayer.FixedDaysSupplier;
 import Suppliers.Payment;
-import Suppliers.ShipmentDays;
+import Suppliers.BusinessLayer.ShipmentDays;
 import org.junit.jupiter.api.Test;
 import org.threeten.bp.LocalDate;
 
