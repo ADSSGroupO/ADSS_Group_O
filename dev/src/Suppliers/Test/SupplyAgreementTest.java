@@ -1,7 +1,7 @@
 package Suppliers.Test;
 
 import Suppliers.BusinessLayer.DiscountOfPriceByProduct;
-import Suppliers.SupplyAgreement;
+import Suppliers.BusinessLayer.SupplyAgreement;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

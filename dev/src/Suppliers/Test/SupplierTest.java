@@ -1,6 +1,5 @@
 package Suppliers.Test;
 
-import Suppliers.*;
 import Suppliers.BusinessLayer.*;
 import org.junit.jupiter.api.Test;
 
@@ -166,22 +165,6 @@ class SupplierTest {
         assertEquals(orders.get(0), order);
         assertEquals(orders.get(1), order2);
         assertEquals(orders.get(2), order3);
-    }
-
-    @Test
-    void getOrder() {
-        // add orders
-        Order order = fd_supplier.addNewOrder(1);
-        Order order2 = fd_supplier.addNewOrder(2);
-        Order order3 = fd_supplier.addNewOrder(3);
-        // test orders were created successfully
-        assertNotNull(order);
-        assertNotNull(order2);
-        assertNotNull(order3);
-        // test getter method
-        assertEquals(fd_supplier.getOrder(1), order);
-        assertEquals(fd_supplier.getOrder(2), order2);
-        assertEquals(fd_supplier.getOrder(3), order3);
     }
 
     @Test

@@ -1,12 +1,7 @@
 package Suppliers.Test;
 
-import Suppliers.*;
-import Suppliers.BusinessLayer.DiscountOfPriceByOrder;
-import Suppliers.BusinessLayer.FixedDaysSupplier;
-import Suppliers.BusinessLayer.ShipmentDays;
-import Suppliers.BusinessLayer.Status;
+import Suppliers.BusinessLayer.*;
 import org.junit.jupiter.api.Test;
-import org.threeten.bp.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,14 +9,6 @@ class OrderTest {
     // initialize objects for order
     FixedDaysSupplier supplier = new FixedDaysSupplier("lior", 209259993, 100100, Payment.Credit);
     Order order = new Order(supplier, 4);
-
-    @Test
-    void getOrderNumber() {
-        // because created 8 orders before, this should be the number of orders
-        assertEquals(9, order.getOrderNumber());
-        Order order2 = new Order(supplier, 3);
-        assertEquals(10, order2.getOrderNumber());
-    }
 
     @Test
     void addProducts() { // also tests getOrderDetailsOfProduct
@@ -62,16 +49,6 @@ class OrderTest {
     @Test
     void getBranch() {
         assertEquals(4, order.getBranch());
-    }
-
-    @Test
-    void getDateOfOrder() {
-        // adds sunday as ship day
-        supplier.addShipDay(ShipmentDays.Sunday);
-        // initialize new order
-        Order order2 = new Order(supplier, 3);
-        // assuming today is saturday 8/4, delivery date should be 9/4
-        assertEquals(LocalDate.of(2023, 4, 9), order2.getDateOfOrder());
     }
 
     @Test

@@ -1,8 +1,6 @@
 package Suppliers.PresentationLayer;
-import Suppliers.*;
 import Suppliers.BusinessLayer.*;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class CLI {
