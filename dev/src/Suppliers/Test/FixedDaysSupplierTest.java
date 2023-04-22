@@ -39,7 +39,7 @@ class FixedDaysSupplierTest { // testing methods implemented in fixed days suppl
         assertEquals(true, fd_supplier.canShipOnDay(ShipmentDays.Friday));
         assertEquals(true, fd_supplier.canShipOnDay(ShipmentDays.Monday));
         // remove friday from shipping days
-        fd_supplier.removeShipDay("Friday");
+        fd_supplier.removeShipDay(5);
         // tests if method returns false as it should
         assertEquals(false, fd_supplier.canShipOnDay(ShipmentDays.Friday));
     }

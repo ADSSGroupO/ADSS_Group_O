@@ -79,8 +79,8 @@ public class OrderController { //Controller for order as singleton
     }
 
 
-    // function that makes order/s from supplier
-    public void makeOrder(int branch, ArrayList<Integer> productsToOrder, HashMap<Integer, Integer> productsAndAmounts) {
+    // function that makes periodic order from supplier
+    public void makePeriodicOrder(int branch, ArrayList<Integer> productsToOrder, HashMap<Integer, Integer> productsAndAmounts) {
         // creating a list of suppliers that are capable of delivering all products
         ArrayList<Supplier> relevantSuppliers = new ArrayList<>();
         // add suppliers who deliver this product to list of capable suppliers

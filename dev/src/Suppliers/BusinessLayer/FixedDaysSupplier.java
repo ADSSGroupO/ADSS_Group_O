@@ -25,10 +25,10 @@ public class FixedDaysSupplier extends Supplier {
     }
 
     // function that takes in the string of the new day, and removes it from the list of days
-    public void removeShipDay(String day) {
+    public void removeShipDay(int dayNumber) {
         // iterate list of days. when finds, delete
         for (int i = 0; i < days.size(); i++) {
-            if (days.get(i).toString().equals(day))
+            if (days.get(i).toString().equals(ShipmentDays.values()[dayNumber].toString()))
                 days.remove(i);
         }
     }

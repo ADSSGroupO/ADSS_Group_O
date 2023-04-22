@@ -71,14 +71,10 @@ public class CLI {
     // function that prints and manages menu that edit suppliers' information
     public void editSupplierInfo() {
         // print menu for editing information of supplier
-        System.out.println("What would you want to edit?\n1. Name\n2. Bank account\n3. Payment method\n4. Contacts");
+        System.out.println("What would you want to edit?\n1. Name\n2. Bank account\n3. Payment method\n4. Contacts\n5. Modify Delivery Information");
         // get input for choice
         Scanner info_input = new Scanner(System.in);
         int option = info_input.nextInt();
-        // if option invalid, print error message and return to main menu
-        if (option != 1 && option != 2 && option != 3 && option != 4) {
-            throw new IllegalArgumentException("Invalid option!");
-        }
         // find the supplier that needs to be edited
         System.out.println("Enter supplier's id: ");
         int id = info_input.nextInt();
@@ -106,8 +102,14 @@ public class CLI {
             System.out.println("Payment method was changed successfully");
         }
         // change contacts
-        else {
+        else if (option == 4) {
             contactsMenu(id);
+        }
+        else if (option == 5) {
+            modifyDeliveryInformation(id);
+        }
+        else {
+            throw new IllegalArgumentException("Invalid option!");
         }
     }
 
@@ -313,16 +315,17 @@ public class CLI {
     /*** orders ***/
     public void ordersMenu() {
         // print menu of orders methods
-        System.out.println("1. Make new order");
+        System.out.println("1. Make new periodic order");
         System.out.println("2. Update order status");
         System.out.println("3. Print all orders");
         System.out.println("4. Print order of supplier");
+        System.out.println("5. Make order due to shortages");
         // ask for input
         Scanner input = new Scanner(System.in);
         int option = input.nextInt();
         // add new order
         if (option == 1) {
-            addOrder();
+            makePeriodicOrder();
         }
         // cancel or confirm order
         else if (option == 2) {
@@ -338,6 +341,9 @@ public class CLI {
             System.out.println("Enter supplier's id: ");
             int id = input.nextInt();
             SupplierController.getInstance().printOrdersOfSupplier(id);
+        }
+        else if (option == 5) {
+            makeOrderDueToShortages();
         }
         else {
             throw new IllegalArgumentException("Invalid input");
@@ -362,7 +368,7 @@ public class CLI {
     }
 
     // function for creating a new order
-    public void addOrder() {
+    public void makePeriodicOrder() {
         Scanner order_input = new Scanner(System.in);
         // a map with product code as key, and units as values
         HashMap<Integer, Integer> productsAndAmounts = new HashMap<>(); // <product_code, num_of_units>
@@ -400,7 +406,7 @@ public class CLI {
             System.out.println("Do you have more products?\n1. Yes\n2. No");
             option = order_input.nextInt();
         }
-        OrderController.getInstance().makeOrder(branch, productsToOrder, productsAndAmounts);
+        OrderController.getInstance().makePeriodicOrder(branch, productsToOrder, productsAndAmounts);
     }
 
     // function that takes input of order and desired status, and updates it
@@ -435,31 +441,50 @@ public class CLI {
         }
     }
 
-    // TO DO: update dates of supplier's delivery by using this input configuration
-    // should do it after creating new making orders method
-    /*
-           // informing of the chosen supplier
-        System.out.println("ID of chosen supplier: " + supplier.getPrivateCompanyNumber() + ", Name: " + supplier.getName());
-        // scanner for input
-        Scanner order_input = new Scanner(System.in);
-        // taking input for delivery dates based on class:
+    public void makeOrderDueToShortages() {
+
+    }
+
+    // function that takes in id, and modifies the delivery information of supplier based on user input
+    public void modifyDeliveryInformation(int id) {
+        // get supplier by id
+        Supplier supplier = SupplierController.getInstance().getSupplierByID(id);
+        Scanner input = new Scanner(System.in);
         // if supplier is on order
         if (supplier.getClass() == OnOrderSupplier.class) {
             System.out.println("Enter number of days to deliver: ");
-            int days = order_input.nextInt();
-            ((OnOrderSupplier) supplier).setNumberOfDaysToNextOrder(days);
+            int days = input.nextInt();
+            // update date
+            SupplierController.getInstance().setNextDeliveryDateOfOnOrderSupplier(id, days);
         }
-        // if supplier is no transport
-        if (supplier.getClass() == NoTransportSupplier.class) {
+        else if (supplier.getClass() == NoTransportSupplier.class) { // if supplier is no transport
+            // get information of next delivery date
             System.out.println("Enter day of estimated delivery date: ");
-            int day = order_input.nextInt();
+            int day = input.nextInt();
             System.out.println("Enter month of estimated delivery date: ");
-            int month = order_input.nextInt();
+            int month = input.nextInt();
             System.out.println("Enter year of estimated delivery date: ");
-            int year = order_input.nextInt();
-            ((NoTransportSupplier) supplier).setNextDeliveryDate(day, month, year);
+            int year = input.nextInt();
+            // update date
+            SupplierController.getInstance().setNextDeliveryDateOfNoTransportSupplier(id, day, month, year);
         }
-     */
+        else { // if supplier is on fixed days
+            // choose if add or delete day
+            System.out.println("Do you wish to:\n1. Add weekly delivery day\n2. Remove weekly delivery day");
+            int option = input.nextInt();
+            // choose day
+            System.out.println("Choose day:\n1. Sunday\n2. Monday\n3. Tuesday\n4. Wednesday\n5. Thursday\n6. Friday\n7. Saturday");
+            int day = input.nextInt();
+            if (option == 1) {
+                // add day to supplier
+                SupplierController.getInstance().addShipDayToFixedSupplier(id, day-1);
+            }
+            else if (option == 2) {
+                // remove day from supplier
+                SupplierController.getInstance().removeShipDayFromFixedSupplier(id, day-1);
+            }
+        }
+    }
 
 }
 
