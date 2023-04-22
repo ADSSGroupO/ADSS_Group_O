@@ -29,6 +29,26 @@ public class SupplierController { //Controller for supplier as singleton
         suppliers.put(id, supplier);
     }
 
+    // function that adds ship day to fixed days supplier
+    public void addShipDayToFixedSupplier(int id, int dayNumber) {
+        if (!suppliers.containsKey(id))
+            throw new IllegalArgumentException("Supplier ID doesn't exist");
+        if (!(suppliers.get(id) instanceof FixedDaysSupplier))
+            throw new IllegalArgumentException("Supplier is not a fixed days supplier");
+        FixedDaysSupplier supplier = (FixedDaysSupplier) suppliers.get(id);
+        supplier.addShipDay(dayNumber);
+    }
+
+    // function that removes ship day from fixed days supplier
+    public void removeShipDayFromFixedSupplier(int id, int dayNumber) {
+        if (!suppliers.containsKey(id))
+            throw new IllegalArgumentException("Supplier ID doesn't exist");
+        if (!(suppliers.get(id) instanceof FixedDaysSupplier))
+            throw new IllegalArgumentException("Supplier is not a fixed days supplier");
+        FixedDaysSupplier supplier = (FixedDaysSupplier) suppliers.get(id);
+        supplier.removeShipDay(dayNumber);
+    }
+
     // add new on order supplier
     public void addOnOrderSupplier(String name, int id, int bank, Payment pay) {
         if (suppliers.containsKey(id))
