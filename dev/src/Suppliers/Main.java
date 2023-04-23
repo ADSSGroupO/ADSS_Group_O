@@ -4,8 +4,9 @@ import Suppliers.PresentationLayer.CLI;
 
 public class Main {
     public static void main(String[] args) {
-        CLI controller = new CLI();
+        // create new CLI
+        CLI cli = new CLI();
         // start menu
-        controller.printMenu();
+        cli.printMenu();
     }
 }
