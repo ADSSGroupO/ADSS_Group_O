@@ -28,7 +28,7 @@ public class ProductController {
         return ProductById.get(productId);
     }
 
-    public void reduceAmountOfProductByID(int productID, int amount , Item.location locale) {
+    public void reduceAmountOfProductByID(int productID, int amount , Item.Location locale) {
         //ProductById.get(productID).setCurrentAmount( ProductById.get(productID).getCurrentAmount()-amount);
         Product product =ProductById.get(productID);
         product.reduceItems(amount);

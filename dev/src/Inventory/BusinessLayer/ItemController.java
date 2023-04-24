@@ -99,7 +99,7 @@ public class ItemController {
         if(!categoryController.getCategoryById().containsKey(category)){
             throw new IllegalArgumentException("Category does not exist");
         }
-        Item.location locate = Item.location.INVENTORY;
+        Item.Location locate = Item.Location.INVENTORY;
         Item item = null;
         if(size==null || size.equals("") || size.equals("null")){
             item = new Item(manufacturer,barcode, name, locate, expirationDate, costPrice, productID);
@@ -139,7 +139,7 @@ public class ItemController {
                 //remove from in store items
                 inStoreItems.get(CategoryID).remove(item);
                 //remove from product amount
-                productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.location.STORE);
+                productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.STORE);
                 item.setCurrentLocation("SOLD");
             }
         }
@@ -148,7 +148,7 @@ public class ItemController {
             //remove from storage items
             storageItems.get(CategoryID).remove(item);
             //remove from product amount
-            productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.location.INVENTORY);
+            productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.INVENTORY);
             item.setCurrentLocation("SOLD");
         }
         //update the price been sold
@@ -224,7 +224,7 @@ public class ItemController {
                 //remove from in store items
                 inStoreItems.get(CategoryId).remove(item);
                 //remove from product amount
-                productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.location.STORE);
+                productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.STORE);
             }
             if (storageItems.get(CategoryId).contains(item)) {
                 //add the item to sold items
@@ -232,7 +232,7 @@ public class ItemController {
                 //remove from in store items
                 storageItems.get(CategoryId).remove(item);
                 //remove from product amount
-                productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.location.INVENTORY);
+                productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.INVENTORY);
         }
     }
 
