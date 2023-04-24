@@ -1,6 +1,6 @@
 package Suppliers.Test;
 
-import Suppliers.DiscountOfPercentageByOrder;
+import Suppliers.BusinessLayer.DiscountOfPercentageByOrder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
