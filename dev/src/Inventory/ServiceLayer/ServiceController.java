@@ -59,9 +59,9 @@ public class ServiceController {
     }
 
     ///////////////////////////ProductService/////////////////////////////
-    public boolean addProduct(String name, int minAmount, int categoryID, int makat , int supplierID) {
+    public boolean addProduct(String name, int minAmount, int categoryID,String sub_category, int makat , int supplierID) {
         try{
-            productService.addProduct(name, minAmount, categoryID, makat , supplierID);
+            productService.addProduct(name, minAmount, categoryID, sub_category,makat , supplierID);
         } catch (Exception e) {
             return false;
         }
@@ -138,12 +138,12 @@ public class ServiceController {
         this.addCategory("Dairy products", 0);
         this.addCategory("Meat products", 1);
         this.addCategory("Housewares", 2);
-        this.addProduct("Milk", 5, 0, 0, 0);
-        this.addProduct("Cheese", 2, 0, 1, 0);
-        this.addProduct("Salami", 2, 1, 2, 0);
-        this.addProduct("Beef Fillet ", 2, 1, 3, 0);
-        this.addProduct("Broom", 2, 2, 4, 0);
-        this.addProduct("Pot", 2, 2, 5, 0);
+        this.addProduct("Milk", 5, 0, "milk",0, 0);
+        this.addProduct("Cheese", 2, 0, "cheese",1, 0);
+        this.addProduct("Salami", 2, 1, "salami",2, 0);
+        this.addProduct("Beef Fillet ", 2, 1, "beef fillet",3, 0);
+        this.addProduct("Broom", 2, 2, "broom",4, 0);
+        this.addProduct("Pot", 2, 2,"pot" ,5, 0);
         this.addItem("Tnuva", 0, "Milk 3%", expirationDateStr, 6.9, 0, 0 ,"1L");
         this.addItem("Tnuva", 1, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L");
         this.addItem("Tnuva", 2, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L");

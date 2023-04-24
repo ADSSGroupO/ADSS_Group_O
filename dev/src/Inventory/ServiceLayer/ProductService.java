@@ -14,8 +14,8 @@ public class ProductService {
     }
 
     //addProduct
-    public void addProduct(String name, int minAmount, int categoryID, int makat , int supplierID) {
-        productController.addProduct(name, minAmount, categoryID, makat, supplierID);
+    public void addProduct(String name, int minAmount, int categoryID,String sub_category, int makat , int supplierID) {
+        productController.addProduct(name, minAmount, categoryID, sub_category,makat, supplierID);
     }
 
     // SetMinimum-product

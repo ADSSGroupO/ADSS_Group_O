@@ -44,7 +44,7 @@ public class ProductController {
         }
     }
     //add product with category
-    public void addProduct(String name, int minAmount, int categoryID, int makat , int supplierID) {
+    public void addProduct(String name, int minAmount, int categoryID,String subCategory, int makat , int supplierID) {
         if(ProductById.containsKey(makat)){
             System.out.println("product ID already exist");
             throw new IllegalArgumentException("product ID already exist");
@@ -53,7 +53,7 @@ public class ProductController {
             System.out.println("category ID not exist");
             throw new IllegalArgumentException("category ID not exist");
         }
-        Product product = new Product(name, minAmount, categoryID, makat , supplierID);
+        Product product = new Product(name, minAmount, categoryID,subCategory, makat , supplierID);
         products.add(product);
         Category category = new Category(name,categoryID);
         //add to product by id dictionary
