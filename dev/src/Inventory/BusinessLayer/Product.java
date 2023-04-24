@@ -138,10 +138,17 @@ public class Product {
     }
 
 
-    public void setDiscount(LocalDate start, LocalDate end, float discount) {
-        this.discount = discount;
-        this.startDiscount = start;
-        this.endDiscount = end;
+    public void setDiscount(String start, String end, float discount) {
+        try{
+            LocalDate startDiscount = LocalDate.parse(start);
+            LocalDate endDiscount = LocalDate.parse(end);
+            this.discount=discount;
+            this.startDiscount=startDiscount;
+            this.endDiscount=endDiscount;
+        }
+        catch (Exception e){
+            System.out.println("Error in date format");
+        }
     }
 
 

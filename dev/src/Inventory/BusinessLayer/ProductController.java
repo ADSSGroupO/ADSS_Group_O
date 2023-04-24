@@ -86,10 +86,8 @@ public class ProductController {
 
 
     public void setDiscountByProduct(int productID, float discount , String start, String end){
-        LocalDate startDate = LocalDate.parse(start);
-        LocalDate endDate = LocalDate.parse(end);
         if(products.contains(ProductById.get(productID))){
-        ProductById.get(productID).setDiscount(startDate,endDate,discount);
+        ProductById.get(productID).setDiscount(start,end,discount);
             }
             else{
         throw new IllegalArgumentException("product not exist");
