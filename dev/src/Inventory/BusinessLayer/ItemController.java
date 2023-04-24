@@ -139,8 +139,8 @@ public class ItemController {
                 //remove from in store items
                 inStoreItems.get(CategoryID).remove(item);
                 //remove from product amount
-                productController.reduceAmountOfProductByID(item.getProductID(), 1, Item.location.STORE);
-
+                productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.location.STORE);
+                item.setCurrentLocation("SOLD");
             }
         }
         else{
@@ -148,7 +148,8 @@ public class ItemController {
             //remove from storage items
             storageItems.get(CategoryID).remove(item);
             //remove from product amount
-            productController.reduceAmountOfProductByID(item.getProductID(), 1, Item.location.INVENTORY);
+            productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.location.INVENTORY);
+            item.setCurrentLocation("SOLD");
         }
         //update the price been sold
         item.setThePriceBeenSoldAt(getDiscount(ItemID)); //todo: check if this is the right way to do it
@@ -205,9 +206,9 @@ public class ItemController {
     //getDiscount
     public double getDiscount(int ItemID) {
         Item item = itemById.get(ItemID);
-        double discountProduct = productController.getProductDiscount(item.getProductID());
+        double discountProduct = productController.getProductDiscount(item.getMakat());
         double pricePerDiscountProduct = item.getSellingPrice() * (1 - discountProduct) * (0.01);
-        int productID = itemById.get(ItemID).getProductID();
+        int productID = itemById.get(ItemID).getMakat();
         int categoryID = productController.getProductById(productID).getCategoryID();
         double categoryDiscount = categoryController.getCategoryDiscount(categoryID);
         double pricePerDiscountCategory = item.getSellingPrice() * (1 - categoryDiscount) * (0.01);
@@ -223,7 +224,7 @@ public class ItemController {
                 //remove from in store items
                 inStoreItems.get(CategoryId).remove(item);
                 //remove from product amount
-                productController.reduceAmountOfProductByID(item.getProductID(), 1, Item.location.STORE);
+                productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.location.STORE);
             }
             if (storageItems.get(CategoryId).contains(item)) {
                 //add the item to sold items
@@ -231,7 +232,7 @@ public class ItemController {
                 //remove from in store items
                 storageItems.get(CategoryId).remove(item);
                 //remove from product amount
-                productController.reduceAmountOfProductByID(item.getProductID(), 1, Item.location.INVENTORY);
+                productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.location.INVENTORY);
         }
     }
 
@@ -320,14 +321,14 @@ public class ItemController {
     public double getPrice(int ItemID) {
         Item item = itemById.get(ItemID);
         //check if product has discount
-        double discountProduct = productController.getProductDiscount(item.getProductID());
+        double discountProduct = productController.getProductDiscount(item.getMakat());
         double pricePerDiscountProduct = 0;
         if(discountProduct != 0){
             pricePerDiscountProduct = item.getSellingPrice() * (1 - (discountProduct * 0.01));
         }
 
         //check if category has discount
-        int productID = item.getProductID();
+        int productID = item.getMakat();
         int categoryID = productController.getProductById(productID).getCategoryID();
         double categoryDiscount = categoryController.getCategoryDiscount(categoryID);
         double pricePerDiscountCategory = 0;

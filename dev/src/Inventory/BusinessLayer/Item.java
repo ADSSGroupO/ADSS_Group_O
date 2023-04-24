@@ -6,7 +6,7 @@ public class Item {
     String size=null;
     private String producerID;
     private String name;
-    enum location {STORE, INVENTORY};
+    enum location {STORE, INVENTORY ,SOLD};
     private location currentLocation;
     private boolean isExpired = false;
     private LocalDate expirationDate;
@@ -17,7 +17,7 @@ public class Item {
     //המחיר שהמוצר נמכר בו!
     private double thePriceBeenSoldAt=-1 ;
     private boolean isDefective = false;
-    private final int productID;
+    private final int makat;
     private final int barcode;
     private String defDescription;
 
@@ -36,7 +36,7 @@ public class Item {
             throw new IllegalArgumentException("Invalid date format");
         }
         this.costPrice = costPrice;
-        this.productID = productID;
+        this.makat = productID;
         this.barcode = barcode;
         this.sellingPrice = costPrice*(1.17+0.2);
     }
@@ -55,7 +55,7 @@ public class Item {
             throw new IllegalArgumentException("Invalid date format");
         }
         this.costPrice = costPrice;
-        this.productID = productID;
+        this.makat = productID;
         this.barcode = barcode;
         this.sellingPrice = costPrice*(1.17+0.2);
     }
@@ -64,16 +64,16 @@ public class Item {
         String categoryString = "";
         String productString = "";
         try {
-            Category category = CategoryController.getInstance().getCategoryByProductID(productID);
+            Category category = CategoryController.getInstance().getCategoryByProductID(makat);
             categoryString = category.toString();
-            Product product = ProductController.getInstance().getProductById(productID);
+            Product product = ProductController.getInstance().getProductById(makat);
             productString = product.toString();
         } catch (IllegalArgumentException e) {
             // handle the exception or log an error message
         }
         if(isDefective)
-            return "producer: " + producerID + " name: " + name + " currentLocation: " + currentLocation + " isExpired: " + isExpired + " expirationDate: " + expirationDate + " costPrice: " + costPrice + " sellingPrice: " + sellingPrice + " isDefective: " + isDefective + " defDescription: " + defDescription + " productID: " + productID + " category: " + categoryString + " product: " + productString;
-        return "producer: " + producerID + " name: " + name + " currentLocation: " + currentLocation + " isExpired: " + isExpired + " expirationDate: " + expirationDate + " costPrice: " + costPrice + " sellingPrice: " + sellingPrice + " isDefective: " + isDefective + " productID: " + productID + " category: " + categoryString + " product: " + productString;
+            return "producer: " + producerID + " name: " + name + " currentLocation: " + currentLocation + " isExpired: " + isExpired + " expirationDate: " + expirationDate + " costPrice: " + costPrice + " sellingPrice: " + sellingPrice + " isDefective: " + isDefective + " defDescription: " + defDescription + " productID: " + makat + " category: " + categoryString + " product: " + productString;
+        return "producer: " + producerID + " name: " + name + " currentLocation: " + currentLocation + " isExpired: " + isExpired + " expirationDate: " + expirationDate + " costPrice: " + costPrice + " sellingPrice: " + sellingPrice + " isDefective: " + isDefective + " productID: " + makat + " category: " + categoryString + " product: " + productString;
 }
 
     public String getProducer() {
@@ -117,12 +117,19 @@ public class Item {
     }
 
     public void setCurrentLocation(String currentLocation) {
-        if(currentLocation.equals("STORE"))
-            this.currentLocation = location.STORE;
-        else if(currentLocation.equals("INVENTORY"))
-            this.currentLocation = location.INVENTORY;
-        else
-            throw new IllegalArgumentException("Invalid location");
+        switch (currentLocation) {
+            case "STORE":
+                this.currentLocation = location.STORE;
+                break;
+            case "INVENTORY":
+                this.currentLocation = location.INVENTORY;
+                break;
+            case "SOLD":
+                this.currentLocation = location.SOLD;
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid location");
+        }
     }
 
     public void setExpired(boolean expired) {
@@ -159,8 +166,8 @@ public class Item {
         return isExpired;
     }
 
-    public int getProductID(){
-        return this.productID;
+    public int getMakat(){
+        return this.makat;
     }
     public double getThePriceBeenSoldAt() {
         return thePriceBeenSoldAt;
