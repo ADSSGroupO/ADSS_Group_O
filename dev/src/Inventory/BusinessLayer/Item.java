@@ -6,8 +6,8 @@ public class Item {
     String size=null;
     private String producerID;
     private String name;
-    enum location {STORE, INVENTORY ,SOLD};
-    private location currentLocation;
+    public enum Location {STORE, INVENTORY ,SOLD};
+    private Location currentLocation;
     private boolean isExpired = false;
     private LocalDate expirationDate;
     //המחיר ששילמנו על המוצר מהספק
@@ -23,7 +23,7 @@ public class Item {
 
 
 
-    public Item(String producer,int barcode, String name, location currentLocation, String expirationDate, double costPrice, int productID) {
+    public Item(String producer, int barcode, String name, Location currentLocation, String expirationDate, double costPrice, int makat) {
         this.producerID = producer;
         this.name = name;
         this.currentLocation = currentLocation;
@@ -36,12 +36,12 @@ public class Item {
             throw new IllegalArgumentException("Invalid date format");
         }
         this.costPrice = costPrice;
-        this.makat = productID;
+        this.makat = makat;
         this.barcode = barcode;
         this.sellingPrice = costPrice*(1.17+0.2);
     }
 
-    public Item(String producer,int barcode, String name, location currentLocation, String expirationDate, double costPrice, int productID , String size) {
+    public Item(String producer, int barcode, String name, Location currentLocation, String expirationDate, double costPrice, int makat , String size) {
         this.producerID = producer;
         this.name = name;
         this.size=size;
@@ -55,7 +55,7 @@ public class Item {
             throw new IllegalArgumentException("Invalid date format");
         }
         this.costPrice = costPrice;
-        this.makat = productID;
+        this.makat = makat;
         this.barcode = barcode;
         this.sellingPrice = costPrice*(1.17+0.2);
     }
@@ -84,7 +84,7 @@ public class Item {
         return name;
     }
 
-    public location getCurrentLocation() {
+    public Location getCurrentLocation() {
         return currentLocation;
     }
 
@@ -119,13 +119,13 @@ public class Item {
     public void setCurrentLocation(String currentLocation) {
         switch (currentLocation) {
             case "STORE":
-                this.currentLocation = location.STORE;
+                this.currentLocation = Location.STORE;
                 break;
             case "INVENTORY":
-                this.currentLocation = location.INVENTORY;
+                this.currentLocation = Location.INVENTORY;
                 break;
             case "SOLD":
-                this.currentLocation = location.SOLD;
+                this.currentLocation = Location.SOLD;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid location");
