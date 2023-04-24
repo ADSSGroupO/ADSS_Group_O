@@ -25,7 +25,9 @@ public class CLI {
                     int makat = scanner.nextInt();
                     System.out.println("Enter product supplier id");
                     int supplierID = scanner.nextInt();
-                    if(serviceController.addProduct(name, minAmount, categoryID, makat, supplierID)){
+                    System.out.println("Enter product sub category");
+                    String sub_category= scanner.next();
+                    if(serviceController.addProduct(name, minAmount, categoryID,sub_category, makat, supplierID)){
                         System.out.println("Product added successfully");
                         start();
                     }

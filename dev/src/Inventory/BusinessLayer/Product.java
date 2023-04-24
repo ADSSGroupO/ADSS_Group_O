@@ -13,6 +13,7 @@ public class Product {
     private int makat;
     private static int supplierID = 0;
     private ArrayList<Double> discounts;
+    private String sub_category;
 
 
     private float discount;
@@ -30,13 +31,14 @@ public class Product {
         this.categoryID = categoryID;
     }
 
-    public Product(String name, int minAmount, int categoryID, int makat , int supplierID) {
+    public Product(String name, int minAmount, int categoryID,String sub_category, int makat , int supplierID) {
         this.name = name;
         this.minAmount = minAmount;
         this.currentAmount = 0;
         this.amountInStore = 0;
         this.amountInInventory = 0;
         this.categoryID = categoryID;
+        this.sub_category = sub_category;
         this.makat = makat;
         this.supplierID = supplierID;
         this.discounts = new ArrayList<>();
@@ -155,7 +157,7 @@ public class Product {
     }
 
     public String toString(){
-        return "Product name: "+name+" Product id: "+makat;
+        return "Product name: "+name+" Product id: "+makat+" Product sub category: "+sub_category;
     }
 
     public void setDiscountBySupplier(int supplierID, Double discount) {

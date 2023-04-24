@@ -19,12 +19,12 @@ class TestServiceController {
         service.addCategory("Dairy products", 0);
         service.addCategory("Meat products", 1);
         service.addCategory("Housewares", 2);
-        service.addProduct("Milk", 5, 0, 0, 0);
-        service.addProduct("Cheese", 2, 0, 1, 0);
-        service.addProduct("Salami", 2, 1, 2, 0);
-        service.addProduct("Beef Fillet ", 2, 1, 3, 0);
-        service.addProduct("Broom", 2, 2, 4, 0);
-        service.addProduct("Pot", 2, 2, 5, 0);
+        service.addProduct("Milk", 5, 0,"milk", 0, 0);
+        service.addProduct("Cheese", 2, 0,"cheese" ,1, 0);
+        service.addProduct("Salami", 2, 1, "salami",2, 0);
+        service.addProduct("Beef Fillet ", 2, 1, "beef fillet",3, 0);
+        service.addProduct("Broom", 2, 2, "broom",4, 0);
+        service.addProduct("Pot", 2, 2,"pot", 5, 0);
         service.addItem("Tnuva", 0, "Milk 3%", expirationDateStr, 6.9, 0, 0 ,"1L");
         service.addItem("Tnuva", 1, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L");
         service.addItem("Tnuva", 2, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L");
@@ -80,9 +80,9 @@ class TestServiceController {
     void addProduct() {
         //ToDo: add product that the category id doesn't exist
         ServiceController service = ServiceController.getInstance();
-        assertFalse(service.addProduct("Milk", 5, 0, 0, 0));
-        assertTrue(service.addProduct("Milk", 5, 0, 6, 0));
-        assertFalse(service.addProduct("Milky", 5, 0, 0, 0));
+        assertFalse(service.addProduct("Milk", 5, 0,"milk", 0, 0));
+        assertTrue(service.addProduct("Milk", 5, 0,"milk", 6, 0));
+        assertFalse(service.addProduct("Milky", 5, 0, "milk",0, 0));
     }
 
     @org.junit.jupiter.api.Test
