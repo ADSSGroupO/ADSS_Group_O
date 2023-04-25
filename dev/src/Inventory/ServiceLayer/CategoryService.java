@@ -2,6 +2,7 @@ package Inventory.ServiceLayer;
 
 import Inventory.BusinessLayer.CategoryController;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,5 +38,7 @@ public class CategoryService {
     }
 
 
-
+    public void startConnection() {
+        categoryController.startConnection();
+    }
 }

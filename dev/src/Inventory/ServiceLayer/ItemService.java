@@ -72,4 +72,8 @@ public class ItemService {
     public double getPrice(int barcode) {
         return itemController.getPrice(barcode);
     }
+
+    public void startConnection() {
+        itemController.startConnection();
+    }
 }

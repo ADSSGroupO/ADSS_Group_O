@@ -11,6 +11,7 @@ public class CLI {
     public void start() {
         int choice;
         do{
+            serviceController.starConnection();
             printMenu();
             choice = scanner.nextInt();
             switch (choice) {
