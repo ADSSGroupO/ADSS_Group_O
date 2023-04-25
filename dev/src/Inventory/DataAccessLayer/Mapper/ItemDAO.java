@@ -54,18 +54,18 @@ public class ItemDAO {
     }
     //TODO: itay what do you think about this function? , i think we shold make a table for the important lists.To ease the work
     //TODO: Tamar, I think it's a good idea, but I'm not sure how to implement it. I think we should discuss it in the next meeting.
-//    public String itemSold(int CategoryID, int ItemID){
-//        try {
-//            connectDB.createTables();
-//            String query = "DELETE FROM Items WHERE makat = " + CategoryID + " AND barcode = " + ItemID;
-//            connectDB.executeUpdate(query);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        } finally {
-//            connectDB.close_connect();
-//        }
-//        return "Item sold successfully";
-//    }
+    public String itemSold(int CategoryID, int ItemID){
+        try {
+            connectDB.createTables();
+            String query = "DELETE FROM Items WHERE makat = " + CategoryID + " AND barcode = " + ItemID;
+            connectDB.executeUpdate(query);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            connectDB.close_connect();
+        }
+        return "Item sold successfully";
+    }
      public String getItem(Integer CategoryID, Integer ItemID){
         try {
             connectDB.createTables();
