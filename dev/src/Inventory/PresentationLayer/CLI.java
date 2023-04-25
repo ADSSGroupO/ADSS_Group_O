@@ -11,7 +11,10 @@ public class CLI {
     public void start() {
         int choice;
         do{
+//            String localDir = System.getProperty("user.dir");
+//            System.out.println(localDir);
             serviceController.starConnection();
+
             printMenu();
             choice = scanner.nextInt();
             switch (choice) {
