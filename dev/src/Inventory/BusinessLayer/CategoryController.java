@@ -1,18 +1,24 @@
 package Inventory.BusinessLayer;
 
+import Inventory.DataAccessLayer.Mapper.CategoryDAO;
+import Inventory.DataAccessLayer.Mapper.CategoryProductDAO;
+
 import java.time.LocalDate;
 import java.util.*;
+
 
 //Controller for category as singleton
 public class CategoryController {
     private static HashMap<Integer, ArrayList<Product>> productByCategory = new HashMap<Integer,ArrayList<Product>>();//dictionary contains the product by category
-    // Itay: we need to consider moving this to the category controller^^^
-    //tamar : been moved -  what do you say?
     //dictionary contains the category by ID
     private static HashMap<Integer, Category> categoryById = new HashMap<Integer,Category>();
     private static CategoryController instance = null;
+    private final CategoryDAO categoryDAO;
+    private final CategoryProductDAO categoryProductDAO;
 
-    public CategoryController() {
+    private CategoryController() {
+        categoryDAO = new CategoryDAO();
+        categoryProductDAO = new CategoryProductDAO();
     }
 
     public static CategoryController getInstance() {
@@ -28,11 +34,15 @@ public class CategoryController {
         Category category = new Category(name,id);
         //add to category by id dictionary
         categoryById.put(id,category);
+        //add to categoryDAO
+        categoryDAO.addCategory(name,id);
     }
 
     //add productByCategory
     public void addProductByCategory(ArrayList<Product> products,Integer categoryId) {
         productByCategory.put(categoryId,products);
+        //add to categoryProductDAO
+        categoryProductDAO.addProductByCategory(products,categoryId);
     }
     public ArrayList<Product> getProductsByCategory(int categoryID){
         return productByCategory.get(categoryID);
@@ -43,6 +53,8 @@ public class CategoryController {
     //end format: yyyy-mm-dd
     public void setDiscountByCategory(int categoryID, float discount, String start, String end) {
         categoryById.get(categoryID).setDiscount( start, end, discount);
+        //add the discount to the categoryDAO
+        categoryDAO.setDiscountByCategory(categoryID,start,end,discount);
     }
     public double getCategoryDiscount(int categoryID){
         return categoryById.get(categoryID).getDiscount();
