@@ -6,6 +6,11 @@ public class Item {
     String size=null;
     private String producerID;
     private String name;
+
+    public void setDefectiveDescription(String reason) {
+        this.defDescription = reason;
+    }
+
     public enum Location {STORE, INVENTORY ,SOLD};
     private Location currentLocation;
     private boolean isExpired = false;
