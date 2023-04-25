@@ -1,5 +1,8 @@
 package Inventory.DataAccessLayer.Mapper;
 
+import Inventory.BusinessLayer.Product;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CategoryProductDAO {
@@ -20,7 +23,21 @@ public class CategoryProductDAO {
             connectDB.close_connect();
         }
     }
-
+    public String addProductByCategory(ArrayList<Product> products, Integer categoryId){
+        try {
+            connectDB.createTables();
+            for (Product product : products) {
+                String query = "INSERT INTO CategoryProduct (categoryID, productID) VALUES (" + categoryId + ", " + product.getMakat() + ")";
+                connectDB.executeUpdate(query);
+            }
+            return "Products added successfully";
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return "Products already exists";
+        } finally {
+            connectDB.close_connect();
+        }
+    }
     public void delete(int categoryID, int productID) {
         try {
             connectDB.createTables();

@@ -43,7 +43,11 @@ public class ItemDAO {
         try {
             connectDB.createTables();
             Item.Location locate = Item.Location.INVENTORY;
-            String query = "INSERT INTO Items (producer, barcode, name, location, expiration_date, cost_price, makat, category, productID, size) VALUES ('" + manufacturer + "', " + barcode + ", '" + name + "', '" + locate + "', '" + expirationDate + "', " + costPrice + ", " + category + ", '" + productID + "', '" + size + "')";
+            String query;
+            if(size!=null)
+                query = "INSERT INTO Items (producer, barcode, name, location, expiration_date, cost_price, makat, category, productID) VALUES ('" + manufacturer + "', " + barcode + ", '" + name + "', '" + locate + "', '" + expirationDate + "', " + costPrice + ", " + category + ", '" + productID + "')";
+            else
+                query = "INSERT INTO Items (producer, barcode, name, location, expiration_date, cost_price, makat, category, productID, size) VALUES ('" + manufacturer + "', " + barcode + ", '" + name + "', '" + locate + "', '" + expirationDate + "', " + costPrice + ", " + category + ", '" + productID + "', '" + size + "')";
             connectDB.executeUpdate(query);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -52,20 +56,17 @@ public class ItemDAO {
         }
         return "Item added successfully";
     }
-    //TODO: itay what do you think about this function? , i think we shold make a table for the important lists.To ease the work
-    //TODO: Tamar, I think it's a good idea, but I'm not sure how to implement it. I think we should discuss it in the next meeting.
-//    public String itemSold(int CategoryID, int ItemID){
-//        try {
-//            connectDB.createTables();
-//            String query = "DELETE FROM Items WHERE makat = " + CategoryID + " AND barcode = " + ItemID;
-//            connectDB.executeUpdate(query);
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        } finally {
-//            connectDB.close_connect();
-//        }
-//        return "Item sold successfully";
-//    }
+    public void setSold(int barcode) {
+        try {
+            connectDB.createTables();
+            String query = "UPDATE Items SET location = 'SOLD' WHERE barcode = " + barcode;
+            connectDB.executeUpdate(query);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            connectDB.close_connect();
+        }
+    }
      public String getItem(Integer CategoryID, Integer ItemID){
         try {
             connectDB.createTables();
@@ -91,10 +92,10 @@ public class ItemDAO {
         }
         return "Item sold successfully";
      }
-      public  String moveItemToStore(Integer CategoryID, Integer ItemID) {
+      public  String moveItemToStore(Integer ItemID) {
           try {
               connectDB.createTables();
-              String query = "UPDATE Items SET location = 'STORE' WHERE makat = " + CategoryID + " AND barcode = " + ItemID;
+              String query = "UPDATE Items SET location = 'STORE' WHERE barcode = " + ItemID;
               connectDB.executeUpdate(query);
           } catch (Exception e) {
               System.out.println(e.getMessage());
@@ -104,28 +105,40 @@ public class ItemDAO {
           return "Item moved successfully";
       }
 
-      public  String defective(Integer DefItem, Integer CategoryId, String reason) {
+      public  void defective(Integer DefItem, String reason) {
           try {
               connectDB.createTables();
-              String query = "UPDATE Items SET location = 'DEFECTIVE', defective_description = '" + reason + "' WHERE makat = " + CategoryId + " AND barcode = " + DefItem;
+              String query = "UPDATE Items SET (is_defective = 'DEFECTIVE' AND defective_description = "+reason+ ") WHERE barcode = " + DefItem;
               connectDB.executeUpdate(query);
           } catch (Exception e) {
               System.out.println(e.getMessage());
           } finally {
               connectDB.close_connect();
           }
-          return "Item moved successfully";
       }
-      public  String getItemsInStore() {
-            try {
-                connectDB.createTables();
-                String query = "SELECT * FROM Items WHERE location = 'STORE'";
-                connectDB.executeUpdate(query);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            } finally {
-                connectDB.close_connect();
-            }
-            return "Item moved successfully";
-      }
+
+    public void setExpired(int barcode) {
+        try {
+            connectDB.createTables();
+            String query = "UPDATE Items SET is_expired = 1 WHERE barcode = " + barcode;
+            connectDB.executeUpdate(query);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            connectDB.close_connect();
+        }
+    }
+
+    public void setThePriceBeenSoldAt(int barcode, double thePriceBeenSoldAt) {
+        try {
+            connectDB.createTables();
+            String query = "UPDATE Items SET the_price_been_sold_at = " + thePriceBeenSoldAt + " WHERE barcode = " + barcode;
+            connectDB.executeUpdate(query);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            connectDB.close_connect();
+        }
+    }
+
 }

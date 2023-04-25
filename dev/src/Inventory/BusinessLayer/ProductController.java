@@ -1,5 +1,7 @@
 package Inventory.BusinessLayer;
 
+import Inventory.DataAccessLayer.Mapper.ProductDAO;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -7,15 +9,17 @@ import java.util.*;
 public class ProductController {
 
     private final CategoryController categoryController;
-    private static HashMap<Integer,List<Category>> categoryByProduct = new HashMap<Integer,List<Category>>();//ToDo: are we sure that product has more than one category?
+    private static HashMap<Integer,List<Category>> categoryByProduct = new HashMap<Integer,List<Category>>();
     private static HashMap<Integer, Product> ProductById = new HashMap<Integer, Product>();
   //  private Dictionary<Integer, List<Item>> itemByProduct;
     private static ProductController instance = null;
     private static ArrayList<Product> products = new ArrayList<Product>();
     private static ArrayList<Category> categories = new ArrayList<Category>();
+    private final ProductDAO productDAO;
 
     private ProductController() {
         categoryController = CategoryController.getInstance();
+        productDAO = new ProductDAO();
     }
 
     public static ProductController getInstance() {
@@ -42,6 +46,8 @@ public class ProductController {
                 break;
             }
         }
+        // reduce the amount of the product in the productDAO
+        productDAO.reduceAmountOfProductByID(productID,amount);
     }
     //add product with category
     public void addProduct(String name, int minAmount, int categoryID,String subCategory, int makat , int supplierID) {
@@ -62,6 +68,8 @@ public class ProductController {
         categoryController.addProductByCategory(products,categoryID);
         //add to category by product dictionary
         categoryByProduct.put(makat,categories);
+        //add to productDAO
+        productDAO.addProduct(name,minAmount,categoryID,subCategory,makat,supplierID);
     }
     //get product
     public Product getProduct(int productID){
@@ -77,6 +85,9 @@ public class ProductController {
         //set minimum amount
         if(ProductById.containsKey(productID)){
             ProductById.get(productID).setMinAmount(deliveryTime,demand);
+            int minAmount = ProductById.get(productID).getMinAmount();
+            //update the product in the productDAO
+            productDAO.setMinimum(productID,minAmount);
         }
         else{
             throw new IllegalArgumentException("product not exist");
@@ -88,6 +99,8 @@ public class ProductController {
     public void setDiscountByProduct(int productID, float discount , String start, String end){
         if(products.contains(ProductById.get(productID))){
         ProductById.get(productID).setDiscount(start,end,discount);
+        //update the product in the productDAO'
+        productDAO.setDiscountByProduct(productID,discount,start,end);
             }
             else{
         throw new IllegalArgumentException("product not exist");
@@ -104,6 +117,8 @@ public class ProductController {
 
     public void addItem(int productID){
         ProductById.get(productID).addItems(1);
+        //update the product in the productDAO
+        productDAO.addItem(productID);
     }
 
     public int getAmountOfProduct(int productID) {
