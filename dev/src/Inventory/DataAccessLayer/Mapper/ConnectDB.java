@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class ConnectDB {
     public Connection conn;
-    public final String url = "jdbc:mysql:Inventory_Suppliers_Database.db";
+    public final String url = "jdbc:mysql:./Inventory_Suppliers_Database.db";
     private static ConnectDB instance = null;
 
     private ConnectDB() {
@@ -30,6 +30,7 @@ public class ConnectDB {
     }
 
     public void createTables() throws SQLException {
+        System.out.println("Creating tables...");
         try(Statement statement = createStatement()){
             String query = "CREATE TABLE IF NOT EXISTS Category ("
                     + "id INTEGER PRIMARY KEY AUTOINCREMENT,"

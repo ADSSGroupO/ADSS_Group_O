@@ -16,6 +16,7 @@ public class ProductController {
     private static ArrayList<Product> products = new ArrayList<Product>();
     private static ArrayList<Category> categories = new ArrayList<Category>();
     private final ProductDAO productDAO;
+    private boolean opened_connection = false;
 
     private ProductController() {
         categoryController = CategoryController.getInstance();
@@ -140,7 +141,10 @@ public class ProductController {
 
     public void startConnection() {
         try {
-            productDAO.startConnection();
+            if(!opened_connection){
+                productDAO.startConnection();
+                opened_connection = true;
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
