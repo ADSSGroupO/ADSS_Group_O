@@ -53,6 +53,7 @@ public class ItemDAO {
         return "Item added successfully";
     }
     //TODO: itay what do you think about this function? , i think we shold make a table for the important lists.To ease the work
+    //TODO: Tamar, I think it's a good idea, but I'm not sure how to implement it. I think we should discuss it in the next meeting.
 //    public String itemSold(int CategoryID, int ItemID){
 //        try {
 //            connectDB.createTables();
