@@ -189,4 +189,10 @@ public class ServiceController {
     public ArrayList<StringBuilder> getInventoryReportByCategory(ArrayList<Integer> categoryList) {
         return categoryService.getReportOfItemsInStockByCategory(categoryList);
     }
+
+    public void starConnection() {
+        categoryService.startConnection();
+        itemService.startConnection();
+        productService.startConnection();
+    }
 }

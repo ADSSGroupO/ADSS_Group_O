@@ -137,4 +137,13 @@ public class ProductController {
     public ArrayList<Double> getDiscountsByProductId(int productID) {
         return ProductById.get(productID).getDiscountsBySupplier();
     }
+
+    public void startConnection() {
+        try {
+            productDAO.startConnection();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
 }

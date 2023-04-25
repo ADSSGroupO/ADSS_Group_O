@@ -394,4 +394,12 @@ public class ItemController {
             throw new IllegalArgumentException("Item does not exist");
         }
     }
+
+    public void startConnection() {
+        try{
+            itemDAO.startConnection();
+        } catch (Exception e){
+            System.out.println("Error connecting to DB");
+        }
+    }
 }

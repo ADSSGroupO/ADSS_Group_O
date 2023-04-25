@@ -2,6 +2,7 @@ package Inventory.DataAccessLayer.Mapper;
 
 import Inventory.BusinessLayer.Product;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -103,5 +104,10 @@ public class ProductDAO {
         } finally {
             connectDB.close_connect();
         }
+    }
+
+    public void startConnection() throws SQLException {
+        connectDB.createTables();
+        loadData();
     }
 }

@@ -141,4 +141,8 @@ public class ItemDAO {
         }
     }
 
+    public void startConnection() throws SQLException {
+        connectDB.createTables();
+        loadData();
+    }
 }

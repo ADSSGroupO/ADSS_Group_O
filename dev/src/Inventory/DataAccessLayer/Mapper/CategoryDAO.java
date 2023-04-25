@@ -3,6 +3,7 @@ package Inventory.DataAccessLayer.Mapper;
 import Inventory.BusinessLayer.Category;
 import Inventory.BusinessLayer.Product;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -55,4 +56,8 @@ public class CategoryDAO {
     }
 
 
+    public void startConnection() throws SQLException {
+        connectDB.createTables();
+        loadData();
+    }
 }

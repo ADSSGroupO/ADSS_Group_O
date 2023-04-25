@@ -3,6 +3,7 @@ package Inventory.BusinessLayer;
 import Inventory.DataAccessLayer.Mapper.CategoryDAO;
 import Inventory.DataAccessLayer.Mapper.CategoryProductDAO;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -104,5 +105,13 @@ public class CategoryController {
     }
     public Category getCategoryById(int id) {
         return categoryById.get(id);
+    }
+
+    public void startConnection()  {
+        try {
+            categoryDAO.startConnection();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

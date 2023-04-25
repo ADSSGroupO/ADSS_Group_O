@@ -47,4 +47,8 @@ public class ProductService {
     public ArrayList<Double> getDiscountsByProductId(int productID) {
         return productController.getDiscountsByProductId(productID);
     }
+
+    public void startConnection() {
+        productController.startConnection();
+    }
 }
