@@ -1,5 +1,7 @@
 package Inventory.BusinessLayer;
 
+import Inventory.DataAccessLayer.Mapper.ItemDAO;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -24,6 +26,7 @@ public class ItemController {
     private static int DAYS_TO_Report = 7;
     private static final HashMap<Integer, ArrayList<Item>> storageItemsByProductID = new HashMap<>(); //storage items by Product ID
     private static final HashMap<Integer, ArrayList<Item>> inStoreItemsByProductId = new HashMap<>(); //in store items by Product ID
+    private final ItemDAO itemDAO;
 
 
 
@@ -34,6 +37,7 @@ public class ItemController {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         //check for expired items
         scheduler.scheduleAtFixedRate(this::checkForExpiredItems, 0, 1, TimeUnit.DAYS);
+        itemDAO = new ItemDAO();
     }
 
     private void checkForExpiredItems() {
@@ -73,6 +77,8 @@ public class ItemController {
                 if(inStoreItems.get(i).get(j).checkDate()){
                     expiredItems.put(i, inStoreItems.get(i).get(j));
                     inStoreItems.get(i).remove(inStoreItems.get(i).get(j));
+                    // update the item is expired in the DB
+                    itemDAO.setExpired(inStoreItems.get(i).get(j).getBarcode());
                 }
             }
         }
@@ -121,6 +127,8 @@ public class ItemController {
         itemById.put(barcode, item);
         //add the amount of the product
         productController.addItem(productID);
+        //add the item to the database
+        itemDAO.addItem(manufacturer,barcode, name, expirationDate, costPrice,category, productID,size);
     }
 
     //sold item
@@ -141,6 +149,8 @@ public class ItemController {
                 //remove from product amount
                 productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.STORE);
                 item.setCurrentLocation("SOLD");
+                // update the item is sold in the DB
+                itemDAO.setSold(item.getBarcode());
             }
         }
         else{
@@ -150,9 +160,14 @@ public class ItemController {
             //remove from product amount
             productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.INVENTORY);
             item.setCurrentLocation("SOLD");
+            // update the item is sold in the DB
+            itemDAO.setSold(item.getBarcode());
         }
+        double thePriceBeenSoldAt = getDiscount(ItemID);
         //update the price been sold
-        item.setThePriceBeenSoldAt(getDiscount(ItemID)); //todo: check if this is the right way to do it
+        item.setThePriceBeenSoldAt(thePriceBeenSoldAt);
+        //update the price the item been sold at in the DB
+        itemDAO.setThePriceBeenSoldAt(item.getBarcode(), thePriceBeenSoldAt);
     }
 
     //get item
@@ -190,6 +205,8 @@ public class ItemController {
             inStoreItems.get(categoryID).add(itemById.get(itemID));
             //remove from storage items
             storageItems.get(categoryID).remove(itemById.get(itemID));
+            //update the location in the DB
+            itemDAO.moveItemToStore(itemID);
         }
         else{
             throw new IllegalArgumentException("Item not found");
@@ -200,6 +217,8 @@ public class ItemController {
             inStoreItems.get(categoryID).add(item);
             //remove from storage items
             storageItems.get(categoryID).remove(item);
+            //update the location in the DB
+            itemDAO.moveItemToStore(itemID);
         }
     }
 
@@ -225,6 +244,10 @@ public class ItemController {
                 inStoreItems.get(CategoryId).remove(item);
                 //remove from product amount
                 productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.STORE);
+                //update the defctive description
+                item.setDefectiveDescription(reason);
+                //update is_defective in the DB
+                itemDAO.defective(item.getBarcode(), reason);
             }
             if (storageItems.get(CategoryId).contains(item)) {
                 //add the item to sold items
@@ -233,7 +256,10 @@ public class ItemController {
                 storageItems.get(CategoryId).remove(item);
                 //remove from product amount
                 productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.INVENTORY);
-        }
+                //update is_defective in the DB
+                itemDAO.defective(item.getBarcode(), reason);
+
+            }
     }
 
     //get all defective items
