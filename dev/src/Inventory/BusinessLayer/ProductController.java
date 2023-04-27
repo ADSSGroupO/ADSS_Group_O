@@ -102,7 +102,7 @@ public class ProductController {
     public void setDiscountByProduct(int productID, float discount , String start, String end){
         if(getProductById(productID)!=null){
         ProductById.get(productID).setDiscount(start,end,discount);
-        //update the product in the productDAO'
+        //update the product in the productDAO
         productDAO.setDiscountByProduct(productID,discount,start,end);
             }
             else{
@@ -152,5 +152,13 @@ public class ProductController {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public void removeSampleData() {
+        try {
+            productDAO.removeSampleData();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
