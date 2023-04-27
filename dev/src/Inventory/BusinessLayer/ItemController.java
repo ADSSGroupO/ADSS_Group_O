@@ -27,6 +27,7 @@ public class ItemController {
     private static final HashMap<Integer, ArrayList<Item>> storageItemsByProductID = new HashMap<>(); //storage items by Product ID
     private static final HashMap<Integer, ArrayList<Item>> inStoreItemsByProductId = new HashMap<>(); //in store items by Product ID
     private final ItemDAO itemDAO;
+    private boolean connection_opened = false;
 
 
 
@@ -397,7 +398,10 @@ public class ItemController {
 
     public void startConnection() {
         try{
+            if (!connection_opened){
             itemDAO.startConnection();
+            connection_opened = true;
+            }
         } catch (Exception e){
             System.out.println("Error connecting to DB");
         }

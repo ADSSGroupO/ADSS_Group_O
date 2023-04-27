@@ -1,27 +1,23 @@
 package Inventory.DataAccessLayer.Mapper;
 
-import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ConnectDB {
     public Connection conn;
-    public String url = "jdbc:sqlite:Inventory_Suppliers_Database.db";
+    public final String url = "jdbc:mysql:./Inventory_Suppliers_Database.db";
     private static ConnectDB instance = null;
 
     private ConnectDB() {
         try {
             Class.forName("org.sqlite.JDBC");
-            String filePath = new File("").getAbsolutePath();
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established.");
-        } catch (SQLException e) {
-//            ClassNotFoundException e
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } finally {
+        }
+        finally {
             close_connect();
         }
     }
@@ -34,6 +30,7 @@ public class ConnectDB {
     }
 
     public void createTables() throws SQLException {
+        System.out.println("Creating tables...");
         try(Statement statement = createStatement()){
             String query = "CREATE TABLE IF NOT EXISTS Category ("
                     + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
