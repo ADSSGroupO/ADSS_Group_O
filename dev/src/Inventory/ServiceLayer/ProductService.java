@@ -51,8 +51,4 @@ public class ProductService {
     public void startConnection() {
         productController.startConnection();
     }
-
-    public void removeSampleData() {
-        productController.removeSampleData();
-    }
 }

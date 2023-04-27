@@ -110,15 +110,4 @@ public class ProductDAO {
         connectDB.createTables();
         loadData();
     }
-
-    public void removeSampleData() {
-        try {
-            connectDB.createTables();
-            connectDB.resetTables();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            connectDB.close_connect();
-        }
-    }
 }
