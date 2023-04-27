@@ -1,20 +1,24 @@
 package Inventory.DataAccessLayer.Mapper;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ConnectDB {
     public Connection conn;
-    public final String url = "jdbc:mysql:Inventory_Suppliers_Database.db";
+    public String url = "jdbc:mysql:./Inventory_Suppliers_Database.db";
     private static ConnectDB instance = null;
 
     private ConnectDB() {
         try {
-            Class.forName("org.sqlite.JDBC");
+//            Class.forName("org.sqlite.JDBC");
+            String filePath = new File("").getAbsolutePath();
+            url = filePath.concat("path to the property file");
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established.");
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
+//            ClassNotFoundException e
             System.out.println(e.getMessage());
         }
         finally {
