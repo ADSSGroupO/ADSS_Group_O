@@ -41,5 +41,14 @@
     </orderEntry>
     <orderEntry type="library" name="bluecatcode.mockito.1.10.19.extended" level="project" />
     <orderEntry type="library" name="dslplatform.dsl.json.threetenbp" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/sqlite-3.34.0/sqlite-jdbc-3.34.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
