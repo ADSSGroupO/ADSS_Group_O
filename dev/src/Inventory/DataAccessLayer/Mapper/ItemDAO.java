@@ -28,6 +28,14 @@ public class ItemDAO {
                 else {
                     item = new Item((String) row.get("producer"), (int) row.get("barcode"), (String) row.get("name"), location, (String) row.get("expiration_date"), (float) row.get("cost_price"), (int) row.get("makat"), (String) row.get("size"));
                 }
+                if((int) row.get("is_defective") == 1)
+                    item.setDefective(row.get("defective_description").toString());
+                if((int) row.get("is_expired") == 1)
+                    item.setExpired(true);
+                if (row.get("selling_price") != null)
+                    item.setSellingPrice((float) row.get("selling_price"));
+                if (row.get("the_price_been_sold_at") != null)
+                    item.setThePriceBeenSoldAt((float) row.get("the_price_been_sold_at"));
                 HashMap<Item, String> itemStringHashMap = new HashMap<>();
                 itemStringHashMap.put(item, (String) row.get("category"));
                 items.add(itemStringHashMap);
@@ -39,7 +47,7 @@ public class ItemDAO {
         }
         return items;
     }
-    public  String addItem(String manufacturer, Integer barcode, String name, String expirationDate, double costPrice, int category, int productID,String size, double sellingPrice){
+    public void addItem(String manufacturer, Integer barcode, String name, String expirationDate, double costPrice, int category, int productID, String size, double sellingPrice){
         try {
             connectDB.createTables();
             Item.Location locate = Item.Location.INVENTORY;
@@ -50,7 +58,6 @@ public class ItemDAO {
         } finally {
             connectDB.close_connect();
         }
-        return "Item added successfully";
     }
     public void setSold(int barcode) {
         try {
@@ -88,7 +95,7 @@ public class ItemDAO {
         }
         return "Item sold successfully";
      }
-      public  String moveItemToStore(Integer ItemID) {
+      public void moveItemToStore(Integer ItemID) {
           try {
               connectDB.createTables();
               String query = "UPDATE Items SET location = 'STORE' WHERE barcode = " + ItemID;
@@ -98,7 +105,6 @@ public class ItemDAO {
           } finally {
               connectDB.close_connect();
           }
-          return "Item moved successfully";
       }
 
       public  void defective(Integer DefItem, String reason) {
@@ -140,5 +146,77 @@ public class ItemDAO {
     public void startConnection() throws SQLException {
         connectDB.createTables();
         loadData();
+    }
+
+    public HashMap<Integer, ArrayList<Item>> getSoldItems() {
+        try {
+            connectDB.createTables();
+            String query = "SELECT id FROM Category ";
+            ArrayList<HashMap<String, Object>> CategorySet = connectDB.executeQuery(query);
+            HashMap<Integer, ArrayList<Item>> soldItems = new HashMap<>();
+            for(HashMap<String, Object> row : CategorySet) {
+                int categoryID = (int) row.get("id");
+                query = "SELECT * FROM Items WHERE category = " + categoryID + " AND location = 'SOLD'";
+                ArrayList<HashMap<String, Object>> resultSet = connectDB.executeQuery(query);
+                ArrayList<Item> items = new ArrayList<>();
+                for (HashMap<String, Object> itemRow : resultSet) {
+                    Item item;
+                    Item.Location location = Item.Location.valueOf((String) itemRow.get("location"));
+                    if(itemRow.get("size")!=null) {
+                        item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (float) itemRow.get("cost_price"), (int) itemRow.get("makat"));
+                    }
+                    else {
+                        item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (float) itemRow.get("cost_price"), (int) itemRow.get("makat"), (String) itemRow.get("size"));
+                    }
+                    if((int) itemRow.get("is_defective") == 1)
+                        item.setDefective(itemRow.get("defective_description").toString());
+                    if((int) itemRow.get("is_expired") == 1)
+                        item.setExpired(true);
+                    if (itemRow.get("selling_price") != null)
+                        item.setSellingPrice((float) itemRow.get("selling_price"));
+                    if (itemRow.get("the_price_been_sold_at") != null)
+                        item.setThePriceBeenSoldAt((float) itemRow.get("the_price_been_sold_at"));
+                    items.add(item);
+                }
+                soldItems.put(categoryID, items);
+            }
+            return soldItems;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public HashMap<Integer, Item> getItemById() {
+        try{
+            connectDB.createTables();
+            String query = "SELECT * FROM Items";
+            ArrayList<HashMap<String, Object>> resultSet = connectDB.executeQuery(query);
+            HashMap<Integer, Item> items = new HashMap<>();
+            for (HashMap<String, Object> itemRow : resultSet) {
+                Item item;
+                Item.Location location = Item.Location.valueOf((String) itemRow.get("location"));
+                if(itemRow.get("size")!=null) {
+                    item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (double) itemRow.get("cost_price"), (int) itemRow.get("makat"));
+                }
+                else {
+                    item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (double) itemRow.get("cost_price"), (int) itemRow.get("makat"), (String) itemRow.get("size"));
+                }
+                if((int) itemRow.get("is_defective") == 1)
+                    item.setDefective(itemRow.get("defective_description").toString());
+                if((int) itemRow.get("is_expired") == 1)
+                    item.setExpired(true);
+                if (itemRow.get("selling_price") != null)
+                    item.setSellingPrice((float) itemRow.get("selling_price"));
+                if (itemRow.get("the_price_been_sold_at") != null)
+                    item.setThePriceBeenSoldAt((float) itemRow.get("the_price_been_sold_at"));
+                items.put((int) itemRow.get("barcode"), item);
+            }
+            return items;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
