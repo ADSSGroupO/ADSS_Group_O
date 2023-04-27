@@ -15,7 +15,7 @@ public class CategoryProductDAO {
     public void insert(int categoryID, int productID) {
         try {
             connectDB.createTables();
-            String query = "INSERT INTO CategoryProduct (categoryID, productID) VALUES (" + categoryID + ", " + productID + ")";
+            String query = "INSERT INTO Category_Product (categoryID, productID) VALUES (" + categoryID + ", " + productID + ")";
             connectDB.executeUpdate(query);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -27,7 +27,7 @@ public class CategoryProductDAO {
         try {
             connectDB.createTables();
             for (Product product : products) {
-                String query = "INSERT INTO CategoryProduct (categoryID, productID) VALUES (" + categoryId + ", " + product.getMakat() + ")";
+                String query = "INSERT INTO Category_Product (categoryID, productID) VALUES (" + categoryId + ", " + product.getMakat() + ")";
                 connectDB.executeUpdate(query);
             }
             return "Products added successfully";
@@ -41,7 +41,7 @@ public class CategoryProductDAO {
     public void delete(int categoryID, int productID) {
         try {
             connectDB.createTables();
-            String query = "DELETE FROM CategoryProduct WHERE categoryID = " + categoryID + " AND productID = " + productID;
+            String query = "DELETE FROM Category_Product WHERE categoryID = " + categoryID + " AND productID = " + productID;
             connectDB.executeUpdate(query);
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -129,7 +129,7 @@ public class ItemController {
         //add the amount of the product
         productController.addItem(productID);
         //add the item to the database
-        itemDAO.addItem(manufacturer,barcode, name, expirationDate, costPrice,category, productID,size);
+        itemDAO.addItem(manufacturer,barcode, name, expirationDate, costPrice,category, productID,size, item.getSellingPrice());
     }
 
     //sold item
