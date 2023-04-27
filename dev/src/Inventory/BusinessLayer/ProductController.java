@@ -150,4 +150,12 @@ public class ProductController {
         }
 
     }
+
+    public void removeSampleData() {
+        try {
+            productDAO.removeSampleData();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
