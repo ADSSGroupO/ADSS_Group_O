@@ -141,4 +141,62 @@ public class ItemDAO {
         connectDB.createTables();
         loadData();
     }
+
+    public HashMap<Integer, ArrayList<Item>> getSoldItems() {
+        try {
+            connectDB.createTables();
+            String query = "SELECT id FROM Category ";
+            ArrayList<HashMap<String, Object>> CategorySet = connectDB.executeQuery(query);
+            HashMap<Integer, ArrayList<Item>> soldItems = new HashMap<>();
+            for(HashMap<String, Object> row : CategorySet) {
+                int categoryID = (int) row.get("id");
+                query = "SELECT * FROM Items WHERE category = " + categoryID + " AND location = 'SOLD'";
+                ArrayList<HashMap<String, Object>> resultSet = connectDB.executeQuery(query);
+                ArrayList<Item> items = new ArrayList<>();
+                for (HashMap<String, Object> itemRow : resultSet) {
+                    Item item;
+                    Item.Location location = Item.Location.valueOf((String) itemRow.get("location"));
+                    if(itemRow.get("size")!=null) {
+                        item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (float) itemRow.get("cost_price"), (int) itemRow.get("makat"));
+                    }
+                    else {
+                        item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (float) itemRow.get("cost_price"), (int) itemRow.get("makat"), (String) itemRow.get("size"));
+                    }
+                    item.setThePriceBeenSoldAt((float) itemRow.get("the_price_been_sold_at"));
+                    items.add(item);
+                }
+                soldItems.put(categoryID, items);
+            }
+            return soldItems;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public HashMap<Integer, Item> getItemById() {
+        try{
+            connectDB.createTables();
+            String query = "SELECT * FROM Items";
+            ArrayList<HashMap<String, Object>> resultSet = connectDB.executeQuery(query);
+            HashMap<Integer, Item> items = new HashMap<>();
+            for (HashMap<String, Object> itemRow : resultSet) {
+                Item item;
+                Item.Location location = Item.Location.valueOf((String) itemRow.get("location"));
+                if(itemRow.get("size")!=null) {
+                    item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (float) itemRow.get("cost_price"), (int) itemRow.get("makat"));
+                }
+                else {
+                    item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (float) itemRow.get("cost_price"), (int) itemRow.get("makat"), (String) itemRow.get("size"));
+                }
+                item.setThePriceBeenSoldAt((float) itemRow.get("the_price_been_sold_at"));
+                items.put((int) itemRow.get("barcode"), item);
+            }
+            return items;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
