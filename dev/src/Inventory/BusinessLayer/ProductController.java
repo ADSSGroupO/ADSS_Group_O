@@ -9,12 +9,12 @@ import java.util.*;
 public class ProductController {
 
     private final CategoryController categoryController;
-    private static HashMap<Integer,List<Category>> categoryByProduct = new HashMap<Integer,List<Category>>();
+//    private static HashMap<Integer,List<Category>> categoryByProduct = new HashMap<Integer,List<Category>>();
+//  private Dictionary<Integer, List<Item>> itemByProduct;
+//    private static ArrayList<Category> categories = new ArrayList<Category>();
+// private static ArrayList<Product> products = new ArrayList<Product>();
     private static HashMap<Integer, Product> ProductById = new HashMap<Integer, Product>();
-  //  private Dictionary<Integer, List<Item>> itemByProduct;
     private static ProductController instance = null;
-    private static ArrayList<Product> products = new ArrayList<Product>();
-    private static ArrayList<Category> categories = new ArrayList<Category>();
     private final ProductDAO productDAO;
     private boolean opened_connection = false;
 
@@ -30,7 +30,7 @@ public class ProductController {
         return instance;
     }
     public Product getProductById(Integer productId) {
-        return ProductById.get(productId);
+        return ProductById.getOrDefault(productId, null);
     }
 
     public void reduceAmountOfProductByID(int productID, int amount , Item.Location locale) {
@@ -61,14 +61,16 @@ public class ProductController {
             throw new IllegalArgumentException("category ID not exist");
         }
         Product product = new Product(name, minAmount, categoryID,subCategory, makat , supplierID);
+        ArrayList <Product> products = new ArrayList<Product>();
         products.add(product);
-        Category category = new Category(name,categoryID);
+        //products.add(product);
+        //Category category = new Category(name,categoryID);
         //add to product by id dictionary
         ProductById.put(makat,product);
         //add to product by category dictionary
         categoryController.addProductByCategory(products,categoryID);
-        //add to category by product dictionary
-        categoryByProduct.put(makat,categories);
+//        //add to category by product dictionary
+//        categoryByProduct.put(makat,categories);
         //add to productDAO
         productDAO.addProduct(name,minAmount,categoryID,subCategory,makat,supplierID);
     }
@@ -98,9 +100,9 @@ public class ProductController {
 
 
     public void setDiscountByProduct(int productID, float discount , String start, String end){
-        if(products.contains(ProductById.get(productID))){
+        if(getProductById(productID)!=null){
         ProductById.get(productID).setDiscount(start,end,discount);
-        //update the product in the productDAO'
+        //update the product in the productDAO
         productDAO.setDiscountByProduct(productID,discount,start,end);
             }
             else{
@@ -144,10 +146,19 @@ public class ProductController {
             if(!opened_connection){
                 productDAO.startConnection();
                 opened_connection = true;
+                ProductById= productDAO.getProducts();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public void removeSampleData() {
+        try {
+            productDAO.removeSampleData();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
