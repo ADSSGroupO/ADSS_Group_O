@@ -130,6 +130,8 @@ public class ServiceController {
     public ArrayList<Double> getDiscountsByProductId(int productID) {
         return productService.getDiscountsByProductId(productID);
     }
+
+
 /*
     this function is for testing purposes only
  */
@@ -194,5 +196,9 @@ public class ServiceController {
         categoryService.startConnection();
         productService.startConnection();
         itemService.startConnection();
+    }
+
+    public void removeSampleData() {
+        productService.removeSampleData();
     }
 }
