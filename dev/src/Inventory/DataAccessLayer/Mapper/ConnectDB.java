@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class ConnectDB {
     public Connection conn;
-    public final String url = "jdbc:mysql:./Inventory_Suppliers_Database.db";
+    public final String url = "jdbc:sqlite:Inventory_Suppliers_Database.db";
     private static ConnectDB instance = null;
 
     private ConnectDB() {
@@ -37,8 +37,7 @@ public class ConnectDB {
                     + "name TEXT NOT NULL,"
                     + "Start_Discount Date,"
                     + "End_Discount Date,"
-                    + "Discount FLOAT,"
-                    + "FOREIGN KEY (parent_id) REFERENCES Category(id)"
+                    + "Discount FLOAT"
                     + ");";
             statement.execute(query);
             query = "CREATE TABLE IF NOT EXISTS Product ("
@@ -75,14 +74,14 @@ public class ConnectDB {
             statement.execute(query);
             query = "CREATE TABLE IF NOT EXISTS CATEGORY_PRODUCT (" +
                     "category_id INTEGER NOT NULL," +
-                    "makat INTEGER NOT NULL PRIMARY_KEY," +
+                    "makat INTEGER NOT NULL PRIMARY KEY," +
                     "FOREIGN KEY (category_id) REFERENCES Category(id)," +
                     "FOREIGN KEY (makat) REFERENCES Product(makat)" +
                     ");";
             statement.execute(query);
             query = "CREATE TABLE IF NOT EXISTS Product_Item (" +
                     "makat INTEGER NOT NULL," +
-                    "barcode INTEGER NOT NULL PRIMARY_KEY," +
+                    "barcode INTEGER NOT NULL PRIMARY KEY," +
                     "FOREIGN KEY (makat) REFERENCES Product(makat)," +
                     "FOREIGN KEY (barcode) REFERENCES Items(barcode)" +
                     ");";
