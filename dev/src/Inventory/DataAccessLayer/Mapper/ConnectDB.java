@@ -45,10 +45,10 @@ public class ConnectDB {
                     + "name TEXT NOT NULL,"
                     + "minAmount INTEGER NOT NULL,"
                     + "currentAmount INTEGER NOT NULL,"
-                    + "amountInStore INTEGER NOT NULL,"
-                    + "amountInInventory INTEGER NOT NULL,"
+                    + "amountInStore INTEGER,"
+                    + "amountInInventory INTEGER,"
                     + "category_id INTEGER NOT NULL,"
-                    + "sub_category TEXT NOT NULL,"
+                    + "sub_category TEXT,"
                     + "supplier_id INTEGER NOT NULL,"
                     + "Discount FLOAT,"
                     + "Start_Discount Date,"
@@ -61,7 +61,7 @@ public class ConnectDB {
                     "barcode INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "makat INTEGER NOT NULL," +
                     "name TEXT NOT NULL," +
-                    "current_location TEXT NOT NULL," +
+                    "location TEXT NOT NULL," +
                     "is_defective INTEGER NOT NULL," +
                     "is_expired INTEGER NOT NULL," +
                     "expiration_date Date," +
@@ -70,7 +70,9 @@ public class ConnectDB {
                     "the_price_been_sold_at FLOAT," +
                     "defective_description TEXT," +
                     "size TEXT," +
-                    "FOREIGN KEY (makat) REFERENCES Product(makat)"+ ");";
+                    "category INTEGER NOT NULL," +
+                    "FOREIGN KEY (makat) REFERENCES Product(makat)"+
+                    "FOREIGN KEY (category) REFERENCES Category(id)"+");";
             statement.execute(query);
             query = "CREATE TABLE IF NOT EXISTS CATEGORY_PRODUCT (" +
                     "category_id INTEGER NOT NULL," +

@@ -39,15 +39,11 @@ public class ItemDAO {
         }
         return items;
     }
-    public  String addItem(String manufacturer, Integer barcode, String name, String expirationDate, double costPrice, int category, int productID,String size){
+    public  String addItem(String manufacturer, Integer barcode, String name, String expirationDate, double costPrice, int category, int productID,String size, double sellingPrice){
         try {
             connectDB.createTables();
             Item.Location locate = Item.Location.INVENTORY;
-            String query;
-            if(size!=null)
-                query = "INSERT INTO Items (producer, barcode, name, location, expiration_date, cost_price, makat, category, productID) VALUES ('" + manufacturer + "', " + barcode + ", '" + name + "', '" + locate + "', '" + expirationDate + "', " + costPrice + ", " + category + ", '" + productID + "')";
-            else
-                query = "INSERT INTO Items (producer, barcode, name, location, expiration_date, cost_price, makat, category, productID, size) VALUES ('" + manufacturer + "', " + barcode + ", '" + name + "', '" + locate + "', '" + expirationDate + "', " + costPrice + ", " + category + ", '" + productID + "', '" + size + "')";
+            String query = "INSERT INTO Items (producer, barcode, name, location, expiration_date, cost_price, category, makat, size, is_defective, is_expired, selling_price) VALUES ('" + manufacturer + "', " + barcode + ", '" + name + "', '" + locate + "', '" + expirationDate + "', " + costPrice + ", " + category + ", '" + productID + "', '" + size + "', 0, 0, " + sellingPrice + ")";
             connectDB.executeUpdate(query);
         } catch (Exception e) {
             System.out.println(e.getMessage());
