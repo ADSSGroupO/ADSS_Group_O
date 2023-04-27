@@ -192,7 +192,7 @@ public class ServiceController {
 
     public void starConnection() {
         categoryService.startConnection();
-        itemService.startConnection();
         productService.startConnection();
+        itemService.startConnection();
     }
 }
