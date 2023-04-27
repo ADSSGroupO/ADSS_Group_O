@@ -1,10 +1,12 @@
 package Inventory.DataAccessLayer.Mapper;
 
+import Inventory.BusinessLayer.Category;
 import Inventory.BusinessLayer.Product;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ProductDAO {
     private final ConnectDB connectDB = ConnectDB.getInstance();
@@ -109,5 +111,27 @@ public class ProductDAO {
     public void startConnection() throws SQLException {
         connectDB.createTables();
         loadData();
+    }
+
+
+    public HashMap<Integer, Product> getProducts() {
+        try{
+            connectDB.createTables();
+            String query = "SELECT * FROM Product";
+            ArrayList<HashMap<String,Object>> resultSet = connectDB.executeQuery(query);
+            HashMap<Integer, Product> products = new HashMap<>();
+            for (HashMap<String, Object> row : resultSet) {
+                Product product = new Product((String) row.get("name"), (int) row.get("minAmount"), (int) row.get("category_id"), (String) row.get("sub_category"), (int) row.get("makat"), (int) row.get("supplier_id"));
+                if(row.get("Start_Discount")!=null && row.get("End_Discount")!=null && row.get("Discount")!=null)
+                    product.setDiscount((String) row.get("Start_Discount"), (String) row.get("End_Discount"), (float) row.get("Discount"));
+                products.put(product.getMakat(), product);
+            }
+            return products;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        } finally {
+            connectDB.close_connect();
+        }
     }
 }
