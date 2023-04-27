@@ -98,6 +98,7 @@ public class CLI {
         System.out.println("1. Add a product");
         System.out.println("2. Add a category");
         System.out.println("3. Add an item or items to a product");
+        System.out.println("4. Go back to the main menu");
         int choice = scanner.nextInt();
         switch (choice) {
             case 1: {
@@ -114,6 +115,9 @@ public class CLI {
                 } else {
                     addItem();
                 }
+            }
+            case 4: {
+                start();
             }
         }
     }
@@ -190,6 +194,7 @@ public class CLI {
         System.out.println("4. Set how often to get defective report");
         System.out.println("5. Move Item to the store");
         System.out.println("6. Sell item");
+        System.out.println("7. Go back to the main menu");
         int choice = scanner.nextInt();
         switch (choice) {
             case 1: {
@@ -209,6 +214,9 @@ public class CLI {
             }
             case 6: {
                 sellItem();
+            }
+            case 7: {
+                start();
             }
         }
     }
@@ -309,6 +317,7 @@ public class CLI {
         System.out.println("6. Get products by category");
         System.out.println("7. Get set to be expired report");
         System.out.println("8. Get amount of a product");
+        System.out.println("9.  Go back to the main menu");
         int choice = scanner.nextInt();
         switch (choice) {
             case 1: {
@@ -373,6 +382,9 @@ public class CLI {
                     System.out.println("Product doesn't exist");
                     getStuff();
                 }
+            }
+            case 9: {
+                start();
             }
 
         }
