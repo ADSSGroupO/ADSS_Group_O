@@ -11,16 +11,19 @@ public class CategoryDAO {
     private final ConnectDB connectDB = ConnectDB.getInstance();
     public CategoryDAO() {
     }
-    public HashMap<Category, String> loadData() {
-        HashMap<Category, String> categories = new HashMap<>();
+    public HashMap<Integer, Category> loadData() {
+        HashMap<Integer, Category> categories = new HashMap<>();
         try {
             connectDB.createTables();
             String query = "SELECT * FROM Category";
             ArrayList<HashMap<String,Object>> resultSet = connectDB.executeQuery(query);
             for (HashMap<String, Object> row : resultSet) {
-                Category category = new Category((String) row.get("name"), (int) row.get("id"));
-                if(row.get("Start_Discount")!=null && row.get("End_Discount")!=null && row.get("Discount")!=null)
+                String name = (String) row.get("name");
+                int id = (int) row.get("id");
+                Category category = new Category(name, id);
+                if (row.get("Start_Discount") != null && row.get("End_Discount") != null && row.get("Discount") != null)
                     category.setDiscount((String) row.get("Start_Discount"), (String) row.get("End_Discount"), (float) row.get("Discount"));
+                categories.put(id, category);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -56,8 +59,8 @@ public class CategoryDAO {
     }
 
 
-    public void startConnection() throws SQLException {
+    public HashMap<Integer, Category> startConnection() throws SQLException {
         connectDB.createTables();
-        loadData();
+        return loadData();
     }
 }

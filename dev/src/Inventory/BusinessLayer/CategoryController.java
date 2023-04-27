@@ -114,9 +114,10 @@ public class CategoryController {
     public void startConnection() {
         try {
             if (!opened_connection) {
-                categoryDAO.startConnection();
+                categoryById = this.categoryDAO.startConnection();
                 opened_connection = true;
             }
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
