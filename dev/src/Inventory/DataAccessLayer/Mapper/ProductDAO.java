@@ -31,7 +31,7 @@ public class ProductDAO {
     public String addProduct(String name, int minAmount, int categoryID, String sub_category, int makat, int supplierID){
         try {
             connectDB.createTables();
-            String query = "INSERT INTO Product (name, minAmount, categoryID, sub_category, makat, supplierID) VALUES ('" + name + "', " + minAmount + ", " + categoryID + ", '" + sub_category + "', " + makat + ", " + supplierID + ")";
+            String query = "INSERT INTO Product (name, currentAmount, minAmount, category_ID, sub_category, makat, supplier_id) VALUES ('" + name + "'," + 0 + ", " + minAmount + ", " + categoryID + ", '" + sub_category + "', " + makat + ", " + supplierID + ")";
             connectDB.executeUpdate(query);
             return "Product added successfully";
         } catch (Exception e) {
@@ -59,7 +59,7 @@ public class ProductDAO {
     public String addItemToProduct(int productID, int amount){
         try {
             connectDB.createTables();
-            String query = "UPDATE Product SET amount = amount + " + amount + " WHERE makat = " + productID;
+            String query = "UPDATE Product SET currentAmount = currentAmount + " + amount + " WHERE makat = " + productID;
             connectDB.executeUpdate(query);
             return "Item added successfully";
         } catch (Exception e) {
@@ -73,7 +73,7 @@ public class ProductDAO {
     public void reduceAmountOfProductByID(int productID, int amount) {
         try {
             connectDB.createTables();
-            String query = "UPDATE Product SET amount = amount - " + amount + " WHERE makat = " + productID;
+            String query = "UPDATE Product SET currentAmount = currentAmount - " + amount + " WHERE makat = " + productID;
             connectDB.executeUpdate(query);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -97,7 +97,7 @@ public class ProductDAO {
     public void addItem(int productID) {
         try {
             connectDB.createTables();
-            String query = "UPDATE Product SET amount = amount + 1 WHERE makat = " + productID;
+            String query = "UPDATE Product SET currentAmount = currentAmount + 1 WHERE makat = " + productID;
             connectDB.executeUpdate(query);
         } catch (Exception e) {
             System.out.println(e.getMessage());
