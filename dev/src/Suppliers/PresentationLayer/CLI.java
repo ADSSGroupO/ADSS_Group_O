@@ -406,7 +406,7 @@ public class CLI {
             System.out.println("Do you have more products?\n1. Yes\n2. No");
             option = order_input.nextInt();
         }
-        OrderController.getInstance().makePeriodicOrder(branch, productsToOrder, productsAndAmounts);
+        OrderController.getInstance().makeOrder(branch, productsToOrder, productsAndAmounts);
     }
 
     // function that takes input of order and desired status, and updates it

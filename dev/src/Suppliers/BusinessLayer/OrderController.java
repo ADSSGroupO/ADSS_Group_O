@@ -3,11 +3,18 @@ package Suppliers.BusinessLayer;
 import Inventory.BusinessLayer.Product;
 import Inventory.BusinessLayer.ProductController;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class OrderController { //Controller for order as singleton
     HashMap<Integer, Order> orders; // <id, Order>: map that matches id to order
+    HashMap<ShipmentDays, ArrayList<FixedPeriodOrder>> fixed_orders; // <shipment_days, list<FixedPeriodOrder>>: map that matches shipment days to list of fixed period orders
+    // that should be executed on those days
     private static OrderController instance = null; // the instance of the Order Controller
 
     // constructor
@@ -80,7 +87,7 @@ public class OrderController { //Controller for order as singleton
 
 
     // function that makes periodic order from supplier
-    public void makePeriodicOrder(int branch, ArrayList<Integer> productsToOrder, HashMap<Integer, Integer> productsAndAmounts) {
+    public void makeOrder(int branch, ArrayList<Integer> productsToOrder, HashMap<Integer, Integer> productsAndAmounts) {
         // creating a list of suppliers that are capable of delivering all products
         ArrayList<Supplier> relevantSuppliers = new ArrayList<>();
         // add suppliers who deliver this product to list of capable suppliers
@@ -165,4 +172,62 @@ public class OrderController { //Controller for order as singleton
         order.confirmDelivery();
     }
 
-}
+
+
+    public void scheduleTask() {
+        // create new timer
+            Timer timer = new Timer();
+
+            // Set the time to run the task
+            int hour = 8; // 8 AM
+            int minute = 0;
+            int second = 0;
+
+            // Create a new timer task
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    // make fixed orders of today
+                    makeTodaysFixedOrder();
+                }
+            };
+
+            // Schedule the task to run every day at the specified time
+            timer.schedule(task, getTime(hour, minute, second), 24 * 60 * 60 * 1000L);
+        }
+
+        // function that checks today's day, and makes the fixed period order of the day that are in the map of fixed orders
+    private void makeTodaysFixedOrder() {
+        // create todays date
+        LocalDate today = LocalDate.now();
+        // get the day
+        DayOfWeek dayOfWeek = today.getDayOfWeek();
+        // get list of fixed period orders of today
+        ShipmentDays day = ShipmentDays.valueOf(dayOfWeek.toString());
+        ArrayList<FixedPeriodOrder> ordersToMake = fixed_orders.get(day);
+        // iterate all orders in the list and make them
+        for (FixedPeriodOrder order : ordersToMake) {
+            // get supplier
+            Supplier supplier = SupplierController.getInstance().getSupplierByID(order.getSupplierID());
+            // get product to order
+            ArrayList<Integer> productsToOrder = new ArrayList<>();
+            productsToOrder.add(order.getProductCode());
+            // get amount of product to order
+            HashMap<Integer, Integer> productsAndAmounts = new HashMap<>();
+            productsAndAmounts.put(order.getProductCode(), order.getAmount());
+            // make order
+            Order newOrder = makeOrderFromSupplier(order.getBranch(), supplier, productsToOrder, productsAndAmounts);
+            // add order to list of orders
+            orders.put(newOrder.getOrderNumber(), newOrder);
+        }
+    }
+
+        public static long getTime(int hour, int minute, int second) {
+            long currentTime = System.currentTimeMillis();
+            long targetTime = currentTime - (currentTime % (24 * 60 * 60 * 1000L)) + (hour * 60 * 60 * 1000L) + (minute * 60 * 1000L) + (second * 1000L);
+            if (targetTime < currentTime) {
+                targetTime += 24 * 60 * 60 * 1000L;
+            }
+            return targetTime;
+        }
+    }
