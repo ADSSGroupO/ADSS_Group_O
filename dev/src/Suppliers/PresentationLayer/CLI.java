@@ -442,7 +442,6 @@ public class CLI {
     }
 
     public void makeOrderDueToShortages() {
-
     }
 
     // function that takes in id, and modifies the delivery information of supplier based on user input

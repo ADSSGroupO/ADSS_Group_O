@@ -1,7 +1,6 @@
 package Suppliers.BusinessLayer;
 
 public class FixedPeriodOrder { // a class that represents a fixed period order, executed every fixed period of time of store's choice
-
     private int branch;
     private int supplier_id;
     private int product_code;
