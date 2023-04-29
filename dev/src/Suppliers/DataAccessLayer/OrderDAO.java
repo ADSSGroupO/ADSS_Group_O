@@ -42,6 +42,32 @@ public class OrderDAO {
         return orders;
     }
 
+    public HashMap<ShipmentDays, ArrayList<FixedPeriodOrder>> getFixedPeriodOrders() {
+        HashMap<ShipmentDays, ArrayList<FixedPeriodOrder>> fixed_orders = new HashMap<>();
+        try {
+            connectDB.createTables();
+            // create query for extracting data
+            String query = "SELECT * FROM FixedPeriodOrder";
+            ArrayList<HashMap<String, Object>> resultSet = connectDB.executeQuery(query);
+            for (HashMap<String, Object> row : resultSet) {
+                ShipmentDays day = ShipmentDays.values()[(int) row.get("day")];
+                FixedPeriodOrder order = new FixedPeriodOrder((int) row.get("supplier_id"), (int) row.get("branch_code"), (int) row.get("makat"), (int) row.get("amount"));
+                if (fixed_orders.containsKey(day)) {
+                    fixed_orders.get(day).add(order);
+                } else {
+                    ArrayList<FixedPeriodOrder> orders = new ArrayList<>();
+                    orders.add(order);
+                    fixed_orders.put(day, orders);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            connectDB.close_connect();
+        }
+        return fixed_orders;
+    }
+
     public String setOrderStatus(int order_number, String status) {
         try {
             connectDB.createTables();
