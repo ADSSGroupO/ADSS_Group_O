@@ -23,19 +23,19 @@ public class ItemDAO {
                 Item item;
                 Item.Location location = (Item.Location) row.get("location");
                 if(row.get("size")!=null) {
-                    item = new Item((String) row.get("producer"), (int) row.get("barcode"), (String) row.get("name"), location, (String) row.get("expiration_date"), (float) row.get("cost_price"), (int) row.get("makat"));
+                    item = new Item((String) row.get("producer"), (int) row.get("barcode"), (String) row.get("name"), location, (String) row.get("expiration_date"), (double) row.get("cost_price"), (int) row.get("makat"));
                 }
                 else {
-                    item = new Item((String) row.get("producer"), (int) row.get("barcode"), (String) row.get("name"), location, (String) row.get("expiration_date"), (float) row.get("cost_price"), (int) row.get("makat"), (String) row.get("size"));
+                    item = new Item((String) row.get("producer"), (int) row.get("barcode"), (String) row.get("name"), location, (String) row.get("expiration_date"), (double) row.get("cost_price"), (int) row.get("makat"), (String) row.get("size"));
                 }
                 if((int) row.get("is_defective") == 1)
                     item.setDefective(row.get("defective_description").toString());
                 if((int) row.get("is_expired") == 1)
                     item.setExpired(true);
                 if (row.get("selling_price") != null)
-                    item.setSellingPrice((float) row.get("selling_price"));
+                    item.setSellingPrice((double) row.get("selling_price"));
                 if (row.get("the_price_been_sold_at") != null)
-                    item.setThePriceBeenSoldAt((float) row.get("the_price_been_sold_at"));
+                    item.setThePriceBeenSoldAt((double) row.get("the_price_been_sold_at"));
                 HashMap<Item, String> itemStringHashMap = new HashMap<>();
                 itemStringHashMap.put(item, (String) row.get("category"));
                 items.add(itemStringHashMap);
@@ -163,19 +163,19 @@ public class ItemDAO {
                     Item item;
                     Item.Location location = Item.Location.valueOf((String) itemRow.get("location"));
                     if(itemRow.get("size")!=null) {
-                        item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (float) itemRow.get("cost_price"), (int) itemRow.get("makat"));
+                        item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (double) itemRow.get("cost_price"), (int) itemRow.get("makat"));
                     }
                     else {
-                        item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (float) itemRow.get("cost_price"), (int) itemRow.get("makat"), (String) itemRow.get("size"));
+                        item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (double) itemRow.get("cost_price"), (int) itemRow.get("makat"), (String) itemRow.get("size"));
                     }
                     if((int) itemRow.get("is_defective") == 1)
                         item.setDefective(itemRow.get("defective_description").toString());
                     if((int) itemRow.get("is_expired") == 1)
                         item.setExpired(true);
                     if (itemRow.get("selling_price") != null)
-                        item.setSellingPrice((float) itemRow.get("selling_price"));
+                        item.setSellingPrice((double) itemRow.get("selling_price"));
                     if (itemRow.get("the_price_been_sold_at") != null)
-                        item.setThePriceBeenSoldAt((float) itemRow.get("the_price_been_sold_at"));
+                        item.setThePriceBeenSoldAt((double) itemRow.get("the_price_been_sold_at"));
                     items.add(item);
                 }
                 soldItems.put(categoryID, items);
@@ -208,9 +208,9 @@ public class ItemDAO {
                 if((int) itemRow.get("is_expired") == 1)
                     item.setExpired(true);
                 if (itemRow.get("selling_price") != null)
-                    item.setSellingPrice((float) itemRow.get("selling_price"));
+                    item.setSellingPrice((double) itemRow.get("selling_price"));
                 if (itemRow.get("the_price_been_sold_at") != null)
-                    item.setThePriceBeenSoldAt((float) itemRow.get("the_price_been_sold_at"));
+                    item.setThePriceBeenSoldAt((double) itemRow.get("the_price_been_sold_at"));
                 items.put((int) itemRow.get("barcode"), item);
             }
             return items;

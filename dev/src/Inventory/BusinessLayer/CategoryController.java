@@ -70,7 +70,7 @@ public class CategoryController {
         if (categoryID.size() == 0) {
             throw new IllegalArgumentException("TO GENERATE A REPORT MUST HAVE AT LEAST ONE CATEGORY");
         }
-        StringBuilder item = new StringBuilder(" Category Id :");
+        StringBuilder item = new StringBuilder(" Category Id");
         ArrayList<StringBuilder> report = new ArrayList<StringBuilder>();
         for (int i = 0; i < categoryID.size(); i++) {
             item.append(" ").append(i).append(" : ");
@@ -115,6 +115,7 @@ public class CategoryController {
         try {
             if (!opened_connection) {
                 categoryById = this.categoryDAO.startConnection();
+                productByCategory = this.categoryProductDAO.startConnection();
                 opened_connection = true;
             }
 
