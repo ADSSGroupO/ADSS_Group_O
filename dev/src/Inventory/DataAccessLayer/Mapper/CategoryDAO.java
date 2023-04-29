@@ -21,8 +21,12 @@ public class CategoryDAO {
                 String name = (String) row.get("name");
                 int id = (int) row.get("id");
                 Category category = new Category(name, id);
-                if (row.get("Start_Discount") != null && row.get("End_Discount") != null && row.get("Discount") != null)
-                    category.setDiscount((String) row.get("Start_Discount"), (String) row.get("End_Discount"), (float) row.get("Discount"));
+                String startDiscount = (String) row.get("Start_Discount");
+                String endDiscount = (String) row.get("End_Discount");
+                Double discount = (Double) row.get("Discount");
+                if (startDiscount != null && endDiscount != null && discount != 0.0) {
+                    category.setDiscount(startDiscount, endDiscount, discount.floatValue());
+                }
                 categories.put(id, category);
             }
         } catch (Exception e) {

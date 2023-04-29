@@ -323,17 +323,16 @@ public class ItemController {
     }
 
     private void publishInventoryReport() {
-        Collection<ArrayList<Item>> storageItemsList = storageItems.values();
-        for (ArrayList<Item> item : storageItemsList) {
-            for (Item value : item) {
-                System.out.println(value.toString());
-            }
+        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (int i = 0; i<itemById.size(); i++){
+            ids.add(i);
         }
-        Collection<ArrayList<Item>> inStoreItemsList = inStoreItems.values();
-        for (ArrayList<Item> item : inStoreItemsList) {
-            for (Item value : item) {
-                System.out.println(value.toString());
-            }
+        for (Integer i : ids){
+            items.add(itemById.get(i));
+        }
+        for (Item item : items) {
+            System.out.println(item.toString());
         }
     }
 

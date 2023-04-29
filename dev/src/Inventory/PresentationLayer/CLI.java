@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CLI {
-    private final Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
     private final ServiceController serviceController = ServiceController.getInstance();
 
     public void start() {
@@ -46,7 +46,7 @@ public class CLI {
                 }
                 case 6: {
                     System.out.println("Bye Bye");
-                    break;
+                    System.exit(0);
                 }
             }
         } while (true);
@@ -99,13 +99,18 @@ public class CLI {
         System.out.println("2. Add a category");
         System.out.println("3. Add an item or items to a product");
         System.out.println("4. Go back to the main menu");
+        scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
         switch (choice) {
             case 1: {
                 addProduct();
+                System.out.println("Product added successfully");
+                start();
             }
             case 2: {
                 addCategory();
+                System.out.println("Category added successfully");
+                start();
             }
             case 3: {
                 System.out.println("Would you like to add many items of the same product? answer with y or n");
@@ -115,6 +120,7 @@ public class CLI {
                 } else {
                     addItem();
                 }
+                start();
             }
             case 4: {
                 start();
@@ -135,10 +141,10 @@ public class CLI {
         int supplierID = scanner.nextInt();
         System.out.println("enter product sub category name");
         String subCategoryName = scanner.next();
-        try {
-            serviceController.addProduct(name, minAmount, categoryID, subCategoryName, makat, supplierID);
-        } catch (Exception e) {
-            System.out.println("Invalid input try again from the beginning");
+        if(serviceController.addProduct(name, minAmount, categoryID, subCategoryName, makat, supplierID)){
+            System.out.println("Product added successfully");
+        }else{
+            System.out.println("Product already exist");
             addStuff();
         }
     }
@@ -148,12 +154,13 @@ public class CLI {
         String name = scanner.next();
         System.out.println("Enter category id");
         int id = scanner.nextInt();
-        try {
-            serviceController.addCategory(name, id);
-        } catch (Exception e) {
-            System.out.println("Invalid input try again from the beginning");
+        if(serviceController.addCategory(name, id)){
+            System.out.println("Category added successfully");
+        }else{
+            System.out.println("Category already exist");
             addStuff();
         }
+
     }
 
     private void addItems() {

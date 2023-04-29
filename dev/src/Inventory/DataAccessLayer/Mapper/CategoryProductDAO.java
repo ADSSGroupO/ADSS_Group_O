@@ -23,17 +23,15 @@ public class CategoryProductDAO {
             connectDB.close_connect();
         }
     }
-    public String addProductByCategory(ArrayList<Product> products, Integer categoryId){
+    public void addProductByCategory(ArrayList<Product> products, Integer categoryId){
         try {
             connectDB.createTables();
             for (Product product : products) {
-                String query = "INSERT INTO Category_Product (categoryID, productID) VALUES (" + categoryId + ", " + product.getMakat() + ")";
+                String query = "INSERT INTO Category_Product (category_id, makat) VALUES (" + categoryId + ", " + product.getMakat() + ")";
                 connectDB.executeUpdate(query);
             }
-            return "Products added successfully";
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return "Products already exists";
         } finally {
             connectDB.close_connect();
         }
@@ -50,4 +48,32 @@ public class CategoryProductDAO {
         }
     }
 
+    public HashMap<Integer, ArrayList<Product>> startConnection() {
+        HashMap<Integer, ArrayList<Product>> categoryProducts = new HashMap<>();
+        HashMap<Integer, Product> products = new HashMap<>();
+        try {
+            connectDB.createTables();
+            String query = "SELECT * FROM Category_Product";
+            ArrayList<HashMap<String,Object>> resultSet = connectDB.executeQuery(query);
+            products = ProductDAO.getInstance().loadData();
+            ArrayList<Product> productsList = new ArrayList<>(products.values());
+            for (HashMap<String, Object> row : resultSet) {
+                int categoryID = (int) row.get("category_id");
+                int productID = (int) row.get("makat");
+                Product product = productsList.stream().filter(p -> p.getMakat() == productID).findFirst().orElse(null);
+                if (categoryProducts.containsKey(categoryID)) {
+                    categoryProducts.get(categoryID).add(product);
+                } else {
+                    ArrayList<Product> productsArray = new ArrayList<>();
+                    productsArray.add(product);
+                    categoryProducts.put(categoryID, productsArray);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            connectDB.close_connect();
+        }
+        return categoryProducts;
+    }
 }

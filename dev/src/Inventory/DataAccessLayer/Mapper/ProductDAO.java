@@ -10,18 +10,37 @@ import java.util.List;
 
 public class ProductDAO {
     private final ConnectDB connectDB = ConnectDB.getInstance();
+    private static ProductDAO instance = null;
     public ProductDAO() {
     }
-    public HashMap<Product, String> loadData() {
-        HashMap<Product, String> products = new HashMap<>();
+
+    public static ProductDAO getInstance() {
+        if (instance == null)
+            instance = new ProductDAO();
+        return instance;
+    }
+
+    public HashMap<Integer, Product> loadData() {
+        HashMap<Integer, Product> products = new HashMap<>();
         try {
             connectDB.createTables();
             String query = "SELECT * FROM Product";
             ArrayList<HashMap<String,Object>> resultSet = connectDB.executeQuery(query);
             for (HashMap<String, Object> row : resultSet) {
-                Product product = new Product((String) row.get("name"), (int) row.get("minAmount"), (int) row.get("categoryID"), (String) row.get("sub_category"), (int) row.get("makat"), (int) row.get("supplierID"));
-                if(row.get("Start_Discount")!=null && row.get("End_Discount")!=null && row.get("Discount")!=null)
-                    product.setDiscount((String) row.get("Start_Discount"), (String) row.get("End_Discount"), (float) row.get("Discount"));
+                String name = (String) row.get("name");
+                int id = (int) row.get("makat");
+                int minAmount = (int) row.get("minAmount");
+                int categoryID = (int) row.get("category_id");
+                String sub_category = (String) row.get("sub_category");
+                int supplierID = (int) row.get("supplier_id");
+                Product product = new Product(name, minAmount, categoryID, sub_category, id, supplierID);
+                String startDiscount = (String) row.get("Start_Discount");
+                String endDiscount = (String) row.get("End_Discount");
+                Double discount = (Double) row.get("Discount");
+                if (startDiscount != null && endDiscount != null && discount != 0.0) {
+                    product.setDiscount(startDiscount, endDiscount, discount.floatValue());
+                }
+                products.put(id, product);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

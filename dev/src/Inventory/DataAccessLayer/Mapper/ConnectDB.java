@@ -74,10 +74,9 @@ public class ConnectDB {
                     "FOREIGN KEY (makat) REFERENCES Product(makat)"+
                     "FOREIGN KEY (category) REFERENCES Category(id)"+");";
             statement.execute(query);
-            query = "CREATE TABLE IF NOT EXISTS CATEGORY_PRODUCT (" +
+            query = "CREATE TABLE IF NOT EXISTS Category_Product (" +
                     "category_id INTEGER NOT NULL," +
-                    "makat INTEGER NOT NULL PRIMARY KEY," +
-                    "FOREIGN KEY (category_id) REFERENCES Category(id)," +
+                    "makat INTEGER NOT NULL," +
                     "FOREIGN KEY (makat) REFERENCES Product(makat)" +
                     ");";
             statement.execute(query);
