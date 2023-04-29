@@ -99,7 +99,7 @@ public abstract class Supplier {
 
     // function takes in information of new order, initializes it, adds the new order to history of orders, and returns the order created
     public Order addNewOrder(int destination) {
-        Order order = new Order(this, destination);
+        Order order = new Order(this.getNextShippingDate(), destination);
         ordersHistory.add(order);
         return order;
     }
