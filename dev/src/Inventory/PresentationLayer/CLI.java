@@ -199,21 +199,27 @@ public class CLI {
         switch (choice) {
             case 1: {
                 setMinimumAmount();
+                break;
             }
             case 2: {
                 setDiscountByProduct();
+                break;
             }
             case 3: {
                 setDiscountByCategory();
+                break;
             }
             case 4: {
                 setHowOftenToGetDefectiveReport();
+                break;
             }
             case 5: {
                 moveItemToStore();
+                break;
             }
             case 6: {
                 sellItem();
+                break;
             }
             case 7: {
                 start();
@@ -322,17 +328,21 @@ public class CLI {
         switch (choice) {
             case 1: {
                 serviceController.getInventoryReport();
+                break;
             }
             case 2: {
                 serviceController.getDefectiveReport();
+                break;
             }
             case 3: {
                 serviceController.getExpiredReport();
+                break;
             }
             case 4: {
                 System.out.println("Enter product id");
                 int productID = scanner.nextInt();
                 serviceController.getDiscountsByProductId(productID);
+                break;
             }
             case 5: {
                 System.out.println("Enter how many categories you would like to be in the report");
@@ -349,6 +359,7 @@ public class CLI {
                     System.out.println("Category doesn't exist");
                     start();
                 }
+                break;
             }
             case 6: {
                 System.out.println("Enter category id");
@@ -360,6 +371,7 @@ public class CLI {
                     System.out.println("Category doesn't exist, please try again");
                     getStuff();
                 }
+                break;
             }
             case 7: {
                 System.out.println("Enter how many days till expiration");
@@ -371,6 +383,7 @@ public class CLI {
                     System.out.println("Invalid input,please try again from the beginning");
                     getStuff();
                 }
+                break;
             }
             case 8: {
                 System.out.println("Enter product id");
@@ -382,6 +395,7 @@ public class CLI {
                     System.out.println("Product doesn't exist");
                     getStuff();
                 }
+                break;
             }
             case 9: {
                 start();
