@@ -13,15 +13,15 @@ public class ItemDAO {
 
     }
 
-    public ArrayList<HashMap<Item, String>> loadData() {
-        ArrayList<HashMap<Item, String>> items = new ArrayList<>();
+    public void loadData() {
         try {
             connectDB.createTables();
             String query = "SELECT * FROM Items";
             ArrayList<HashMap<String,Object>> resultSet = connectDB.executeQuery(query);
             for (HashMap<String, Object> row : resultSet) {
                 Item item;
-                Item.Location location = (Item.Location) row.get("location");
+                String location1 = (String) row.get("location");
+                Item.Location location = Item.Location.valueOf(location1);
                 if(row.get("size")!=null) {
                     item = new Item((String) row.get("producer"), (int) row.get("barcode"), (String) row.get("name"), location, (String) row.get("expiration_date"), (double) row.get("cost_price"), (int) row.get("makat"));
                 }
@@ -36,16 +36,12 @@ public class ItemDAO {
                     item.setSellingPrice((double) row.get("selling_price"));
                 if (row.get("the_price_been_sold_at") != null)
                     item.setThePriceBeenSoldAt((double) row.get("the_price_been_sold_at"));
-                HashMap<Item, String> itemStringHashMap = new HashMap<>();
-                itemStringHashMap.put(item, (String) row.get("category"));
-                items.add(itemStringHashMap);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
             connectDB.close_connect();
         }
-        return items;
     }
     public void addItem(String manufacturer, Integer barcode, String name, String expirationDate, double costPrice, int category, int productID, String size, double sellingPrice){
         try {
