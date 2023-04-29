@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class ConnectDB {
     public Connection conn;
     public final String url = "jdbc:sqlite:Inventory_Suppliers_Database.db";
-    private static Suppliers.DataAccessLayer.ConnectDB instance = null;
+    private static ConnectDB instance = null;
 
     private ConnectDB() {
         try {
@@ -22,9 +22,9 @@ public class ConnectDB {
         }
     }
 
-    public static Suppliers.DataAccessLayer.ConnectDB getInstance() {
+    public static ConnectDB getInstance() {
         if (instance == null) {
-            instance = new Suppliers.DataAccessLayer.ConnectDB();
+            instance = new ConnectDB();
         }
         return instance;
     }
@@ -41,7 +41,7 @@ public class ConnectDB {
             statement.execute(query);
             query = "CREATE TABLE IF NOT EXISTS FixedSupplierDays ("
                     + "FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id),"
-                    + "day TEXT PRIMARY KEY,"
+                    + "day INTEGER PRIMARY KEY,"
                     + ");";
             statement.execute(query);
             query = "CREATE TABLE IF NOT EXISTS NoTransportSupplierInfo (" +
@@ -74,6 +74,7 @@ public class ConnectDB {
                     "FOREIGN KEY (makat) REFERENCES Product(makat)," + // product code
                     "minimalPrice FLOAT NOT NULL," +
                     "val FLOAT NOT NULL" +
+                    "ByPrice BOOLEAN NOT NULL" +
                     ");";
             statement.execute(query);
             query = "CREATE TABLE IF NOT EXISTS Contact ("
