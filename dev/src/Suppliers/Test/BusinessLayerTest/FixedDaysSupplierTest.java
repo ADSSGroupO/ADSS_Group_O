@@ -1,4 +1,4 @@
-package Suppliers.Test;
+package Suppliers.Test.BusinessLayerTest;
 import Suppliers.BusinessLayer.FixedDaysSupplier;
 import Suppliers.BusinessLayer.Payment;
 import Suppliers.BusinessLayer.ShipmentDays;

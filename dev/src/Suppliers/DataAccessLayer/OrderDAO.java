@@ -50,7 +50,7 @@ public class OrderDAO {
             String query = "SELECT * FROM FixedPeriodOrder";
             ArrayList<HashMap<String, Object>> resultSet = connectDB.executeQuery(query);
             for (HashMap<String, Object> row : resultSet) {
-                ShipmentDays day = ShipmentDays.values()[(int) row.get("day")];
+                ShipmentDays day = ShipmentDays.values()[(int) row.get("ship_day")];
                 FixedPeriodOrder order = new FixedPeriodOrder((int) row.get("supplier_id"), (int) row.get("branch_code"), (int) row.get("makat"), (int) row.get("amount"));
                 if (fixed_orders.containsKey(day)) {
                     fixed_orders.get(day).add(order);

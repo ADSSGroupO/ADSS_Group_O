@@ -1,4 +1,4 @@
-package Suppliers.Test;
+package Suppliers.Test.BusinessLayerTest;
 
 import Suppliers.BusinessLayer.*;
 import org.junit.jupiter.api.Test;

@@ -108,6 +108,7 @@ public class ConnectDB {
                     + "FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id),"
                     + "FOREIGN KEY (makat) REFERENCES Product(makat)," // product code
                     + "amount INTEGER NOT NULL,"
+                    + "ship_day INTEGER NOT NULL,"
                     + ");";
             statement.execute(query);
         }
@@ -209,7 +210,7 @@ public class ConnectDB {
         }
     }
 
-    void close_connect() {
+    public void close_connect() {
         try {
             if (conn != null) {
                 conn.close();
