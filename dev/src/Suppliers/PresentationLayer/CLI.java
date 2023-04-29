@@ -406,7 +406,7 @@ public class CLI {
             System.out.println("Do you have more products?\n1. Yes\n2. No");
             option = order_input.nextInt();
         }
-        OrderController.getInstance().makePeriodicOrder(branch, productsToOrder, productsAndAmounts);
+        OrderController.getInstance().makeOrder(branch, productsToOrder, productsAndAmounts);
     }
 
     // function that takes input of order and desired status, and updates it
@@ -442,7 +442,6 @@ public class CLI {
     }
 
     public void makeOrderDueToShortages() {
-
     }
 
     // function that takes in id, and modifies the delivery information of supplier based on user input

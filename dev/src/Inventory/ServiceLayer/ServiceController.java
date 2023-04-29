@@ -195,4 +195,8 @@ public class ServiceController {
         productService.startConnection();
         itemService.startConnection();
     }
+
+    public void removeSampleData() {
+        productService.removeSampleData();
+    }
 }

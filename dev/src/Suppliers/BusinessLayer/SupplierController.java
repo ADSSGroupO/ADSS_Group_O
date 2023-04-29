@@ -1,6 +1,7 @@
 package Suppliers.BusinessLayer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class SupplierController { //Controller for supplier as singleton
@@ -160,5 +161,9 @@ public class SupplierController { //Controller for supplier as singleton
         Supplier supplier = suppliers.get(supplierID);
         supplier.printOrderHistory();
     }
+
+    //getter of suppliers
+    public Collection<Supplier> getSuppliers() {
+        return suppliers.values(); }
 
 }

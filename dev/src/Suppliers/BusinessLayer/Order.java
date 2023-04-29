@@ -20,11 +20,11 @@ public class Order {
     private double total_price; // the total cost of the order
     private double orderDiscount; // discount given on total order
 
-    public Order(Supplier supplier, int destination) { // constructor
+    public Order(LocalDate date, int destination) { // constructor
         numberOfOrders++;
         order_number = numberOfOrders; // assign order number
         branch_code = destination;
-        date = supplier.getNextShippingDate(); // activating supplier's next shipping date method
+        this.date = date;
         order_status = Status.InProcess;
         ordered_products = new ArrayList<OrderDetailsByProduct>(); // setting empty list
         orderDiscount = 0; // discount 0 until finishing order and calculating final price
@@ -81,6 +81,25 @@ public class Order {
     public int getBranch() {return branch_code;}
     public LocalDate getDateOfOrder() {return date;}
     public Status getOrderStatus() {return order_status;}
+
+    public void setOrderStatus(String status) {
+        if (status.equals("InProcess")) {
+            order_status = Status.InProcess;
+        }
+        else if (status.equals("Canceled")) {
+            order_status = Status.Canceled;
+        }
+        else if (status.equals("Completed")) {
+            order_status = Status.Completed;
+        }
+        else {
+            throw new IllegalArgumentException("Invalid status");
+        }
+    }
+
+    public void setOrderDiscount(double discount) {
+        orderDiscount = discount;
+    }
 
     public double getTotalPrice() {return total_price;}
 
