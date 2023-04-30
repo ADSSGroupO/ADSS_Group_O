@@ -400,7 +400,7 @@ public class ItemController {
             int categoryId;
             for(Item item : itemById.values()){
                 if(item.getLocation()!= Item.Location.SOLD){
-                    productController.updateAmount(item.getMakat());
+//                    productController.updateAmount(item.getMakat());
                     categoryId = productController.getProductById(item.getMakat()).getCategoryID();
                     if(item.getLocation() == Item.Location.INVENTORY){
                         if(!storageItems.containsKey(categoryId)){
