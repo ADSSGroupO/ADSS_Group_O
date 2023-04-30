@@ -36,7 +36,6 @@ public class ProductController {
     public void reduceAmountOfProductByID(int productID, int amount , Item.Location locale) {
         //ProductById.get(productID).setCurrentAmount( ProductById.get(productID).getCurrentAmount()-amount);
         Product product =ProductById.get(productID);
-        product.reduceItems(amount);
         switch (locale){
             case STORE : {
                 product.reduceItemsFromStore(1);
@@ -67,12 +66,13 @@ public class ProductController {
         //Category category = new Category(name,categoryID);
         //add to product by id dictionary
         ProductById.put(makat,product);
-        //add to product by category dictionary
-        categoryController.addProductByCategory(products,categoryID);
 //        //add to category by product dictionary
 //        categoryByProduct.put(makat,categories);
         //add to productDAO
         productDAO.addProduct(name,minAmount,categoryID,subCategory,makat,supplierID);
+        //add to product by category dictionary
+        categoryController.addProductByCategory(products,categoryID);
+
     }
     //get product
     public Product getProduct(int productID){
@@ -122,6 +122,9 @@ public class ProductController {
         ProductById.get(productID).addItems(1);
         //update the product in the productDAO
         productDAO.addItem(productID);
+    }
+    public void updateAmount(int makat){
+        getProductById(makat).addItems(1);
     }
 
     public int getAmountOfProduct(int productID) {

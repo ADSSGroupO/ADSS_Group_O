@@ -75,7 +75,7 @@ public class Product {
     }
 
     public void setCurrentAmount(int currentAmount) {
-        this.currentAmount =- currentAmount;
+        this.currentAmount = currentAmount;
     }
 
     public int getAmountInStore() {
@@ -109,7 +109,6 @@ public class Product {
             this.currentAmount -= amount;
         if(minAmount >= currentAmount)
             System.out.println("Warning: The amount of " + name + " is below the minimum amount");
-            //TODO: send jason about the amount of product needed to order
     }
     public void addItems(int amount){
         this.currentAmount += amount;

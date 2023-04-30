@@ -11,6 +11,12 @@ public class Item {
         this.defDescription = reason;
     }
 
+    public Location getLocation() {
+        return currentLocation;
+    }
+
+
+
     public enum Location {STORE, INVENTORY ,SOLD};
     private Location currentLocation;
     private boolean isExpired = false;
@@ -149,9 +155,9 @@ public class Item {
         this.costPrice = costPrice;
     }
 
-    public void setSellingPrice(float sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
+//    public void setSellingPrice(double sellingPrice) {
+//        this.sellingPrice = sellingPrice;
+//    }
 
     public void setDefective(String defDescription) {
         this.defDescription = defDescription;

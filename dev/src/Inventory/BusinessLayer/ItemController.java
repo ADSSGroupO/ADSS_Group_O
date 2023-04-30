@@ -144,6 +144,9 @@ public class ItemController {
         if(inStoreItems.get(CategoryID)!=null){
             if (inStoreItems.get(CategoryID).contains(item)) {
                 //add the item to sold items
+                if(soldItems.get(CategoryID)==null){
+                    soldItems.put(CategoryID, new ArrayList<>());
+                }
                 soldItems.get(CategoryID).add(item);
                 //remove from in store items
                 inStoreItems.get(CategoryID).remove(item);
@@ -323,17 +326,8 @@ public class ItemController {
     }
 
     private void publishInventoryReport() {
-        Collection<ArrayList<Item>> storageItemsList = storageItems.values();
-        for (ArrayList<Item> item : storageItemsList) {
-            for (Item value : item) {
-                System.out.println(value.toString());
-            }
-        }
-        Collection<ArrayList<Item>> inStoreItemsList = inStoreItems.values();
-        for (ArrayList<Item> item : inStoreItemsList) {
-            for (Item value : item) {
-                System.out.println(value.toString());
-            }
+        for (Item item : itemById.values()) {
+            System.out.println(item.toString());
         }
     }
 
@@ -403,6 +397,25 @@ public class ItemController {
             connection_opened = true;
             soldItems = itemDAO.getSoldItems();
             itemById = itemDAO.getItemById();
+            int categoryId;
+            for(Item item : itemById.values()){
+                if(item.getLocation()!= Item.Location.SOLD){
+//                    productController.updateAmount(item.getMakat());
+                    categoryId = productController.getProductById(item.getMakat()).getCategoryID();
+                    if(item.getLocation() == Item.Location.INVENTORY){
+                        if(!storageItems.containsKey(categoryId)){
+                            storageItems.put(categoryId, new ArrayList<>());
+                        }
+                        storageItems.get(categoryId).add(item);
+                    }
+                    else{
+                        if(!inStoreItems.containsKey(categoryId)){
+                            inStoreItems.put(categoryId, new ArrayList<>());
+                        }
+                        inStoreItems.get(categoryId).add(item);
+                    }
+                }
+            }
             }
         } catch (Exception e){
             System.out.println("Error connecting to DB");
