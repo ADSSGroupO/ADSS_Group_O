@@ -16,7 +16,7 @@ public class SupplierDAO {
     public HashMap<Integer, Supplier> loadData() {
         HashMap<Integer, Supplier> suppliers = new HashMap<>();
         try {
-            connectDB.createTables();
+            //.createTables();
             // create query for extracting data of fixed days suppliers
             String query = "SELECT * FROM Supplier WHERE supplier_id IN (SELECT supplier_id FROM FixedSupplierDays)";
             ArrayList<HashMap<String, Object>> resultSet = connectDB.executeQuery(query);
@@ -157,7 +157,7 @@ public class SupplierDAO {
     // function that adds shipping days for fixed days supplier
     public String addDaysForFixedSupplier(int id, ArrayList<Integer> days) {
         try {
-            connectDB.createTables();
+            //connectDB.createTables();
             for (int day : days) {
                 String query = "INSERT INTO FixedSupplierDays (supplier_id, day) VALUES ('" + id + "'," + day + ")";
                 connectDB.executeUpdate(query);
@@ -174,7 +174,7 @@ public class SupplierDAO {
     // function that adds information of no transport supplier
     public String addInformationForNoTransport(int id, String address, LocalDate date) {
         try {
-            connectDB.createTables();
+            //connectDB.createTables();
             String query = "INSERT INTO NoTransportSupplierInfo (supplier_id, address, nextDeliveryDate) VALUES ('" + id + "'," + address + "'," + date.toString() + ")";
             connectDB.executeUpdate(query);
             return "Address and date were added successfully";
@@ -189,7 +189,7 @@ public class SupplierDAO {
     // function that adds number of days for on order supplier
     public String addNumOfDaysForOnOrder(int id, int numOfDays) {
         try {
-            connectDB.createTables();
+            //connectDB.createTables();
             String query = "INSERT INTO OnOrderSupplierNumOfDays (supplier_id, numberOfDaysToNextOrder) VALUES ('" + id + "'," + numOfDays + ")";
             connectDB.executeUpdate(query);
             return "Number of days was added successfully";
@@ -203,7 +203,7 @@ public class SupplierDAO {
 
     public String setName(int id, String name) {
         try {
-            connectDB.createTables();
+            //connectDB.createTables();
             String query = "UPDATE Supplier SET supplier_name = " + name + " WHERE supplier_id = " + id;
             connectDB.executeUpdate(query);
             return "Name updated successfully";
@@ -217,7 +217,7 @@ public class SupplierDAO {
 
     public String setBankAccount(int id, int bank) {
         try {
-            connectDB.createTables();
+            //connectDB.createTables();
             String query = "UPDATE Supplier SET bank_account = " + bank + " WHERE supplier_id = " + id;
             connectDB.executeUpdate(query);
             return "Bank account updated successfully";
@@ -231,7 +231,7 @@ public class SupplierDAO {
 
     public String setPayment(int id, String payment) {
         try {
-            connectDB.createTables();
+           // connectDB.createTables();
             String query = "UPDATE Supplier SET payment = " + payment + " WHERE supplier_id = " + id;
             connectDB.executeUpdate(query);
             return "Payment method updated successfully";
@@ -244,13 +244,13 @@ public class SupplierDAO {
     }
 
     public void startConnection() throws SQLException {
-        connectDB.createTables();
+        //connectDB.createTables();
         loadData();
     }
 
     public void removeSampleData() {
         try {
-            connectDB.createTables();
+            //connectDB.createTables();
             connectDB.resetTables();
         } catch (Exception e) {
             System.out.println(e.getMessage());

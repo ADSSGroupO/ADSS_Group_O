@@ -16,14 +16,14 @@ public class OrderDAO {
     public HashMap<Integer, Order> loadData() {
         HashMap<Integer, Order> orders = new HashMap<>();
         try {
-            connectDB.createTables();
+            //connectDB.createTables();
             // create query for extracting data of orders
             String query = "SELECT * FROM Order";
             ArrayList<HashMap<String, Object>> resultSet = connectDB.executeQuery(query);
             for (HashMap<String, Object> row : resultSet) {
                 String[] dateString = row.get("order_date").toString().split("-");
                 LocalDate date = LocalDate.of(Integer.parseInt(dateString[2]), Integer.parseInt(dateString[1]), Integer.parseInt(dateString[0]));
-                Order order = new Order(date, (int) row.get("branch_code"));
+                Order order = new Order(date, (String) row.get("branch_code"));
                 order.setOrderDiscount((float) row.get("orderDiscount"));
                 order.setOrderStatus((String) row.get("order_status"));
                 // add order details for each order
@@ -45,13 +45,13 @@ public class OrderDAO {
     public HashMap<ShipmentDays, ArrayList<FixedPeriodOrder>> getFixedPeriodOrders() {
         HashMap<ShipmentDays, ArrayList<FixedPeriodOrder>> fixed_orders = new HashMap<>();
         try {
-            connectDB.createTables();
+            //connectDB.createTables();
             // create query for extracting data
             String query = "SELECT * FROM FixedPeriodOrder";
             ArrayList<HashMap<String, Object>> resultSet = connectDB.executeQuery(query);
             for (HashMap<String, Object> row : resultSet) {
                 ShipmentDays day = ShipmentDays.values()[(int) row.get("ship_day")];
-                FixedPeriodOrder order = new FixedPeriodOrder((int) row.get("supplier_id"), (int) row.get("branch_code"), (int) row.get("makat"), (int) row.get("amount"));
+                FixedPeriodOrder order = new FixedPeriodOrder((int) row.get("supplier_id"), (String) row.get("branch_code"), (int) row.get("makat"), (int) row.get("amount"));
                 if (fixed_orders.containsKey(day)) {
                     fixed_orders.get(day).add(order);
                 } else {
@@ -70,7 +70,7 @@ public class OrderDAO {
 
     public String setOrderStatus(int order_number, String status) {
         try {
-            connectDB.createTables();
+            //connectDB.createTables();
             String query = "UPDATE Order SET order_status = " + status + " WHERE order_number = " + order_number;
             connectDB.executeUpdate(query);
             return "Status updated successfully";
@@ -84,7 +84,7 @@ public class OrderDAO {
 
     public String setOrderDiscount(int order_number, double discount) {
         try {
-            connectDB.createTables();
+            //connectDB.createTables();
             String query = "UPDATE Supplier SET orderDiscount = " + discount + " WHERE order_number = " + order_number;
             connectDB.executeUpdate(query);
             return "Discount updated successfully";
@@ -97,13 +97,13 @@ public class OrderDAO {
     }
 
     public void startConnection() throws SQLException {
-        connectDB.createTables();
+        //connectDB.createTables();
         loadData();
     }
 
     public void removeSampleData() {
         try {
-            connectDB.createTables();
+            //connectDB.createTables();
             connectDB.resetTables();
         } catch (Exception e) {
             System.out.println(e.getMessage());

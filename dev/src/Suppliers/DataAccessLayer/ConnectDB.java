@@ -29,24 +29,26 @@ public class ConnectDB {
         return instance;
     }
 
-    public void createTables() throws SQLException {
+/*    public void createTables() throws SQLException {
         System.out.println("Creating tables...");
         try(Statement statement = createStatement()){
             String query = "CREATE TABLE IF NOT EXISTS Supplier ("
                     + "supplier_id INTEGER PRIMARY KEY,"
                     + "supplier_name TEXT NOT NULL,"
                     + "bank_account INTEGER NOT NULL,"
-                    + "payment TEXT NOT NULL,"
-                    + ");";
+                    + "payment TEXT NOT NULL"
+                    + ");" ;
             statement.execute(query);
-            query = "CREATE TABLE IF NOT EXISTS FixedSupplierDays ("
-                    + "FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id),"
-                    + "day INTEGER PRIMARY KEY,"
-                    + ");";
+            query = "CREATE TABLE IF NOT EXISTS FixedSupplierDays (\n" +
+                    "  supplier_id INT NOT NULL,\n" +
+                    "  day INTEGER NOT NULL,\n" +
+                    "  PRIMARY KEY (supplier_id, day),\n" +
+                    "  FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id)\n" +
+                    ");";
             statement.execute(query);
             query = "CREATE TABLE IF NOT EXISTS NoTransportSupplierInfo (" +
-                    "FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id)"+
-                    "address TEXT NOT NULL," +
+                    "Fsupplier_id int not NULL FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id)"+
+                    "address TEXT NOT NULL" +
                     "nextDeliveryDate Date," +");";
             statement.execute(query);
             query = "CREATE TABLE IF NOT EXISTS OnOrderSupplierNumOfDays (" +
@@ -118,7 +120,7 @@ public class ConnectDB {
         finally {
             close_connect();
         }
-    }
+    }*/
 
     public Statement createStatement() throws SQLException {
         conn = DriverManager.getConnection(url);
@@ -200,7 +202,7 @@ public class ConnectDB {
             statement.execute(query);
             query = "DROP TABLE IF EXISTS FixedPeriodOrder;";
             statement.execute(query);
-            createTables();
+            //createTables();
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());

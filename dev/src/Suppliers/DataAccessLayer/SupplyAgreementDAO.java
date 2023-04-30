@@ -17,7 +17,7 @@ public class SupplyAgreementDAO {
     public HashMap<Integer, ArrayList<SupplyAgreement>> loadData() {
         HashMap<Integer, ArrayList<SupplyAgreement>> agreements = new HashMap<>();
         try {
-            connectDB.createTables();
+            //connectDB.createTables();
             // create query for extracting data of supply agreements
             String query = "SELECT * FROM SupplyAgreement";
             ArrayList<HashMap<String, Object>> resultSet = connectDB.executeQuery(query);
@@ -51,13 +51,13 @@ public class SupplyAgreementDAO {
     }
 
     public void startConnection() throws SQLException {
-        connectDB.createTables();
+        //connectDB.createTables();
         loadData();
     }
 
     public void removeSampleData() {
         try {
-            connectDB.createTables();
+            //connectDB.createTables();
             connectDB.resetTables();
         } catch (Exception e) {
             System.out.println(e.getMessage());
