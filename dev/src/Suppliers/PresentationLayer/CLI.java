@@ -76,7 +76,7 @@ public class CLI {
         Scanner info_input = new Scanner(System.in);
         int option = info_input.nextInt();
         // find the supplier that needs to be edited
-        System.out.println("Enter supplier's id: ");
+        System.out.println("Enter supplier's ID: ");
         int id = info_input.nextInt();
         // change name
         if (option == 1) {
@@ -164,10 +164,11 @@ public class CLI {
     public void addSupplier() {
         // printing menu for user, asking for input
         Scanner supplier_input = new Scanner(System.in);
-        System.out.println("Enter private company number: ");
+        System.out.println("Enter supplier's ID: ");
         int supplier_id = supplier_input.nextInt();
         System.out.println("Enter supplier's name: ");
         String supplier_name = supplier_input.nextLine();
+        supplier_input.nextLine();
         System.out.println("Enter supplier's bank account number: ");
         int bank = supplier_input.nextInt();
         System.out.println("Choose preferred payment method:\n1. Credit\n2. Checks\n3. Cash\n4. Transfer To Account");
@@ -210,13 +211,14 @@ public class CLI {
             // if option is invalid, throw exception
             throw new IllegalArgumentException("Invalid option");
         }
+        System.out.println("Supplier was created successfully");
     }
 
     // function that takes in supplier's id and removes it from system
     public void removeSupplier() {
         Scanner input = new Scanner(System.in);
         // get input of supplier to remove
-        System.out.println("Enter supplier's id: ");
+        System.out.println("Enter supplier's ID: ");
         int id = input.nextInt();
         SupplierController.getInstance().removeSupplierByID(id);
         // inform supplier was deleted
@@ -255,7 +257,7 @@ public class CLI {
     public void addSupplyAgreement() {
         // find supplier in suppliers list
         Scanner agreement_input = new Scanner(System.in);
-        System.out.println("Enter supplier's id: ");
+            System.out.println("Enter supplier's ID: ");
         int id = agreement_input.nextInt();
         // printing menu for user, asking for input
         System.out.println("Enter product code: ");
@@ -291,7 +293,7 @@ public class CLI {
     public void removeSupplyAgreement() {
         // find supplier in suppliers list
         Scanner code_input = new Scanner(System.in);
-        System.out.println("Enter supplier's id: ");
+        System.out.println("Enter supplier's ID: ");
         int id = code_input.nextInt();
         // asking for input
         System.out.println("Enter product code of agreement: ");
@@ -306,7 +308,7 @@ public class CLI {
     public void printSupplyAgreements() {
         // find supplier in suppliers list
         Scanner code_input = new Scanner(System.in);
-        System.out.println("Enter supplier's id: ");
+        System.out.println("Enter supplier's ID: ");
         int id = code_input.nextInt();
         // print all agreements
         SupplyAgreementController.getInstance().printAllSupplyAgreementsOfSupplier(id);
@@ -315,17 +317,17 @@ public class CLI {
     /*** orders ***/
     public void ordersMenu() {
         // print menu of orders methods
-        System.out.println("1. Make new periodic order");
+        System.out.println("1. Make order due to shortages");
         System.out.println("2. Update order status");
         System.out.println("3. Print all orders");
         System.out.println("4. Print order of supplier");
-        System.out.println("5. Make order due to shortages");
+        System.out.println("5. Add periodic order");
         // ask for input
         Scanner input = new Scanner(System.in);
         int option = input.nextInt();
         // add new order
         if (option == 1) {
-            makePeriodicOrder();
+            makeOrder();
         }
         // cancel or confirm order
         else if (option == 2) {
@@ -338,12 +340,12 @@ public class CLI {
         // print supplier's orders
         else if (option == 4) {
             // get input of supplier to remove
-            System.out.println("Enter supplier's id: ");
+            System.out.println("Enter supplier's ID: ");
             int id = input.nextInt();
             SupplierController.getInstance().printOrdersOfSupplier(id);
         }
         else if (option == 5) {
-            makeOrderDueToShortages();
+            addPeriodicOrder();
         }
         else {
             throw new IllegalArgumentException("Invalid input");
@@ -354,7 +356,7 @@ public class CLI {
     public void addOrderDiscountForSupplier() {
         // taking input
         Scanner order_discount = new Scanner(System.in);
-        System.out.println("Enter supplier's id: ");
+        System.out.println("Enter supplier's ID: ");
         int id = order_discount.nextInt();
         System.out.println("Is the discount of percentage or of fixed price?\n1. By Percentage\n2. By Fixed Price");
         int discountOption = order_discount.nextInt();
@@ -368,7 +370,7 @@ public class CLI {
     }
 
     // function for creating a new order
-    public void makePeriodicOrder() {
+    public void makeOrder() {
         Scanner order_input = new Scanner(System.in);
         // a map with product code as key, and units as values
         HashMap<Integer, Integer> productsAndAmounts = new HashMap<>(); // <product_code, num_of_units>
@@ -377,8 +379,8 @@ public class CLI {
         int option = 1;
         // creating a list of suppliers that are capable of delivering all products
         ArrayList<Supplier> relevantSuppliers = new ArrayList<>();
-        System.out.println("Please enter branch code of order destination: ");
-        int branch = order_input.nextInt();
+        System.out.println("Please enter branch ID of order destination: ");
+        String branch = order_input.nextLine();
         // taking input of first product
         System.out.println("---CHOOSING PRODUCTS---\n Please enter product code: ");
         int product_code = order_input.nextInt();
@@ -441,7 +443,27 @@ public class CLI {
         }
     }
 
-    public void makeOrderDueToShortages() {
+    // function that takes in the arguments of a periodic order and adds it to the system
+    public void addPeriodicOrder() {
+        Scanner input = new Scanner(System.in);
+        // take input of supplier id
+        System.out.println("Enter supplier's ID: ");
+        int id = input.nextInt();
+        // take input of branch code
+        System.out.println("Enter branch ID: ");
+        String branch = input.nextLine();
+        // take product code
+        System.out.println("Enter product code: ");
+        int product = input.nextInt();
+        // take amount of units
+        System.out.println("Enter number of units: ");
+        int units = input.nextInt();
+        // enter day of the week
+        System.out.println("Enter weekly day of the delivery:\n1. Sunday\n2. Monday\n3. Tuesday\n4. Wednesday\n5. Thursday\n6. Friday\n7. Saturday");
+        int day = input.nextInt();
+        // initialize fixed order
+        OrderController.getInstance().addPeriodicOrder(branch, id, product, units, day);
+        System.out.println("Fixed period order was added successfully");
     }
 
     // function that takes in id, and modifies the delivery information of supplier based on user input

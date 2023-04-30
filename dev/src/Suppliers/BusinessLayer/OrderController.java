@@ -2,6 +2,8 @@ package Suppliers.BusinessLayer;
 
 import Inventory.BusinessLayer.Product;
 import Inventory.BusinessLayer.ProductController;
+
+import java.lang.reflect.Array;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -13,13 +15,20 @@ import java.util.TimerTask;
 
 public class OrderController { //Controller for order as singleton
     HashMap<Integer, Order> orders; // <id, Order>: map that matches id to order
-    HashMap<ShipmentDays, ArrayList<FixedPeriodOrder>> fixed_orders; // <shipment_days, list<FixedPeriodOrder>>: map that matches shipment days to list of fixed period orders
+    ArrayList<ArrayList<FixedPeriodOrder>> fixed_orders; // List<list<FixedPeriodOrder>>: array list of lists of period order, each list is the list of orders of that day (from 0 as
+    // sunday to 6 as saturday)
     // that should be executed on those days
     private static OrderController instance = null; // the instance of the Order Controller
 
     // constructor
     private OrderController() {
+        // initialize data structures
         orders = new HashMap<Integer, Order>();
+        fixed_orders = new ArrayList<ArrayList<FixedPeriodOrder>>();
+        // create lists of 7 days
+        for (int i = 0; i < 7; i++) {
+            fixed_orders.add(new ArrayList<FixedPeriodOrder>());
+        }
     }
 
     // get instance of order controller. if it doesn't exist, create it
@@ -37,7 +46,7 @@ public class OrderController { //Controller for order as singleton
 
     // this function takes in a list of optional supppliers who deliver all the products in the productsToOrder list, and a map with product code as key and
     // the amount to order as value. it finds the cheapest supplier, makes an order and returns it
-    private Order cheapestSupplier(int branch, ArrayList<Supplier> optionalSuppliers, ArrayList<Integer> productsToOrder, HashMap<Integer, Integer> productsAndAmounts) {
+    private Order cheapestSupplier(String branch, ArrayList<Supplier> optionalSuppliers, ArrayList<Integer> productsToOrder, HashMap<Integer, Integer> productsAndAmounts) {
         Supplier minSupplier = null;
         double minTotalPrice = -1;
         // iterating all suppliers and finding cheapest supplier for product
@@ -112,7 +121,7 @@ public class OrderController { //Controller for order as singleton
 
     // function that takes in supplier, hashmap of product codes and total price for their portion, and hashmap of product codes and amounts. it creates an order and
     // adds it to list of supplier's orders
-    private Order makeOrderFromSupplier(int branch, Supplier supplier, ArrayList<Integer> productsToOrder, HashMap<Integer, Integer> productsAndAmounts) {
+    private Order makeOrderFromSupplier(String branch, Supplier supplier, ArrayList<Integer> productsToOrder, HashMap<Integer, Integer> productsAndAmounts) {
         // starting the order
         Order newOrder = supplier.addNewOrder(branch);
         System.out.println("---INITIALIZING ORDER---");
@@ -136,7 +145,7 @@ public class OrderController { //Controller for order as singleton
 
 
     // function that makes shortage order from supplier
-    public void makeOrder(int branch, ArrayList<Integer> productsToOrder, HashMap<Integer, Integer> productsAndAmounts) {
+    public void makeOrder(String branch, ArrayList<Integer> productsToOrder, HashMap<Integer, Integer> productsAndAmounts) {
         // creating a list of suppliers that are capable of delivering all products
         ArrayList<Supplier> relevantSuppliers = (ArrayList<Supplier>) SupplierController.getInstance().getSuppliers();
         // add suppliers who deliver this product to list of capable suppliers
@@ -250,8 +259,7 @@ public class OrderController { //Controller for order as singleton
         DayOfWeek dayOfWeek = today.getDayOfWeek();
         // get list of fixed period orders of tomorrow
         ShipmentDays day = ShipmentDays.valueOf(dayOfWeek.toString());
-        ShipmentDays tomorrow = ShipmentDays.values()[day.ordinal() + 1];
-        ArrayList<FixedPeriodOrder> ordersToMake = fixed_orders.get(tomorrow);
+        ArrayList<FixedPeriodOrder> ordersToMake = fixed_orders.get(day.ordinal() + 1);
         // iterate all orders in the list and make them
         for (FixedPeriodOrder order : ordersToMake) {
             // get supplier
@@ -276,5 +284,11 @@ public class OrderController { //Controller for order as singleton
                 targetTime += 24 * 60 * 60 * 1000L;
             }
             return targetTime;
+        }
+
+        // function that takes in the information of a new fixed period order and adds it to list of orders by day
+        public void addPeriodicOrder(String branchID, int supplierID, int productCode, int amount, int day) {
+        FixedPeriodOrder newFixedOrder = new FixedPeriodOrder(supplierID, branchID, productCode, amount);
+        fixed_orders.get(day).add(newFixedOrder);
         }
     }

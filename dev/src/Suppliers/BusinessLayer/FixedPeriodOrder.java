@@ -1,12 +1,12 @@
 package Suppliers.BusinessLayer;
 
 public class FixedPeriodOrder { // a class that represents a fixed period order, executed every fixed period of time of store's choice
-    private int branch;
+    private String branch;
     private int supplier_id;
     private int product_code;
     private int amount;
 
-    public FixedPeriodOrder(int id, int branch, int product_code, int amount){
+    public FixedPeriodOrder(int id, String branch, int product_code, int amount){
         this.branch = branch;
         this.supplier_id = id;
         this.product_code = product_code;
@@ -14,7 +14,7 @@ public class FixedPeriodOrder { // a class that represents a fixed period order,
     }
 
     // getter of branch
-    public int getBranch() {
+    public String getBranch() {
         return branch;
     }
 
@@ -49,7 +49,7 @@ public class FixedPeriodOrder { // a class that represents a fixed period order,
     }
 
     // setter of branch
-    public void setBranch(int branch) {
+    public void setBranch(String branch) {
         this.branch = branch;
     }
 }
