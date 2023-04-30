@@ -65,7 +65,7 @@ class SupplierTest {
     @Test
     void addNewOrder() {
         // add order
-        Order order = fd_supplier.addNewOrder(1);
+        Order order = fd_supplier.addNewOrder("1");
         // test order was created successfully
         assertNotNull(order);
         // get list of orders
@@ -82,7 +82,7 @@ class SupplierTest {
         fd_supplier.addOrderDiscount(discount);
         fd_supplier.addOrderDiscount(discount2);
         // create new order
-        Order order = fd_supplier.addNewOrder(2);
+        Order order = fd_supplier.addNewOrder("2");
         // adding product to order
         order.addProducts(1, "milk", 100, 10, 0, 1000);
         // apply order discounts
@@ -152,9 +152,9 @@ class SupplierTest {
     @Test
     void getOrdersHistory() {
         // add orders
-        Order order = fd_supplier.addNewOrder(1);
-        Order order2 = fd_supplier.addNewOrder(2);
-        Order order3 = fd_supplier.addNewOrder(3);
+        Order order = fd_supplier.addNewOrder("1");
+        Order order2 = fd_supplier.addNewOrder("2");
+        Order order3 = fd_supplier.addNewOrder("3");
         // test orders were created successfully
         assertNotNull(order);
         assertNotNull(order2);

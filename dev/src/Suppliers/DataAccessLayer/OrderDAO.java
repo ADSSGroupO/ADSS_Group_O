@@ -23,7 +23,7 @@ public class OrderDAO {
             for (HashMap<String, Object> row : resultSet) {
                 String[] dateString = row.get("order_date").toString().split("-");
                 LocalDate date = LocalDate.of(Integer.parseInt(dateString[2]), Integer.parseInt(dateString[1]), Integer.parseInt(dateString[0]));
-                Order order = new Order(date, (int) row.get("branch_code"));
+                Order order = new Order(date, (String) row.get("branch_code"));
                 order.setOrderDiscount((float) row.get("orderDiscount"));
                 order.setOrderStatus((String) row.get("order_status"));
                 // add order details for each order
@@ -51,7 +51,7 @@ public class OrderDAO {
             ArrayList<HashMap<String, Object>> resultSet = connectDB.executeQuery(query);
             for (HashMap<String, Object> row : resultSet) {
                 ShipmentDays day = ShipmentDays.values()[(int) row.get("ship_day")];
-                FixedPeriodOrder order = new FixedPeriodOrder((int) row.get("supplier_id"), (int) row.get("branch_code"), (int) row.get("makat"), (int) row.get("amount"));
+                FixedPeriodOrder order = new FixedPeriodOrder((int) row.get("supplier_id"), (String) row.get("branch_code"), (int) row.get("makat"), (int) row.get("amount"));
                 if (fixed_orders.containsKey(day)) {
                     fixed_orders.get(day).add(order);
                 } else {

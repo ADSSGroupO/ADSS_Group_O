@@ -23,7 +23,7 @@ public class OrderDAOTest {
     void setUp() {
         try {
             connectDB.createTables();
-            connectDB.resetTables();
+//            connectDB.resetTables();
             // create tables
             String query = "INSERT INTO `Orders` (supplier_id, order_number, branch_code, order_date, order_status, total_price, orderDiscount) VALUES"
                     + "(201, 1, 2, '2022-04-28', 'InProcess', 500.0, 50.0),"
