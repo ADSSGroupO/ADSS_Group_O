@@ -30,10 +30,12 @@ public class ProductDAO {
                 String name = (String) row.get("name");
                 int id = (int) row.get("makat");
                 int minAmount = (int) row.get("minAmount");
+                int currentAmount = (int) row.get("currentAmount");
                 int categoryID = (int) row.get("category_id");
                 String sub_category = (String) row.get("sub_category");
                 int supplierID = (int) row.get("supplier_id");
                 Product product = new Product(name, minAmount, categoryID, sub_category, id, supplierID);
+                product.setCurrentAmount(currentAmount);
                 String startDiscount = (String) row.get("Start_Discount");
                 String endDiscount = (String) row.get("End_Discount");
                 Double discount = (Double) row.get("Discount");

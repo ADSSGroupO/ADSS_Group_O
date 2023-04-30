@@ -75,7 +75,7 @@ public class Product {
     }
 
     public void setCurrentAmount(int currentAmount) {
-        this.currentAmount =- currentAmount;
+        this.currentAmount = currentAmount;
     }
 
     public int getAmountInStore() {
