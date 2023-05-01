@@ -22,10 +22,12 @@ public class OrderDAOTest {
     @BeforeEach
     void setUp() {
         try {
-            //connectDB.createTables();
-//            connectDB.resetTables();
+            connectDB.createTables();
             // create tables
-            String query = "INSERT INTO `Orders` (supplier_id, order_number, branch_code, order_date, order_status, total_price, orderDiscount) VALUES"
+            String query = "INSERT INTO `Orders` ('supplier_id', 'branch_code', 'order_date', 'order_status', 'total_price', 'orderDiscount')"
+            + "VALUES (1, 'ABC', '2023-04-30', 'pending', 100.00, 10.00);";
+            connectDB.executeQuery(query);
+            query = "INSERT INTO `Orders` (supplier_id, order_number, branch_code, order_date, order_status, total_price, orderDiscount) VALUES"
                     + "(201, 1, '2', '2022-04-28', 'InProcess', 500.0, 50.0),"
                     + "(202, 2, '3', '2022-04-27', 'InProcess', 700.0, 30.0),"
                     + "(203, 3, '4', '2022-04-26', 'Completed', 320.0, 80.0);"
@@ -41,7 +43,7 @@ public class OrderDAOTest {
                     + "(403, 503, 303, 100, 1),"
                     + "(404, 504, 304, 75, 3),"
                     + "(405, 505, 305, 200, 4);";
-            connectDB.executeUpdate(query);
+            connectDB.executeQuery(query);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {

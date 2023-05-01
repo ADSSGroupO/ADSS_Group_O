@@ -29,89 +29,102 @@ public class ConnectDB {
         return instance;
     }
 
-/*    public void createTables() throws SQLException {
+    public void createTables() throws SQLException {
         System.out.println("Creating tables...");
         try(Statement statement = createStatement()){
-            String query = "CREATE TABLE IF NOT EXISTS Supplier ("
-                    + "supplier_id INTEGER PRIMARY KEY,"
-                    + "supplier_name TEXT NOT NULL,"
-                    + "bank_account INTEGER NOT NULL,"
-                    + "payment TEXT NOT NULL"
-                    + ");" ;
+            String query = "CREATE TABLE 'Supplier' (" +
+                    "'supplier_id' INTEGER NOT NULL," +
+                    "'supplier_name' TEXT NOT NULL," +
+                    "'bank_account'	INTEGER NOT NULL," +
+                    "'payment'	TEXT NOT NULL," +
+                    "PRIMARY KEY('supplier_id'));";
             statement.execute(query);
-            query = "CREATE TABLE IF NOT EXISTS FixedSupplierDays (\n" +
-                    "  supplier_id INT NOT NULL,\n" +
-                    "  day INTEGER NOT NULL,\n" +
-                    "  PRIMARY KEY (supplier_id, day),\n" +
-                    "  FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id)\n" +
-                    ");";
+            query = "CREATE TABLE 'FixedSupplierDays' (" +
+                    "'supplier_id'	INT NOT NULL," +
+                    "'day'	INTEGER NOT NULL," +
+                    "FOREIGN KEY('supplier_id') REFERENCES 'Supplier'('supplier_id')," +
+                    "PRIMARY KEY('supplier_id','day')" + ");";
             statement.execute(query);
-            query = "CREATE TABLE IF NOT EXISTS NoTransportSupplierInfo (" +
-                    "Fsupplier_id int not NULL FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id)"+
-                    "address TEXT NOT NULL" +
-                    "nextDeliveryDate Date," +");";
+            query = "CREATE TABLE 'NoTransportSupplierInfo' (" +
+            "'supplier_id'	INT NOT NULL," +
+                    "'address'	TEXT NOT NULL," +
+                    "'nextDeliveryDate'	DATE," +
+                    "PRIMARY KEY('supplier_id')," +
+                    "FOREIGN KEY('supplier_id') REFERENCES 'Supplier'('supplier_id')" + ");";
             statement.execute(query);
-            query = "CREATE TABLE IF NOT EXISTS OnOrderSupplierNumOfDays (" +
-                    "FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id)"+
-                    "numberOfDaysToNextOrder INTEGER," +");";
+            query = "CREATE TABLE 'OnOrderSupplierNumOfDays' ("+
+            "'supplier_id'	INT NOT NULL," +
+                    "'numberOfDaysToNextOrder'	INTEGER," +
+                    "PRIMARY KEY('supplier_id')," +
+                    "FOREIGN KEY('supplier_id') REFERENCES 'Supplier'('supplier_id'));";
             statement.execute(query);
-            query = "CREATE TABLE IF NOT EXISTS SupplyAgreement (" +
-                    "FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id)," +
-                    "FOREIGN KEY (makat) REFERENCES Product(makat)," + // product code
-                    "list_price FLOAT NOT NULL," +
-                    "max_amount INTEGER NOT NULL," +
-                    "catalog_code INTEGER NOT NULL," +
-                    ");";
+            query = "CREATE TABLE 'SupplyAgreement' ("+
+            "'supplier_id'	INT NOT NULL," +
+                    "'makat'	INT NOT NULL," +
+                    "'list_price'	FLOAT NOT NULL," +
+                    "'max_amount'	INTEGER NOT NULL," +
+                    "'catalog_code'	INTEGER NOT NULL," +
+                    "FOREIGN KEY('makat') REFERENCES 'Product'('makat')," +
+                    "FOREIGN KEY('supplier_id') REFERENCES 'Supplier'('supplier_id')," +
+                    "PRIMARY KEY('supplier_id','makat'));";
             statement.execute(query);
-            query = "CREATE TABLE IF NOT EXISTS DiscountByProduct (" +
-                    "FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id)," +
-                    "FOREIGN KEY (makat) REFERENCES Product(makat)," + // product code
-                    "numOfProducts INTEGER NOT NULL," +
-                    "val FLOAT NOT NULL," +
-                    "ByPrice BOOLEAN NOT NULL" +
-                    ");";
+            query = "CREATE TABLE 'DiscountByProduct' (" +
+            "'supplier_id'	INT NOT NULL," +
+                    "'makat'	INT NOT NULL," +
+                    "'numOfProducts'	INTEGER NOT NULL," +
+                    "'val'	FLOAT NOT NULL," +
+                    "'ByPrice'	BOOLEAN NOT NULL," +
+                    "FOREIGN KEY('supplier_id') REFERENCES 'Supplier'('supplier_id')," +
+                    "FOREIGN KEY('makat') REFERENCES 'Product'('makat'), " +
+                    "PRIMARY KEY('supplier_id','makat','numOfProducts','val','ByPrice')" + ");";
             statement.execute(query);
-            query = "CREATE TABLE IF NOT EXISTS DiscountByOrder (" +
-                    "FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id)," +
-                    "FOREIGN KEY (makat) REFERENCES Product(makat)," + // product code
-                    "minimalPrice FLOAT NOT NULL," +
-                    "val FLOAT NOT NULL" +
-                    "ByPrice BOOLEAN NOT NULL" +
-                    ");";
+            query = "CREATE TABLE 'DiscountByOrder' (" +
+            "'supplier_id'	INT NOT NULL," +
+                    "'minimalPrice'	FLOAT NOT NULL," +
+                    "'val'	FLOAT NOT NULL," +
+                    "'ByPrice'	BOOLEAN NOT NULL," +
+                    "PRIMARY KEY('supplier_id','minimalPrice','val','ByPrice')," +
+                    "FOREIGN KEY('supplier_id') REFERENCES 'Supplier'('supplier_id')" + ");";
             statement.execute(query);
-            query = "CREATE TABLE IF NOT EXISTS Contact ("
-                    + "FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id),"
-                    + "contact_name TEXT NOT NULL,"
-                    + "cellphone TEXT NOT NULL,"
-                    + ");";
+            query = "CREATE TABLE 'Contact' (" +
+            "'supplier_id'	INT NOT NULL," +
+                    "'contact_name'	TEXT NOT NULL," +
+                    "'cellphone'	TEXT NOT NULL," +
+                    "FOREIGN KEY('supplier_id') REFERENCES 'Supplier'('supplier_id')," +
+                    "PRIMARY KEY('supplier_id')" + ");";
             statement.execute(query);
-            query = "CREATE TABLE IF NOT EXISTS Orders ("
-                    + "FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id),"
-                    + "order_number INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + "branch_code INTEGER NOT NULL,"
-                    + "order_date Date,"
-                    + "order_status TEXT NOT NULL,"
-                    + "total_price FLOAT NOT NULL,"
-                    + "orderDiscount FLOAT NOT NULL,"
-                    + ");";
+            query = "CREATE TABLE 'Orders' ("+
+            "'supplier_id'	INT NOT NULL," +
+                    "'order_number'	INTEGER NOT NULL," +
+                    "'branch_code'	TEXT NOT NULL," +
+                    "'order_date'	DATE NOT NULL," +
+                    "'order_status'	TEXT NOT NULL,"+
+                    "'total_price'	FLOAT NOT NULL," +
+                    "'orderDiscount'	FLOAT NOT NULL," +
+                    "FOREIGN KEY('supplier_id') REFERENCES 'Supplier'('supplier_id')," +
+                    "PRIMARY KEY('order_number' AUTOINCREMENT)" + ");";
             statement.execute(query);
-            query = "CREATE TABLE IF NOT EXISTS OrderDetailsByProduct ("
-                    + "FOREIGN KEY (order_number) REFERENCES Orders(order_number),"
-                    + "FOREIGN KEY (makat) REFERENCES Product(makat)," // product code
-                    + "product_name TEXT NOT NULL,"
-                    + "amount INTEGER NOT NULL,"
-                    + "list_price FLOAT NOT NULL,"
-                    + "discount FLOAT NOT NULL,"
-                    + "final_price FLOAT NOT NULL,"
-                    + ");";
+            query = "CREATE TABLE 'OrderDetailsByProduct' ("+
+            "'order_number'	INTEGER NOT NULL," +
+                    "'makat'	INT NOT NULL," +
+                    "'product_name'	TEXT NOT NULL," +
+                    "'amount'	INTEGER NOT NULL," +
+                    "'list_price'	FLOAT NOT NULL," +
+                    "'discount'	FLOAT NOT NULL," +
+                    "'final_price'	FLOAT NOT NULL," +
+                    "FOREIGN KEY('makat') REFERENCES 'Product'('makat')," +
+                    "FOREIGN KEY('order_number') REFERENCES 'Orders'('order_number')," +
+                    "PRIMARY KEY('order_number')" + ");";
             statement.execute(query);
-            query = "CREATE TABLE IF NOT EXISTS FixedPeriodOrder ("
-                    + "branch INTEGER NOT NULL,"
-                    + "FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id),"
-                    + "FOREIGN KEY (makat) REFERENCES Product(makat)," // product code
-                    + "amount INTEGER NOT NULL,"
-                    + "ship_day INTEGER NOT NULL,"
-                    + ");";
+            query = "CREATE TABLE 'FixedPeriodOrder' (" +
+            "'branch'	TEXT NOT NULL," +
+                    "'supplier_id'	INTEGER NOT NULL," +
+                    "'makat'	INTEGER NOT NULL," +
+                    "'amount'	INTEGER NOT NULL," +
+                    "'ship_day'	INTEGER NOT NULL," +
+                    "FOREIGN KEY('supplier_id') REFERENCES 'Supplier'('supplier_id')," +
+                    "FOREIGN KEY('makat') REFERENCES 'Product'('makat')," +
+                    "PRIMARY KEY('supplier_id','makat','branch'));";
             statement.execute(query);
         }
         catch (SQLException e) {
@@ -120,7 +133,7 @@ public class ConnectDB {
         finally {
             close_connect();
         }
-    }*/
+    }
 
     public Statement createStatement() throws SQLException {
         conn = DriverManager.getConnection(url);

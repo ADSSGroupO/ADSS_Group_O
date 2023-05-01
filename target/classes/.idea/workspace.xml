@@ -9,7 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4da3dfe4-640f-4ecd-b812-e0548fb3edf8" name="Changes" comment="added some testing methods that should be fixed" />
+    <list default="true" id="4da3dfe4-640f-4ecd-b812-e0548fb3edf8" name="Changes" comment="tried to commit changes again">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,6 +25,13 @@
         <option value="JUnit5 Test Class" />
         <option value="Class" />
       </list>
+    </option>
+  </component>
+  <component name="Git.Pull.Settings">
+    <option name="OPTIONS">
+      <set>
+        <option value="FF_ONLY" />
+      </set>
     </option>
   </component>
   <component name="Git.Settings">
@@ -80,7 +89,7 @@
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers&quot;: &quot;true&quot;,
     &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lior/OneDrive/שולחן העבודה&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lior/OneDrive/מסמכים/GitHub/ADSS_Group_O/Inventory_Suppliers_Database.db&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -105,7 +114,7 @@
       <recent name="Suppliers" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.OrderDAOTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Suppliers.Main" />
       <module name="ADSS_Group_O" />
@@ -182,8 +191,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.OrderDAOTest" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.OrderDAOTest.testGetFixedPeriodOrders" />
         <item itemvalue="JUnit.SupplyAgreementTest" />
         <item itemvalue="JUnit.SupplierTest" />
@@ -236,6 +245,15 @@
       <workItem from="1682617297569" duration="1651000" />
       <workItem from="1682618968765" duration="1051000" />
       <workItem from="1682620052611" duration="34518000" />
+      <workItem from="1682784755034" duration="5672000" />
+      <workItem from="1682856169396" duration="178000" />
+      <workItem from="1682856363556" duration="1392000" />
+      <workItem from="1682857855559" duration="6225000" />
+      <workItem from="1682868543559" duration="63000" />
+      <workItem from="1682868624216" duration="3557000" />
+      <workItem from="1682874250538" duration="1396000" />
+      <workItem from="1682875903455" duration="331000" />
+      <workItem from="1682876270640" duration="616000" />
     </task>
     <task id="LOCAL‎-00001" summary="creating suppliers classes">
       <created>1680258166279</created>
@@ -475,7 +493,77 @@
       <option name="project" value="LOCAL‎" />
       <updated>1682784664452</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL‎-00035" summary="added fixed period order method&#10;also changed branch code from int to string">
+      <created>1682855865924</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL‎-00035" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1682855865924</updated>
+    </task>
+    <task id="LOCAL‎-00036" summary="added fixed period order method&#10;also changed branch code from int to string">
+      <created>1682856438635</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL‎-00036" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1682856438635</updated>
+    </task>
+    <task id="LOCAL‎-00037" summary="deleted jar">
+      <created>1682857107576</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL‎-00037" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1682857107576</updated>
+    </task>
+    <task id="LOCAL‎-00038" summary="deleted jar">
+      <created>1682857921914</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL‎-00038" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1682857921914</updated>
+    </task>
+    <task id="LOCAL‎-00039" summary="removed duplicates">
+      <created>1682858916464</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL‎-00039" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1682858916464</updated>
+    </task>
+    <task id="LOCAL‎-00040" summary="update">
+      <created>1682868738048</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL‎-00040" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1682868738049</updated>
+    </task>
+    <task id="LOCAL‎-00041" summary="update">
+      <created>1682869823092</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL‎-00041" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1682869823092</updated>
+    </task>
+    <task id="LOCAL‎-00042" summary="update">
+      <created>1682876315097</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL‎-00042" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1682876315097</updated>
+    </task>
+    <task id="LOCAL‎-00043" summary="tried to commit changes again">
+      <created>1682876521045</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL‎-00043" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1682876521045</updated>
+    </task>
+    <task id="LOCAL‎-00044" summary="tried to commit changes again">
+      <created>1682876640998</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL‎-00044" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1682876640998</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -525,6 +613,11 @@
     <MESSAGE value="Added DAO for all classes" />
     <MESSAGE value="added fixed order function to orderDAO" />
     <MESSAGE value="added some testing methods that should be fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="added some testing methods that should be fixed" />
+    <MESSAGE value="added fixed period order method&#10;also changed branch code from int to string" />
+    <MESSAGE value="deleted jar" />
+    <MESSAGE value="removed duplicates" />
+    <MESSAGE value="update" />
+    <MESSAGE value="tried to commit changes again" />
+    <option name="LAST_COMMIT_MESSAGE" value="tried to commit changes again" />
   </component>
 </project>
