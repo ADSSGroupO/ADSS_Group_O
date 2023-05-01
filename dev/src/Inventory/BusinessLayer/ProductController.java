@@ -33,12 +33,15 @@ public class ProductController {
         return ProductById.getOrDefault(productId, null);
     }
 
-    public void reduceAmountOfProductByID(int productID, int amount , Item.Location locale) {
+    public void reduceAmountOfProductByID(int productID, int amount , Item.Location locale,String branch) {
         //ProductById.get(productID).setCurrentAmount( ProductById.get(productID).getCurrentAmount()-amount);
         Product product =ProductById.get(productID);
+
         switch (locale){
             case STORE : {
-                product.reduceItemsFromStore(1);
+                if(branch!=null){
+                    product.reduceItemsFromStore(1, Branch.valueOf(branch));
+                }
                 break;
             }
             case INVENTORY : {
@@ -127,9 +130,10 @@ public class ProductController {
         getProductById(makat).addItems(1);
     }
 
-    public int getAmountOfProduct(int productID) {
+    public int getAmountOfProduct(int productID,String branch) {
+
         if(ProductById.containsKey(productID)){
-            return ProductById.get(productID).getCurrentAmount();
+            return ProductById.get(productID).getCurrentAmount(branch);
         }
         else{
             throw new IllegalArgumentException("product not exist");

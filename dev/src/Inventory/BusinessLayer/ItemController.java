@@ -14,7 +14,8 @@ import java.util.concurrent.TimeUnit;
 public class ItemController {
     private static HashMap<Integer, ArrayList<Item>> soldItems = new HashMap<>(); //sold items by category ID
     private static HashMap<Integer, ArrayList<Item>> storageItems = new HashMap<>(); //storage items by category ID
-    private static HashMap<Integer, ArrayList<Item>> inStoreItems = new HashMap<>(); //in store items by category ID
+    private static HashMap<Branch,HashMap<Integer, ArrayList<Item>>> inStoreItems = new HashMap<>(); //in store items by category ID
+    //private static HashMap<String,HashMap<Integer, ArrayList<Item>>> inStoreItemsByBranch = new HashMap<>(); //in store items by category ID by branch.
     private static HashMap<Integer, ArrayList<Item>> defectiveItems = new HashMap<>(); //defective items by category ID
     private static final ArrayList<Item> items = new ArrayList<>(); //all items
     private static final HashMap<Integer, Item> expiredItems = new HashMap<>();
@@ -57,7 +58,9 @@ public class ItemController {
     }
 
     private void publishExpiredReport() {
-        removeExpired(inStoreItems);
+        for (HashMap<Integer, ArrayList<Item>> categoryItems: inStoreItems.values()) {
+            removeExpired(categoryItems);
+        }
         removeExpired(storageItems);
         if(expiredItems.isEmpty()){
             System.out.println("No expired items");
@@ -96,7 +99,7 @@ public class ItemController {
         return instance;
     }
 
-    public void addItem(String manufacturer, Integer barcode, String name, String expirationDate, double costPrice, int category, int productID,String size) {
+    public void addItem(String manufacturer, Integer barcode, String name, String expirationDate, double costPrice, int category, int productID,String size,String branch) {
         if(itemById.containsKey(barcode)){
             throw new IllegalArgumentException("Item already exists");
         }
@@ -109,10 +112,10 @@ public class ItemController {
         Item.Location locate = Item.Location.INVENTORY;
         Item item = null;
         if(size==null || size.equals("") || size.equals("null")){
-            item = new Item(manufacturer,barcode, name, locate, expirationDate, costPrice, productID);
+            item = new Item(manufacturer,barcode, name, locate, expirationDate, costPrice, productID,branch);
         }
         else {
-            item = new Item(manufacturer,barcode, name, locate, expirationDate, costPrice, productID,size);
+            item = new Item(manufacturer,barcode, name, locate, expirationDate, costPrice, productID,size,branch);
         }
         if(storageItems.containsKey(category)){//every new item added goes straight to storage
             storageItems.get(category).add(item);
@@ -129,7 +132,7 @@ public class ItemController {
         //add the amount of the product
         productController.addItem(productID);
         //add the item to the database
-        itemDAO.addItem(manufacturer,barcode, name, expirationDate, costPrice,category, productID,size, item.getSellingPrice());
+        itemDAO.addItem(manufacturer,barcode, name, expirationDate, costPrice,category, productID,size, item.getSellingPrice(),branch);
     }
 
     //sold item
@@ -139,47 +142,55 @@ public class ItemController {
         //get item from storage
         //add to sold items
         //remove from storage
-        Item item = itemById.get(ItemID);
-
-        if(inStoreItems.get(CategoryID)!=null){
-            if (inStoreItems.get(CategoryID).contains(item)) {
-                //add the item to sold items
-                if(soldItems.get(CategoryID)==null){
-                    soldItems.put(CategoryID, new ArrayList<>());
+        Item item = null;
+        Branch branch = null;
+        if(itemById.get(ItemID)==null){
+            throw new IllegalArgumentException("Item does not exist");
+        }else{
+             item = itemById.get(ItemID);
+             branch = item.getBranch();
+        }
+        if(inStoreItems.get(branch)==null){
+            throw new IllegalArgumentException("Item does not exist in store");
+        }else {
+            if (inStoreItems.get(branch).get(CategoryID) != null) {
+                if (inStoreItems.get(branch).get(CategoryID).contains(item)) {
+                    //add the item to sold items
+                    soldItems.computeIfAbsent(CategoryID, k -> new ArrayList<>());
+                    soldItems.get(CategoryID).add(item);
+                    //remove from in store items
+                    inStoreItems.get(branch).get(CategoryID).remove(item);
+                    //remove from product amount
+                    productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.STORE,item.getBranch().toString());
+                    item.setCurrentLocation("SOLD");
+                    // update the item is sold in the DB
+                    itemDAO.setSold(item.getBarcode());
                 }
+            } else {
                 soldItems.get(CategoryID).add(item);
-                //remove from in store items
-                inStoreItems.get(CategoryID).remove(item);
+                //remove from storage items
+                storageItems.get(CategoryID).remove(item);
                 //remove from product amount
-                productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.STORE);
+                productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.INVENTORY,null);
                 item.setCurrentLocation("SOLD");
                 // update the item is sold in the DB
                 itemDAO.setSold(item.getBarcode());
             }
+            double thePriceBeenSoldAt = getDiscount(ItemID);
+            //update the price been sold
+            item.setThePriceBeenSoldAt(thePriceBeenSoldAt);
+            //update the price the item been sold at in the DB
+            itemDAO.setThePriceBeenSoldAt(item.getBarcode(), thePriceBeenSoldAt);
         }
-        else{
-            soldItems.get(CategoryID).add(item);
-            //remove from storage items
-            storageItems.get(CategoryID).remove(item);
-            //remove from product amount
-            productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.INVENTORY);
-            item.setCurrentLocation("SOLD");
-            // update the item is sold in the DB
-            itemDAO.setSold(item.getBarcode());
-        }
-        double thePriceBeenSoldAt = getDiscount(ItemID);
-        //update the price been sold
-        item.setThePriceBeenSoldAt(thePriceBeenSoldAt);
-        //update the price the item been sold at in the DB
-        itemDAO.setThePriceBeenSoldAt(item.getBarcode(), thePriceBeenSoldAt);
     }
 
     //get item
     public Item getItem(int CategoryID, int ItemID) {
         Item item = itemById.get(ItemID);
+        Branch branch = item.getBranch();
         //get item from storage
-        if (inStoreItems.get(CategoryID).contains(item)) {
-            return inStoreItems.get(CategoryID).get(ItemID);
+        if (inStoreItems.get(branch).get(CategoryID).contains(item)) {
+            return inStoreItems.get(branch).get(CategoryID).get(ItemID);
         }
         throw new IllegalArgumentException("Item not found");
     }
@@ -191,38 +202,46 @@ public class ItemController {
         if(storageItems.get(CategoryID)!=null){
             items.addAll(storageItems.get(CategoryID));
         }
-        if(inStoreItems.get(CategoryID)!=null){
-            items.addAll(inStoreItems.get(CategoryID));
+        for(Branch branch : inStoreItems.keySet()){
+            if(inStoreItems.get(branch).get(CategoryID)!=null){
+                items.addAll(inStoreItems.get(branch).get(CategoryID));
+            }
         }
         return items;
     }
 
 
     public void moveItemToStore(int categoryID, int itemID) {
+        Item item = null;
+        Branch branch = null;
+        if(itemById.get(itemID)==null){
+            throw new IllegalArgumentException("No such item ");
+        }else {
+             item = itemById.get(itemID);
+              branch = item.getBranch();
+        }
         //check if there are items in this category in store
-        inStoreItems.computeIfAbsent(categoryID, k -> new ArrayList<>());
-        if(inStoreItems.get(categoryID).contains(itemById.get(itemID))){
-            throw new IllegalArgumentException("Item already in store");
-        }
-        else if(storageItems.get(categoryID).contains(itemById.get(itemID))){
-            //add the item to in store items
-            inStoreItems.get(categoryID).add(itemById.get(itemID));
-            //remove from storage items
-            storageItems.get(categoryID).remove(itemById.get(itemID));
-            //update the location in the DB
-            itemDAO.moveItemToStore(itemID);
-        }
-        else{
-            throw new IllegalArgumentException("Item not found");
-        }
-        Item item = itemById.get(itemID);
-        if (storageItems.get(categoryID).contains(item)) {
-            //add the item to in store items
-            inStoreItems.get(categoryID).add(item);
-            //remove from storage items
-            storageItems.get(categoryID).remove(item);
-            //update the location in the DB
-            itemDAO.moveItemToStore(itemID);
+        if(inStoreItems.get(branch)==null){
+            throw new IllegalArgumentException("No such branch ");
+        }else {
+            if (inStoreItems.get(branch).get(categoryID) == null) {
+                throw new IllegalArgumentException("No such category ");
+            } else {
+                inStoreItems.computeIfAbsent(branch, k -> new HashMap<>());
+                inStoreItems.get(branch).computeIfAbsent(categoryID, k -> new ArrayList<>());
+                if (inStoreItems.get(branch).get(categoryID).contains(item)) {
+                    throw new IllegalArgumentException("Item already in store");
+                } else if (storageItems.get(categoryID).contains(item)) {
+                    //add the item to in store items
+                    inStoreItems.get(item.getBranch()).get(categoryID).add(item);
+                    //remove from storage items
+                    storageItems.get(categoryID).remove(item);
+                    //update the location in the DB
+                    itemDAO.moveItemToStore(itemID);
+                } else {
+                    throw new IllegalArgumentException("Item not found");
+                }
+            }
         }
     }
 
@@ -240,30 +259,39 @@ public class ItemController {
 
     //change to one item at a time
     public void defective(Integer DefItem, int CategoryId, String reason) {
-        Item item = itemById.get(DefItem);
-            if (inStoreItems.get(CategoryId).contains(item)) {
-                //add the item to sold items
-                defectiveItems.get(CategoryId).add(item);
-                //remove from in store items
-                inStoreItems.get(CategoryId).remove(item);
-                //remove from product amount
-                productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.STORE);
-                //update the defctive description
-                item.setDefectiveDescription(reason);
-                //update is_defective in the DB
-                itemDAO.defective(item.getBarcode(), reason);
-            }
-            if (storageItems.get(CategoryId).contains(item)) {
-                //add the item to sold items
-                defectiveItems.get(CategoryId).add(item);
-                //remove from in store items
-                storageItems.get(CategoryId).remove(item);
-                //remove from product amount
-                productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.INVENTORY);
-                //update is_defective in the DB
-                itemDAO.defective(item.getBarcode(), reason);
+        if(itemById.get(DefItem)==null){
+            throw new IllegalArgumentException("Item does not exist");
+        }else {
+            Item item = itemById.get(DefItem);
+            Branch branch = item.getBranch();
+            if(inStoreItems.get(branch)==null){
+                throw new IllegalArgumentException("Item does not exist in store");
+            }else {
+                if (inStoreItems.get(branch).get(CategoryId).contains(item)) {
+                    //add the item to sold items
+                    defectiveItems.get(CategoryId).add(item);
+                    //remove from in store items
+                    inStoreItems.get(branch).get(CategoryId).remove(item);
+                    //remove from product amount
+                    productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.STORE,item.getBranch().toString());
+                    //update the defctive description
+                    item.setDefectiveDescription(reason);
+                    //update is_defective in the DB
+                    itemDAO.defective(item.getBarcode(), reason);
+                }
+                if (storageItems.get(CategoryId).contains(item)) {
+                    //add the item to sold items
+                    defectiveItems.get(CategoryId).add(item);
+                    //remove from in store items
+                    storageItems.get(CategoryId).remove(item);
+                    //remove from product amount
+                    productController.reduceAmountOfProductByID(item.getMakat(), 1, Item.Location.INVENTORY,null);
+                    //update is_defective in the DB
+                    itemDAO.defective(item.getBarcode(), reason);
 
+                }
             }
+        }
     }
 
     //get all defective items
@@ -282,7 +310,9 @@ public class ItemController {
             }
         } else if (storageItems.isEmpty()) {
             for (int i = 0; i < inStoreItems.size(); i++) {
-                allItems.addAll(inStoreItems.get(i));
+                for(Branch branch : inStoreItems.keySet()){
+                    allItems.addAll(inStoreItems.get(branch).get(i));
+                }
             }
         }
         for (Item allItem : allItems) {
@@ -334,7 +364,9 @@ public class ItemController {
     public ArrayList<Item> getItemsInStore() {
         ArrayList<Item> items = new ArrayList<>();
         for (int i = 0; i < inStoreItems.size(); i++) {
-            items.addAll(inStoreItems.get(i));
+            for(Branch branch : inStoreItems.keySet()){
+                items.addAll(inStoreItems.get(branch).get(i));
+            }
         }
         return items;
     }
@@ -398,10 +430,12 @@ public class ItemController {
             soldItems = itemDAO.getSoldItems();
             itemById = itemDAO.getItemById();
             int categoryId;
+            Branch branch;
             for(Item item : itemById.values()){
                 if(item.getLocation()!= Item.Location.SOLD){
 //                    productController.updateAmount(item.getMakat());
                     categoryId = productController.getProductById(item.getMakat()).getCategoryID();
+                    branch = item.getBranch();
                     if(item.getLocation() == Item.Location.INVENTORY){
                         if(!storageItems.containsKey(categoryId)){
                             storageItems.put(categoryId, new ArrayList<>());
@@ -409,10 +443,16 @@ public class ItemController {
                         storageItems.get(categoryId).add(item);
                     }
                     else{
-                        if(!inStoreItems.containsKey(categoryId)){
-                            inStoreItems.put(categoryId, new ArrayList<>());
+                        if(!inStoreItems.containsKey(branch)){
+                            inStoreItems.put(branch, new HashMap<>());
+                            if(!inStoreItems.get(branch).containsKey(categoryId)){
+                                inStoreItems.get(branch).put(categoryId, new ArrayList<>());
+                            }
                         }
-                        inStoreItems.get(categoryId).add(item);
+                        else if(!inStoreItems.get(branch).containsKey(categoryId)){
+                            inStoreItems.get(branch).put(categoryId, new ArrayList<>());
+                        }
+                        inStoreItems.get(branch).get(categoryId).add(item);
                     }
                 }
             }

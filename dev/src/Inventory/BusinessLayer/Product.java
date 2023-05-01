@@ -2,18 +2,19 @@ package Inventory.BusinessLayer;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Product {
     private String name;
     private int minAmount;
-    private int currentAmount;
+    private HashMap<Branch, Integer> currentAmount;
     private int amountInStore;
     private int amountInInventory;
     private int categoryID;
     private int makat;
-    private static int supplierID = 0;
-    private ArrayList<Double> discounts;
-    private String sub_category;
+    private  int supplierID = -1;
+    private final ArrayList<Double> discounts;
+    private final String sub_category;
 
 
     private float discount;
@@ -34,7 +35,7 @@ public class Product {
     public Product(String name, int minAmount, int categoryID,String sub_category, int makat , int supplierID) {
         this.name = name;
         this.minAmount = minAmount;
-        this.currentAmount = 0;
+        this.currentAmount = new HashMap<>();
         this.amountInStore = 0;
         this.amountInInventory = 0;
         this.categoryID = categoryID;
@@ -70,12 +71,15 @@ public class Product {
             this.minAmount = storeState;
     }
 
-    public int getCurrentAmount() {
+    public HashMap<Branch, Integer> getCurrentAmount() {
         return currentAmount;
     }
+    public  Integer getCurrentAmount(String branch) {
+        return currentAmount.get(Branch.valueOf(branch));
+    }
 
-    public void setCurrentAmount(int currentAmount) {
-        this.currentAmount = currentAmount;
+    public void setCurrentAmount(Branch branch, int amount) {
+        this.currentAmount.put(branch, amount);
     }
 
     public int getAmountInStore() {
@@ -104,14 +108,15 @@ public class Product {
 
     //this method is used to reduce items from inventory and
     // raise a warning if the amount is below the minimum amount
-    public void reduceItems(int amount){
-        if(amount <= this.currentAmount)
-            this.currentAmount -= amount;
-        if(minAmount >= currentAmount)
+    public void reduceItems(int amount, Branch branch){
+        if(amount <= this.currentAmount.get(branch))
+            this.currentAmount.put(branch, this.currentAmount.get(branch) - amount);
+        if(minAmount >= this.currentAmount.get(branch))
             System.out.println("Warning: The amount of " + name + " is below the minimum amount");
     }
+    //when we add items its only into the inventory
     public void addItems(int amount){
-        this.currentAmount += amount;
+        this.amountInInventory += amount;
     }
     public void addItemsToStore(int amount){
         this.amountInStore += amount;
@@ -119,19 +124,21 @@ public class Product {
     public void addItemsToInventory(int amount){
         this.amountInInventory += amount;
     }
-    public void reduceItemsFromStore(int amount){
-        if(amount <= this.amountInStore)
+    public void reduceItemsFromStore(int amount, Branch branch){
+        if(amount <= this.amountInStore) {
             this.amountInStore -= amount;
-            reduceItems(amount);
+            reduceItems(amount, branch);
+        }
     }
     public void reduceItemsFromInventory(int amount){
-        if(amount <= this.amountInInventory)
+        if(amount <= this.amountInInventory) {
             this.amountInInventory -= amount;
-            reduceItems(amount);
+            //reduceItems(amount);
+        }
     }
-    public void setSupplierID(int supplierID) {
-        this.supplierID = supplierID;
-    }
+//    public void setSupplierID(int supplierID) {
+//        this.supplierID = supplierID;
+//    }
     public int getSupplierID() {
         return supplierID;
     }

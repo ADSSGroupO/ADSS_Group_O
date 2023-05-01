@@ -1,5 +1,6 @@
 package Inventory.DataAccessLayer.Mapper;
 
+import Inventory.BusinessLayer.Branch;
 import Inventory.BusinessLayer.Item;
 
 import java.sql.SQLException;
@@ -23,10 +24,10 @@ public class ItemDAO {
                 String location1 = (String) row.get("location");
                 Item.Location location = Item.Location.valueOf(location1);
                 if(row.get("size")!=null) {
-                    item = new Item((String) row.get("producer"), (int) row.get("barcode"), (String) row.get("name"), location, (String) row.get("expiration_date"), (double) row.get("cost_price"), (int) row.get("makat"));
+                    item = new Item((String) row.get("producer"), (int) row.get("barcode"), (String) row.get("name"), location, (String) row.get("expiration_date"), (double) row.get("cost_price"), (int) row.get("makat"),(String) row.get("branch"));
                 }
                 else {
-                    item = new Item((String) row.get("producer"), (int) row.get("barcode"), (String) row.get("name"), location, (String) row.get("expiration_date"), (double) row.get("cost_price"), (int) row.get("makat"), (String) row.get("size"));
+                    item = new Item((String) row.get("producer"), (int) row.get("barcode"), (String) row.get("name"), location, (String) row.get("expiration_date"), (double) row.get("cost_price"), (int) row.get("makat"), (String) row.get("size"),(String) row.get("branch"));
                 }
                 if((int) row.get("is_defective") == 1)
                     item.setDefective(row.get("defective_description").toString());
@@ -43,11 +44,11 @@ public class ItemDAO {
             connectDB.close_connect();
         }
     }
-    public void addItem(String manufacturer, Integer barcode, String name, String expirationDate, double costPrice, int category, int productID, String size, double sellingPrice){
+    public void addItem(String manufacturer, Integer barcode, String name, String expirationDate, double costPrice, int category, int productID, String size, double sellingPrice, String branch){
         try {
             connectDB.createTables();
             Item.Location locate = Item.Location.INVENTORY;
-            String query = "INSERT INTO Items (producer, barcode, name, location, expiration_date, cost_price, category, makat, size, is_defective, is_expired, selling_price) VALUES ('" + manufacturer + "', " + barcode + ", '" + name + "', '" + locate + "', '" + expirationDate + "', " + costPrice + ", " + category + ", '" + productID + "', '" + size + "', 0, 0, " + sellingPrice + ")";
+            String query = "INSERT INTO Items (producer, barcode, name, location, expiration_date, cost_price, category, makat, size, is_defective, is_expired, selling_price,branch) VALUES ('" + manufacturer + "', " + barcode + ", '" + name + "', '" + locate + "', '" + expirationDate + "', " + costPrice + ", " + category + ", '" + productID + "', '" + size + "', 0, 0, " + sellingPrice + ", '" + branch + "')";
             connectDB.executeUpdate(query);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -159,10 +160,10 @@ public class ItemDAO {
                     Item item;
                     Item.Location location = Item.Location.valueOf((String) itemRow.get("location"));
                     if(itemRow.get("size")!=null) {
-                        item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (double) itemRow.get("cost_price"), (int) itemRow.get("makat"));
+                        item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (double) itemRow.get("cost_price"), (int) itemRow.get("makat"),(String) itemRow.get("branch"));
                     }
                     else {
-                        item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (double) itemRow.get("cost_price"), (int) itemRow.get("makat"), (String) itemRow.get("size"));
+                        item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (double) itemRow.get("cost_price"), (int) itemRow.get("makat"), (String) itemRow.get("size"),(String) itemRow.get("branch"));
                     }
                     if((int) itemRow.get("is_defective") == 1)
                         item.setDefective(itemRow.get("defective_description").toString());
@@ -194,10 +195,10 @@ public class ItemDAO {
                 Item item;
                 Item.Location location = Item.Location.valueOf((String) itemRow.get("location"));
                 if(itemRow.get("size")!=null) {
-                    item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (double) itemRow.get("cost_price"), (int) itemRow.get("makat"));
+                    item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (double) itemRow.get("cost_price"), (int) itemRow.get("makat"),(String) itemRow.get("branch"));
                 }
                 else {
-                    item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (double) itemRow.get("cost_price"), (int) itemRow.get("makat"), (String) itemRow.get("size"));
+                    item = new Item((String) itemRow.get("producer"), (int) itemRow.get("barcode"), (String) itemRow.get("name"), location, (String) itemRow.get("expiration_date"), (double) itemRow.get("cost_price"), (int) itemRow.get("makat"), (String) itemRow.get("size"),(String) itemRow.get("branch"));
                 }
                 if((int) itemRow.get("is_defective") == 1)
                     item.setDefective(itemRow.get("defective_description").toString());
@@ -210,6 +211,27 @@ public class ItemDAO {
                 items.put((int) itemRow.get("barcode"), item);
             }
             return items;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public HashMap<Branch, Integer> getBranches(int makat) {
+        try {
+            connectDB.createTables();
+            String query = "SELECT * FROM Items WHERE makat = " + makat + " AND location = 'STORE' G;";
+            ArrayList<HashMap<String, Object>> resultSet = connectDB.executeQuery(query);
+            HashMap<Branch, Integer> branches = new HashMap<>();
+            for (HashMap<String, Object> branchRow : resultSet) {
+                Branch branch = Branch.valueOf((String) branchRow.get("Branch"));
+                branches.put(branch, (int) branchRow.get("barcode"));
+            }
+            for(Branch branch : Branch.values()) {
+                if(!branches.containsKey(branch))
+                    branches.put(branch, 0);
+            }
+            return branches;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

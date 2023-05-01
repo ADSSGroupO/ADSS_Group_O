@@ -7,6 +7,8 @@ public class Item {
     private String producerID;
     private String name;
 
+    private Branch branch;
+
     public void setDefectiveDescription(String reason) {
         this.defDescription = reason;
     }
@@ -15,6 +17,9 @@ public class Item {
         return currentLocation;
     }
 
+    public Branch getBranch() {
+        return branch;
+    }
 
 
     public enum Location {STORE, INVENTORY ,SOLD};
@@ -34,7 +39,7 @@ public class Item {
 
 
 
-    public Item(String producer, int barcode, String name, Location currentLocation, String expirationDate, double costPrice, int makat) {
+    public Item(String producer, int barcode, String name, Location currentLocation, String expirationDate, double costPrice, int makat , String branch) {
         this.producerID = producer;
         this.name = name;
         this.currentLocation = currentLocation;
@@ -49,10 +54,11 @@ public class Item {
         this.costPrice = costPrice;
         this.makat = makat;
         this.barcode = barcode;
+        this.branch=Branch.valueOf(branch);
         this.sellingPrice = costPrice*(1.17+0.2);
     }
 
-    public Item(String producer, int barcode, String name, Location currentLocation, String expirationDate, double costPrice, int makat , String size) {
+    public Item(String producer, int barcode, String name, Location currentLocation, String expirationDate, double costPrice, int makat , String size, String branch) {
         this.producerID = producer;
         this.name = name;
         this.size=size;
@@ -68,6 +74,7 @@ public class Item {
         this.costPrice = costPrice;
         this.makat = makat;
         this.barcode = barcode;
+        this.branch=Branch.valueOf(branch);
         this.sellingPrice = costPrice*(1.17+0.2);
     }
 @Override

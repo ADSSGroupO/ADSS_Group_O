@@ -36,8 +36,8 @@ public class ProductService {
     }
 
 
-    public int getAmountOfProduct(int productID) {
-        return productController.getAmountOfProduct(productID);
+    public int getAmountOfProduct(int productID,String branch) {
+        return productController.getAmountOfProduct(productID,branch);
     }
 
     public void setDiscountBySupplier(int supplierID, int productID, Double discount) {

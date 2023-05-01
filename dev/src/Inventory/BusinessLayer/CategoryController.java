@@ -77,8 +77,11 @@ public class CategoryController {
             if (productByCategory.get(i) != null) {
                 ArrayList<Product> products = productByCategory.get(i);
                 for (Product product : products) {
-                    //Do we need to check the repeatability of a product?
-                    item.append(product.getName()).append(" product makat ").append(product.getMakat()).append(" : current amount : ").append(product.getCurrentAmount()).append("\n");
+                    HashMap<Branch,Integer> amount=product.getCurrentAmount();
+                    //Todo: check
+                    for(Branch branch:amount.keySet()){
+                        item.append(product.getName()).append(" product makat ").append(product.getMakat()).append("in branch :").append(branch).append(" : current amount : ").append(product.getCurrentAmount(String.valueOf(branch))).append("\n");
+                    }
                 }
                 report.add(item);
                 item = new StringBuilder(" Category Id : ");

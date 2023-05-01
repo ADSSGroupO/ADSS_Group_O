@@ -71,6 +71,7 @@ public class ConnectDB {
                     "defective_description TEXT," +
                     "size TEXT," +
                     "category INTEGER NOT NULL," +
+                    "branch TEXT NOT NULL," +
                     "FOREIGN KEY (makat) REFERENCES Product(makat)"+
                     "FOREIGN KEY (category) REFERENCES Category(id)"+");";
             statement.execute(query);

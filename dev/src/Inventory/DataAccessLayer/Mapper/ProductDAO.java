@@ -35,7 +35,7 @@ public class ProductDAO {
                 String sub_category = (String) row.get("sub_category");
                 int supplierID = (int) row.get("supplier_id");
                 Product product = new Product(name, minAmount, categoryID, sub_category, id, supplierID);
-                product.setCurrentAmount(currentAmount);
+                //product.setCurrentAmount(currentAmount);
                 String startDiscount = (String) row.get("Start_Discount");
                 String endDiscount = (String) row.get("End_Discount");
                 Double discount = (Double) row.get("Discount");
@@ -51,6 +51,7 @@ public class ProductDAO {
         }
         return products;
     }
+
     public String addProduct(String name, int minAmount, int categoryID, String sub_category, int makat, int supplierID){
         try {
             connectDB.createTables();

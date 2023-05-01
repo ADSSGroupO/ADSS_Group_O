@@ -17,6 +17,7 @@ public class CLI {
             serviceController.starConnection();
 
             printMenu();
+            scanner = new Scanner(System.in);
             choice = scanner.nextInt();
             switch (choice) {
                 case 1: {
@@ -84,8 +85,10 @@ public class CLI {
         int productID = scanner.nextInt();
         System.out.println("Enter item size if exist otherwise press enter or write null");
         String size = scanner.next();
+        System.out.println("Enter item branch");
+        String branch = scanner.next();
         try {
-            serviceController.addItem(manufacturer, barcode, name, expirationDate, costPrice, categoryID2, productID, size);
+            serviceController.addItem(manufacturer, barcode, name, expirationDate, costPrice, categoryID2, productID, size, branch);
         } catch (Exception e) {
             System.out.println("Invalid input try again from the beginning");
             start();
@@ -182,9 +185,11 @@ public class CLI {
         int productID = scanner.nextInt();
         System.out.println("Enter item size if exist otherwise press enter or write null");
         String size = scanner.next();
+        System.out.println("Enter item branch");
+        String branch = scanner.next();
         try {
             for(int i = 0; i < amount; i++){
-                serviceController.addItem(manufacturer, barcode++, name, expirationDate, costPrice, categoryID2, productID, size);
+                serviceController.addItem(manufacturer, barcode++, name, expirationDate, costPrice, categoryID2, productID, size, branch);
             }
             }catch (Exception e) {
             System.out.println("Invalid input try again from the beginning");
@@ -395,8 +400,10 @@ public class CLI {
             case 8: {
                 System.out.println("Enter product id");
                 int productID = scanner.nextInt();
+                System.out.println("Enter product branch");
+                String branch = scanner.next();
                 try {
-                    System.out.println(serviceController.getAmountOfProduct(productID));
+                    System.out.println(serviceController.getAmountOfProduct(productID, branch));
                     start();
                 } catch (Exception e) {
                     System.out.println("Product doesn't exist");

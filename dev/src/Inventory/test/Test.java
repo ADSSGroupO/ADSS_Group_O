@@ -25,46 +25,46 @@ class TestServiceController {
         service.addProduct("Beef Fillet ", 2, 1, "beef fillet",3, 0);
         service.addProduct("Broom", 2, 2, "broom",4, 0);
         service.addProduct("Pot", 2, 2,"pot", 5, 0);
-        service.addItem("Tnuva", 0, "Milk 3%", expirationDateStr, 6.9, 0, 0 ,"1L");
-        service.addItem("Tnuva", 1, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L");
-        service.addItem("Tnuva", 2, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L");
-        service.addItem("Tnuva", 3, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L");
-        service.addItem("Tnuva", 4, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L");
-        service.addItem("Tnuva", 5, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L");
-        service.addItem("Tnuva", 6, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L");
-        service.addItem("Tnuva", 7, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L");
-        service.addItem("Tnuva", 8, "Cheese 3%", expirationDateStr, 10, 0, 1,"250g");
-        service.addItem("Tnuva", 9, "Cheese 3%", expirationDateStr, 10, 0, 1,"250g");
-        service.addItem("Tnuva", 10, "Cheese 3%", expirationDateStr, 10, 0, 1,"250g");
-        service.addItem("Tnuva", 11, "Cheese 3%", expirationDateStr, 10, 0, 1,"250g");
-        service.addItem("Tnuva", 12, "Cheese 3%", expirationDateStr, 10, 0, 1,"250g");
-        service.addItem("Tnuva", 13, "Cheese 3%", expirationDateStr, 10, 0, 1,"250g");
-        service.addItem("Zoglobek", 14, "Salami 5%", expirationDateStr, 15, 1, 2,"500g");
-        service.addItem("Zoglobek", 15, "Salami 5%", expirationDateStr, 15, 1, 2 ,"500g");
-        service.addItem("Zoglobek", 16, "Salami 5%", expirationDateStr, 15, 1, 2,"500g");
-        service.addItem("Zoglobek", 17, "Salami 5%", expirationDateStr, 15, 1, 2, "500g");
-        service.addItem("Zoglobek", 18, "Salami 5%", expirationDateStr, 15, 1, 2, "500g");
-        service.addItem("Zoglobek", 19, "Salami 5%", expirationDateStr, 15, 1, 2 ,"500g");
-        service.addItem("Havat HaBokrim", 20, "Beef Fillet", expirationDateStr, 100, 1, 3,"1k");
-        service.addItem("Havat HaBokrim", 21, "Beef Fillet", expirationDateStr, 100, 1, 3 ,"1k");
-        service.addItem("Havat HaBokrim", 22, "Beef Fillet", expirationDateStr, 100, 1, 3, "1k");
-        service.addItem("Havat HaBokrim", 23, "Beef Fillet", expirationDateStr, 100, 1, 3, "1k");
-        service.addItem("Havat HaBokrim", 24, "Beef Fillet", expirationDateStr, 100, 1, 3 ,"1k");
-        service.addItem("Havat HaBokrim", 25, "Beef Fillet", expirationDateStr, 100, 1, 3, "1k");
-        service.addItem("Havat HaBokrim", 26, "Beef Fillet", expirationDateStr, 100, 1, 3,"1k");
-        service.addItem("Soltam", 27, "Pot 1L", null, 55, 2, 4 ,"");
-        service.addItem("Soltam", 28, "Pot 1L", null, 55, 2, 4,"");
-        service.addItem("Soltam", 29, "Pot 0.5L", null, 55, 2, 4,"");
-        service.addItem("Soltam", 30, "Pot 0.5L", null, 55, 2, 4,"");
-        service.addItem("Soltam", 31, "Pot 0.5L", null, 55, 2, 4,"");
-        service.addItem("Ruhama", 32, "Broom", null, 15, 2, 5,"");
-        service.addItem("Ruhama", 33, "Broom", null, 15, 2, 5,"");
-        service.addItem("Ruhama", 34, "Broom", null, 15, 2, 5,"");
-        service.addItem("Ruhama", 35, "Broom", null, 15, 2, 5,"");
-        service.addItem("Ruhama", 36, "Broom", null, 15, 2, 5,"");
-        service.addItem("Ruhama", 37, "Broom", null, 15, 2, 5,"");
-        service.addItem("Ruhama", 38, "Broom", null, 15, 2, 5,"");
-        service.addItem("Ruhama", 39, "Broom", null, 15, 2, 5,"");
+        service.addItem("Tnuva", 0, "Milk 3%", expirationDateStr, 6.9, 0, 0 ,"1L","Site A");
+        service.addItem("Tnuva", 1, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L","Site A");
+        service.addItem("Tnuva", 2, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L","Site A");
+        service.addItem("Tnuva", 3, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L","Site A");
+        service.addItem("Tnuva", 4, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L","Site B" );
+        service.addItem("Tnuva", 5, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L","Site B");
+        service.addItem("Tnuva", 6, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L","Site B");
+        service.addItem("Tnuva", 7, "Milk 3%", expirationDateStr, 6.9, 0, 0,"1L","Site C");
+        service.addItem("Tnuva", 8, "Cheese 3%", expirationDateStr, 10, 0, 1,"250g","Site A");
+        service.addItem("Tnuva", 9, "Cheese 3%", expirationDateStr, 10, 0, 1,"250g","Site A");
+        service.addItem("Tnuva", 10, "Cheese 3%", expirationDateStr, 10, 0, 1,"250g","Site B");
+        service.addItem("Tnuva", 11, "Cheese 3%", expirationDateStr, 10, 0, 1,"250g","Site C");
+        service.addItem("Tnuva", 12, "Cheese 3%", expirationDateStr, 10, 0, 1,"250g","Site C");
+        service.addItem("Tnuva", 13, "Cheese 3%", expirationDateStr, 10, 0, 1,"250g" ,"Site C");
+        service.addItem("Zoglobek", 14, "Salami 5%", expirationDateStr, 15, 1, 2,"500g","Site A");
+        service.addItem("Zoglobek", 15, "Salami 5%", expirationDateStr, 15, 1, 2 ,"500g","Site A");
+        service.addItem("Zoglobek", 16, "Salami 5%", expirationDateStr, 15, 1, 2,"500g","Site B");
+        service.addItem("Zoglobek", 17, "Salami 5%", expirationDateStr, 15, 1, 2, "500g","Site C");
+        service.addItem("Zoglobek", 18, "Salami 5%", expirationDateStr, 15, 1, 2, "500g","Site C");
+        service.addItem("Zoglobek", 19, "Salami 5%", expirationDateStr, 15, 1, 2 ,"500g","Site C");
+        service.addItem("Havat HaBokrim", 20, "Beef Fillet", expirationDateStr, 100, 1, 3,"1k","Site A");
+        service.addItem("Havat HaBokrim", 21, "Beef Fillet", expirationDateStr, 100, 1, 3 ,"1k","Site A");
+        service.addItem("Havat HaBokrim", 22, "Beef Fillet", expirationDateStr, 100, 1, 3, "1k","Site A");
+        service.addItem("Havat HaBokrim", 23, "Beef Fillet", expirationDateStr, 100, 1, 3, "1k","Site B");
+        service.addItem("Havat HaBokrim", 24, "Beef Fillet", expirationDateStr, 100, 1, 3 ,"1k","Site C");
+        service.addItem("Havat HaBokrim", 25, "Beef Fillet", expirationDateStr, 100, 1, 3, "1k","Site C");
+        service.addItem("Havat HaBokrim", 26, "Beef Fillet", expirationDateStr, 100, 1, 3,"1k","Site C");
+        service.addItem("Soltam", 27, "Pot 1L", null, 55, 2, 4 ,"","Site A");
+        service.addItem("Soltam", 28, "Pot 1L", null, 55, 2, 4,"","Site A");
+        service.addItem("Soltam", 29, "Pot 0.5L", null, 55, 2, 4,"","Site A");
+        service.addItem("Soltam", 30, "Pot 0.5L", null, 55, 2, 4,"","Site B");
+        service.addItem("Soltam", 31, "Pot 0.5L", null, 55, 2, 4,"","Site C");
+        service.addItem("Ruhama", 32, "Broom", null, 15, 2, 5,"","Site C");
+        service.addItem("Ruhama", 33, "Broom", null, 15, 2, 5,"","Site C");
+        service.addItem("Ruhama", 34, "Broom", null, 15, 2, 5,"","Site C");
+        service.addItem("Ruhama", 35, "Broom", null, 15, 2, 5,"","Site C");
+        service.addItem("Ruhama", 36, "Broom", null, 15, 2, 5,"","Site C");
+        service.addItem("Ruhama", 37, "Broom", null, 15, 2, 5,"","Site C");
+        service.addItem("Ruhama", 38, "Broom", null, 15, 2, 5,"","Site C");
+        service.addItem("Ruhama", 39, "Broom", null, 15, 2, 5,"","Site C");
     }
 
 
@@ -88,10 +88,10 @@ class TestServiceController {
     @org.junit.jupiter.api.Test
     void addItem() {
         ServiceController service = ServiceController.getInstance();
-        assertFalse(service.addItem("Soltam", 27, "Pot 1L", null, 55, 2, 4, ""));
-        assertTrue(service.addItem("Soltam", 45, "Pot 1L", null, 55, 2, 4, ""));
-        assertFalse(service.addItem("Soltam", 44, "Pot 1L", null, 55, 5, 4, ""));
-        assertFalse(service.addItem("Soltam", 43, "Pot 1L", null, 55, 5, 8, ""));
+        assertFalse(service.addItem("Soltam", 27, "Pot 1L", null, 55, 2, 4, "","site A"));
+        assertTrue(service.addItem("Soltam", 45, "Pot 1L", null, 55, 2, 4, "", "site A"));
+        assertFalse(service.addItem("Soltam", 44, "Pot 1L", null, 55, 5, 4, "", "site A"));
+        assertFalse(service.addItem("Soltam", 43, "Pot 1L", null, 55, 5, 8, "", "site A"));
     }
     @org.junit.jupiter.api.Test
     void itemSold() {
@@ -157,12 +157,12 @@ class TestServiceController {
     @org.junit.jupiter.api.Test
     void getAmountOfProduct() {
         ServiceController service = ServiceController.getInstance();
-        assertEquals(8, service.getAmountOfProduct(0));
-        assertEquals(6, service.getAmountOfProduct(1));
-        assertEquals(6, service.getAmountOfProduct(2));
-        assertEquals(7, service.getAmountOfProduct(3));
-        assertEquals(6, service.getAmountOfProduct(4));
-        assertEquals(8, service.getAmountOfProduct(5));
+        assertEquals(8, service.getAmountOfProduct(0, "site A"));
+        assertEquals(6, service.getAmountOfProduct(1, "site A"));
+        assertEquals(6, service.getAmountOfProduct(2, "site A"));
+        assertEquals(7, service.getAmountOfProduct(3, "site A"));
+        assertEquals(6, service.getAmountOfProduct(4, "site A"));
+        assertEquals(8, service.getAmountOfProduct(5, "site A"));
     }
 
 
