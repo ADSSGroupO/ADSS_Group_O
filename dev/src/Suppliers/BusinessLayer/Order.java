@@ -14,13 +14,13 @@ public class Order {
 
     private int order_number;
     private ArrayList<OrderDetailsByProduct> ordered_products; // list of all the information of ordered products
-    private int branch_code; // the destination branch of the order
+    private String branch_code; // the destination branch of the order
     private LocalDate date; // the estimated date of delivery
     private Status order_status; // the status of the order
     private double total_price; // the total cost of the order
     private double orderDiscount; // discount given on total order
 
-    public Order(LocalDate date, int destination) { // constructor
+    public Order(LocalDate date, String destination) { // constructor
         numberOfOrders++;
         order_number = numberOfOrders; // assign order number
         branch_code = destination;
@@ -78,7 +78,7 @@ public class Order {
     }
 
     // getters for attributes
-    public int getBranch() {return branch_code;}
+    public String getBranch() {return branch_code;}
     public LocalDate getDateOfOrder() {return date;}
     public Status getOrderStatus() {return order_status;}
 
